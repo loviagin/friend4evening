@@ -26,13 +26,13 @@ export default function Testimonials() {
                     <div className={styles.testimonial}>
                         <div className={styles.quote}>"</div>
                         <p className={styles.text}>
-                            Отличный сервис! Нашла компанию на вечер за полчаса. 
+                            Отличный сервис! Нашел компанию на вечер за полчаса. 
                             Всё прошло отлично, обязательно вернусь ещё.
                         </p>
                         <div className={styles.author}>
                             <div className={styles.authorAvatar}>А</div>
                             <div className={styles.authorInfo}>
-                                <div className={styles.authorName}>Анна, 25</div>
+                                <div className={styles.authorName}>Андрей, 48</div>
                                 <div className={styles.authorLocation}>Москва</div>
                             </div>
                         </div>
