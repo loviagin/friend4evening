@@ -32,12 +32,16 @@ export default function LoginPage() {
                 const email = userCredential.user.email
                 console.log(email)
                 clearLoginForm()
-                logEvent(analytics, `email_login_success ${email}`)
+                if (analytics) {
+                    logEvent(analytics, `email_login_success ${email}`)
+                }
                 router.push('/')
             })
             .catch((e) => {
                 setError(e.message)
-                logEvent(analytics, `email_login_error ${e.message}`)
+                if (analytics) {
+                    logEvent(analytics, `email_login_error ${e.message}`)
+                }
             })
     };
 
@@ -58,11 +62,15 @@ export default function LoginPage() {
                     displayName: registrationForm.name
                 }).then(() => {
                     clearRegistrationForm()
-                    logEvent(analytics, `email_register_success ${user.email}`)
+                    if (analytics) {
+                        logEvent(analytics, `email_register_success ${user.email}`)
+                    }
                     router.push('/')
                 }).catch((e) => { 
                     setError(e.message) 
-                    logEvent(analytics, `email_register_error ${e.message}`)
+                    if (analytics) {
+                        logEvent(analytics, `email_register_error ${e.message}`)
+                    }
                 })
             })
             .catch((e) => {
