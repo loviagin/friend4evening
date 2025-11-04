@@ -3,6 +3,7 @@ import { auth } from "@/lib/firebase";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
+import styles from "./layout.module.css";
 
 export type User = {
     id: string,
@@ -42,7 +43,19 @@ export default function AccountLayout({
 
     if (loading) {
         return (
-            <div>LOADING...</div>
+            <div className={styles.loader}>
+                <div className={styles.container}>
+                    <div className={styles.spinner}></div>
+                    <div>
+                        <div className={styles.text}>Загрузка</div>
+                        <div className={styles.dots}>
+                            <div className={styles.dot}></div>
+                            <div className={styles.dot}></div>
+                            <div className={styles.dot}></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     } else {
         return (
