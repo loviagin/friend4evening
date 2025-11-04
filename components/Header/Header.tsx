@@ -6,12 +6,12 @@ export default function Header() {
     const router = useRouter();
 
     const handleAccountClick = () => {
-        router.push('/login')
+        router.push('/account')
     }
     
     return (
         <header className={styles.header}>
-            <a href="/" className={styles.logo}>Friend4Evening</a>
+            <a href="/" className={styles.logo}><img className={styles.favicon} src={'icon.png'} /> Friend4Evening</a>
             <nav className={styles.nav}>
                 <ul className={styles.navLinks}>
                     <li><a href="#how-it-works" className={styles.navLink}>Как это работает</a></li>

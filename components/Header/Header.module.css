@@ -21,6 +21,10 @@
   }
 }
 
+.favicon {
+  width: 18px;
+}
+
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
@@ -91,6 +95,10 @@
 
   .logo {
     font-size: 1.25rem;
+  }
+
+  .favicon {
+    width: 15px;
   }
 
   .navLinks {
