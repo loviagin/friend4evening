@@ -129,7 +129,7 @@ export default function LoginPage() {
     if (isLoading) {
         return (
             <div className={styles.loader}>
-                <div className={styles.container}>
+                <div className={styles.loaderContainer}>
                     <div className={styles.spinner}></div>
                     <div>
                         <div className={styles.text}>Загрузка</div>

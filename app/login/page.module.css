@@ -139,7 +139,7 @@
   background: linear-gradient(135deg, rgba(70, 108, 149, 0.05) 0%, rgba(93, 174, 139, 0.05) 100%);
 }
 
-.container {
+.loaderContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
