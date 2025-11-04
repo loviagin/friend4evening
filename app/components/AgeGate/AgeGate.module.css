@@ -1,0 +1,141 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  background: var(--background);
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.content {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--blue);
+}
+
+.text {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: var(--foreground);
+  opacity: 0.9;
+}
+
+.text:last-of-type {
+  margin-bottom: 2.5rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.buttonContinue,
+.buttonExit {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.buttonContinue {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+}
+
+.buttonContinue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(70, 108, 149, 0.3);
+}
+
+.buttonExit {
+  background: transparent;
+  color: var(--foreground);
+  border: 2px solid var(--red);
+  color: var(--red);
+}
+
+.buttonExit:hover {
+  background: var(--red);
+  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 118, 118, 0.3);
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 2rem 1.5rem;
+  }
+
+  .icon {
+    font-size: 3rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .text {
+    font-size: 1rem;
+  }
+
+  .buttonContinue,
+  .buttonExit {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,89 @@
+.section {
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+  text-align: center;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 3rem;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.buttonPrimary,
+.buttonSecondary {
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.buttonPrimary {
+  background: var(--yellow);
+  color: var(--foreground);
+}
+
+.buttonPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.buttonSecondary {
+  background: transparent;
+  color: var(--background);
+  border: 2px solid var(--background);
+}
+
+.buttonSecondary:hover {
+  background: var(--background);
+  color: var(--blue);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem 1.5rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .buttonPrimary,
+  .buttonSecondary {
+    width: 100%;
+  }
+}
