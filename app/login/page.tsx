@@ -1,11 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { analytics, auth } from "@/lib/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import GoogleLogin from "./components/GoogleLogin/GoogleLogin";
 import { logEvent } from "firebase/analytics";
-import PhoneLogin from "./components/PhoneLogin/PhoneLogin";
 import styles from "./page.module.css";
 
 export type LoginForm = {
@@ -20,10 +19,22 @@ export type RegisterForm = {
 export default function LoginPage() {
     const router = useRouter();
 
+    const [isLoading, setIsLoading] = useState(true);
     const [loginForm, setLoginForm] = useState<LoginForm>({ email: "", password: "" });
     const [registrationForm, setRegistrationForm] = useState<RegisterForm>({ name: "", email: "", password: "" });
     const [isLogin, setIsLogin] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        console.log(`useEffect.LoginPage ${auth.currentUser}`)
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                router.push('/account')
+            } else {
+                setIsLoading(false)
+            }
+        })
+    }, [auth])
 
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -113,6 +124,24 @@ export default function LoginPage() {
     const switchAuthMode = () => {
         setError(null)
         setIsLogin(!isLogin)
+    }
+
+    if (isLoading) {
+        return (
+            <div className={styles.loader}>
+                <div className={styles.container}>
+                    <div className={styles.spinner}></div>
+                    <div>
+                        <div className={styles.text}>Загрузка</div>
+                        <div className={styles.dots}>
+                            <div className={styles.dot}></div>
+                            <div className={styles.dot}></div>
+                            <div className={styles.dot}></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     return (
