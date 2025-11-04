@@ -12,7 +12,7 @@ const nunitoFont = Nunito({
 
 export const metadata: Metadata = {
   title: "Friend4Evening – найти друга на вечер",
-  description: "Удобный поиск и фильтр по нужным параметрам, чаты и много другое на friend4evening. 18+",
+  description: "Удобный поиск и фильтр по нужным параметрам, чаты и многое другое на friend4evening. 18+",
 };
 
 export default function RootLayout({

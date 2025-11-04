@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import GoogleLogin from "./components/GoogleLogin/GoogleLogin";
 import { logEvent } from "firebase/analytics";
 import PhoneLogin from "./components/PhoneLogin/PhoneLogin";
+import styles from "./page.module.css";
 
 export type LoginForm = {
     email: string,
@@ -115,12 +116,14 @@ export default function LoginPage() {
     }
 
     return (
-        <main>
-            <h1>Вход </h1>
-            {isLogin ?
-                <section id="login" key="login">
-                    <form id="login-form" onSubmit={handleLogin} autoComplete="on">
+        <main className={styles.main}>
+            <div className={styles.container}>
+                <h1 className={styles.title}>{isLogin ? "Вход" : "Регистрация"}</h1>
+                {isLogin ?
+                <section className={styles.section} id="login" key="login">
+                    <form className={styles.form} id="login-form" onSubmit={handleLogin} autoComplete="on">
                         <input
+                            className={styles.input}
                             type="email"
                             id="login-email"
                             name="email"
@@ -132,6 +135,7 @@ export default function LoginPage() {
                         />
 
                         <input
+                            className={styles.input}
                             type="password"
                             id="login-password"
                             name="password"
@@ -142,13 +146,14 @@ export default function LoginPage() {
                             onChange={(event) => setLoginForm({ ...loginForm, password: event.target.value })}
                         />
 
-                        <button type="submit">Войти</button>
+                        <button className={styles.submitButton} type="submit">Войти</button>
                     </form>
                 </section>
                 :
-                <section id="registration" key="registration">
-                    <form id="registration-form" onSubmit={handleRegistration} autoComplete="on">
+                <section className={styles.section} id="registration" key="registration">
+                    <form className={styles.form} id="registration-form" onSubmit={handleRegistration} autoComplete="on">
                         <input
+                            className={styles.input}
                             type="text"
                             id="register-name"
                             name="name"
@@ -160,6 +165,7 @@ export default function LoginPage() {
                         />
 
                         <input
+                            className={styles.input}
                             type="email"
                             id="register-email"
                             name="email"
@@ -171,6 +177,7 @@ export default function LoginPage() {
                         />
 
                         <input
+                            className={styles.input}
                             type="password"
                             id="register-password"
                             name="password"
@@ -181,22 +188,23 @@ export default function LoginPage() {
                             onChange={(event) => setRegistrationForm({ ...registrationForm, password: event.target.value })}
                         />
 
-                        <button type="submit">Зарегистрироваться</button>
+                        <button className={styles.submitButton} type="submit">Зарегистрироваться</button>
                     </form>
                 </section>
             }
 
-            {error !== null && (<div>Ошибка: {error}</div>)}
+            {error !== null && (<div className={styles.error}>Ошибка: {error}</div>)}
 
-            <hr />
+            <hr className={styles.divider} />
 
-            <button onClick={switchAuthMode}>{isLogin ? "Зарегистрировать через email" : "Войти по email"}</button>
+            <button className={styles.switchButton} onClick={switchAuthMode}>{isLogin ? "Зарегистрировать через email" : "Войти по email"}</button>
 
-            <section id="social-login">
+            <section className={styles.socialLogin} id="social-login">
                 <GoogleLogin onComplete={handleGoogleAuth} />
                 {/* <YandexLogin /> */}
-                <PhoneLogin />
+                {/* <PhoneLogin /> */}
             </section>
+            </div>
         </main>
     );
 }
