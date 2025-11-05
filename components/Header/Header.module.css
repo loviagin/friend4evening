@@ -80,7 +80,22 @@
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .accountButton:hover {
@@ -108,5 +123,11 @@
   .accountButton {
     padding: 0.625rem 1.25rem;
     font-size: 0.875rem;
+  }
+
+  .avatar,
+  .userIcon {
+    width: 18px;
+    height: 18px;
   }
 }

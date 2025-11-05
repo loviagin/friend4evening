@@ -2,10 +2,17 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { analytics, auth } from "@/lib/firebase";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile, User } from "firebase/auth";
 import GoogleLogin from "./components/GoogleLogin/GoogleLogin";
 import { logEvent } from "firebase/analytics";
+import DatePicker from "react-datepicker";
+import { registerLocale } from "react-datepicker";
+import { ru } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
+import "./datepicker-custom.css";
 import styles from "./page.module.css";
+
+registerLocale("ru", ru);
 
 export type LoginForm = {
     email: string,
@@ -14,16 +21,33 @@ export type LoginForm = {
 
 export type RegisterForm = {
     name: string,
+    birthday: Date | null,
 } & LoginForm
 
 export default function LoginPage() {
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(true);
+    const [showMobileBanner, setShowMobileBanner] = useState(false);
     const [loginForm, setLoginForm] = useState<LoginForm>({ email: "", password: "" });
-    const [registrationForm, setRegistrationForm] = useState<RegisterForm>({ name: "", email: "", password: "" });
+    const [registrationForm, setRegistrationForm] = useState<RegisterForm>({ name: "", birthday: null, email: "", password: "" });
     const [isLogin, setIsLogin] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchDeviceType = async () => {
+            const response = await fetch('/api/device/os');
+            const data = await response.json();
+            console.log(response, data);
+            if (data.message === 'mobile' || data.message === 'tablet') {
+                setShowMobileBanner(true);
+            } else {
+                setShowMobileBanner(false);
+            }
+        }
+
+        fetchDeviceType()
+    })
 
     useEffect(() => {
         console.log(`useEffect.LoginPage ${auth.currentUser}`)
@@ -36,21 +60,51 @@ export default function LoginPage() {
         })
     }, [auth])
 
+    const completeLogin = () => {
+        clearLoginForm()
+        setIsLoading(false);
+        router.push('/account')
+    }
+
+    const completeRegistration = (user: User) => {
+        updateProfile(user, {
+            displayName: registrationForm.name,
+            photoURL: user.photoURL
+        }).then(() => {
+            clearRegistrationForm()
+            setIsLoading(false)
+            router.push('/account')
+        }).catch((e) => {
+            setError(e.message)
+            setIsLoading(false)
+        })
+    }
+
+    const handleSocialAuth = (userId: string, name: string | null, avatarUrl: string | null) => {
+        setError(null);
+        setIsLoading(true);
+
+        completeLogin();
+    };
+
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        setError(null)
+        setIsLoading(true)
 
         signInWithEmailAndPassword(auth, loginForm.email, loginForm.password)
             .then((userCredential) => {
                 const email = userCredential.user.email
                 console.log(email)
-                clearLoginForm()
                 if (analytics) {
                     logEvent(analytics, `email_login_success ${email}`)
                 }
-                router.push('/')
+                completeLogin()
             })
             .catch((e) => {
                 setError(e.message)
+                setIsLoading(false)
                 if (analytics) {
                     logEvent(analytics, `email_login_error ${e.message}`)
                 }
@@ -66,31 +120,27 @@ export default function LoginPage() {
         }
 
         setError(null);
+        setIsLoading(true);
 
         createUserWithEmailAndPassword(auth, registrationForm.email, registrationForm.password)
             .then((userCredential) => {
                 const user = userCredential.user
-                updateProfile(user, {
-                    displayName: registrationForm.name
-                }).then(() => {
-                    clearRegistrationForm()
-                    if (analytics) {
-                        logEvent(analytics, `email_register_success ${user.email}`)
-                    }
-                    router.push('/')
-                }).catch((e) => { 
-                    setError(e.message) 
-                    if (analytics) {
-                        logEvent(analytics, `email_register_error ${e.message}`)
-                    }
-                })
+                completeRegistration(user);
+
+                if (analytics) {
+                    logEvent(analytics, `email_register_success ${user.email}`)
+                }
             })
             .catch((e) => {
                 setError(e.message)
+                setIsLoading(false);
+                if (analytics) {
+                    logEvent(analytics, `email_register_error ${e.message}`)
+                }
             })
     };
 
-    const handleGoogleAuth = (userId: string | null, error: string | null) => {
+    const handleGoogleAuth = (userId: string | null, name: string | null, avatarUrl: string | null, error: string | null) => {
         if (error) {
             setError(error);
             return;
@@ -101,7 +151,7 @@ export default function LoginPage() {
             return;
         }
 
-        router.push('/');
+        handleSocialAuth(userId, name, avatarUrl)
     };
 
     const clearLoginForm = () => {
@@ -117,6 +167,7 @@ export default function LoginPage() {
             name: "",
             email: "",
             password: "",
+            birthday: null,
         });
         setError(null);
     };
@@ -148,91 +199,127 @@ export default function LoginPage() {
         <main className={styles.main}>
             <div className={styles.container}>
                 <h1 className={styles.title}>{isLogin ? "Вход" : "Регистрация"}</h1>
+
+                {!showMobileBanner &&
+                    <div className={styles.mobileBanner}>
+                        <b>Добавьте иконку Friend4Evening на главный экран</b>
+                        Для более быстрого доступа к Аккаунту: <br />
+                        1. Нажмите поделиться или откройте меню доп действий <br />
+                        2. Нажмите Добавить на главный экран
+                    </div>
+                }
+
                 {isLogin ?
-                <section className={styles.section} id="login" key="login">
-                    <form className={styles.form} id="login-form" onSubmit={handleLogin} autoComplete="on">
-                        <input
-                            className={styles.input}
-                            type="email"
-                            id="login-email"
-                            name="email"
-                            required
-                            placeholder="Введите ваш email"
-                            autoComplete="section-login email"
-                            value={loginForm.email}
-                            onChange={(event) => setLoginForm({ ...loginForm, email: event.target.value })}
-                        />
+                    <section className={styles.section} id="login" key="login">
+                        <form className={styles.form} id="login-form" onSubmit={handleLogin} autoComplete="on">
+                            <input
+                                className={styles.input}
+                                type="email"
+                                id="login-email"
+                                name="email"
+                                required
+                                placeholder="Введите ваш email"
+                                autoComplete="section-login email"
+                                value={loginForm.email}
+                                onChange={(event) => setLoginForm({ ...loginForm, email: event.target.value })}
+                            />
 
-                        <input
-                            className={styles.input}
-                            type="password"
-                            id="login-password"
-                            name="password"
-                            required
-                            placeholder="Ваш пароль"
-                            autoComplete="section-login current-password"
-                            value={loginForm.password}
-                            onChange={(event) => setLoginForm({ ...loginForm, password: event.target.value })}
-                        />
+                            <input
+                                className={styles.input}
+                                type="password"
+                                id="login-password"
+                                name="password"
+                                required
+                                placeholder="Ваш пароль"
+                                autoComplete="section-login current-password"
+                                value={loginForm.password}
+                                onChange={(event) => setLoginForm({ ...loginForm, password: event.target.value })}
+                            />
 
-                        <button className={styles.submitButton} type="submit">Войти</button>
-                    </form>
+                            <button className={styles.submitButton} type="submit">Войти</button>
+                        </form>
+                    </section>
+                    :
+                    <section className={styles.section} id="registration" key="registration">
+                        <form className={styles.form} id="registration-form" onSubmit={handleRegistration} autoComplete="on">
+                            <input
+                                className={styles.input}
+                                type="text"
+                                id="register-name"
+                                name="name"
+                                required
+                                placeholder="Ваше имя"
+                                autoComplete="section-register given-name"
+                                value={registrationForm.name}
+                                onChange={(event) => setRegistrationForm({ ...registrationForm, name: event.target.value })}
+                            />
+
+                            <DatePicker
+                                id="register-birthday"
+                                placeholderText="Ваша дата рождения"
+                                autoComplete="section-register birthday"
+                                selected={registrationForm.birthday}
+                                onChange={(date) => setRegistrationForm({ ...registrationForm, birthday: date })}
+                                className={styles.datePicker}
+                                wrapperClassName={styles.datePickerWrapper}
+                                dateFormat="dd.MM.yyyy"
+                                locale="ru"
+                                showYearDropdown
+                                showMonthDropdown
+                                dropdownMode="select"
+                                yearDropdownItemNumber={100}
+                                scrollableYearDropdown
+                                minDate={new Date(1900, 0, 1)}
+                                maxDate={new Date(new Date().getFullYear() - 18, 11, 31)}
+                            />
+
+                            <input
+                                className={styles.input}
+                                type="email"
+                                id="register-email"
+                                name="email"
+                                required
+                                placeholder="Ваш email"
+                                autoComplete="section-register email"
+                                value={registrationForm.email}
+                                onChange={(event) => setRegistrationForm({ ...registrationForm, email: event.target.value })}
+                            />
+
+                            <input
+                                className={styles.input}
+                                type="password"
+                                id="register-password"
+                                name="password"
+                                required
+                                placeholder="Придумайте пароль"
+                                autoComplete="section-register new-password"
+                                value={registrationForm.password}
+                                onChange={(event) => setRegistrationForm({ ...registrationForm, password: event.target.value })}
+                            />
+
+                            <button className={styles.submitButton} type="submit">Зарегистрироваться</button>
+                        </form>
+                    </section>
+                }
+
+                {error !== null && (<div className={styles.error}>Ошибка: {error}</div>)}
+
+                <hr className={styles.divider} />
+
+                <button className={styles.switchButton} onClick={switchAuthMode}>{isLogin ? "Зарегистрироваться через email" : "Войти по email"}</button>
+
+                <section className={styles.socialLogin} id="social-login">
+                    <GoogleLogin onComplete={handleGoogleAuth} />
+                    {/* <YandexLogin /> */}
+                    {/* <PhoneLogin /> */}
                 </section>
-                :
-                <section className={styles.section} id="registration" key="registration">
-                    <form className={styles.form} id="registration-form" onSubmit={handleRegistration} autoComplete="on">
-                        <input
-                            className={styles.input}
-                            type="text"
-                            id="register-name"
-                            name="name"
-                            required
-                            placeholder="Ваше имя"
-                            autoComplete="section-register given-name"
-                            value={registrationForm.name}
-                            onChange={(event) => setRegistrationForm({ ...registrationForm, name: event.target.value })}
-                        />
 
-                        <input
-                            className={styles.input}
-                            type="email"
-                            id="register-email"
-                            name="email"
-                            required
-                            placeholder="Ваш email"
-                            autoComplete="section-register email"
-                            value={registrationForm.email}
-                            onChange={(event) => setRegistrationForm({ ...registrationForm, email: event.target.value })}
-                        />
-
-                        <input
-                            className={styles.input}
-                            type="password"
-                            id="register-password"
-                            name="password"
-                            required
-                            placeholder="Придумайте пароль"
-                            autoComplete="section-register new-password"
-                            value={registrationForm.password}
-                            onChange={(event) => setRegistrationForm({ ...registrationForm, password: event.target.value })}
-                        />
-
-                        <button className={styles.submitButton} type="submit">Зарегистрироваться</button>
-                    </form>
-                </section>
-            }
-
-            {error !== null && (<div className={styles.error}>Ошибка: {error}</div>)}
-
-            <hr className={styles.divider} />
-
-            <button className={styles.switchButton} onClick={switchAuthMode}>{isLogin ? "Зарегистрировать через email" : "Войти по email"}</button>
-
-            <section className={styles.socialLogin} id="social-login">
-                <GoogleLogin onComplete={handleGoogleAuth} />
-                {/* <YandexLogin /> */}
-                {/* <PhoneLogin /> */}
-            </section>
+                <p className={styles.agreementText}>
+                    Регистрируясь и используя сервис, вы подтверждаете, что вам исполнилось 18 лет и вы соглашаетесь с{" "}
+                    <a href="/rules" target="_blank" className={styles.agreementLink}>правилами</a>,{" "}
+                    <a href="/agreement" target="_blank" className={styles.agreementLink}>соглашением</a> и{" "}
+                    <a href="/privacy" target="_blank" className={styles.agreementLink}>политикой конфиденциальности</a>.
+                </p>
             </div>
         </main>
     );
