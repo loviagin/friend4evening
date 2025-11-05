@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './page.module.css';
 
 export default function Rules() {
@@ -128,7 +129,7 @@ export default function Rules() {
                     <h2 className={styles.sectionTitle}>8. Контакты</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            По вопросам, связанным с использованием Сервиса или нарушением Правил, обращайтесь по адресу: <a href="mailto:friend4evening@lovigin.com" className={styles.link}>friend4evening@lovigin.com</a>
+                            По вопросам, связанным с использованием Сервиса или нарушением Правил, обращайтесь по адресу: <Link href="mailto:friend4evening@lovigin.com" className={styles.link}>friend4evening@lovigin.com</Link>
                         </p>
                     </div>
                 </section>

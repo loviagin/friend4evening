@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header/Header";
 import AgeGate from "./components/AgeGate/AgeGate";
 import Footer from "@/components/Footer/Footer";
+import { AuthProvider } from "./_providers/AuthProvider";
 
 const nunitoFont = Nunito({
   variable: "--font-nunito",
@@ -23,10 +24,12 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={`${nunitoFont.variable}`}>
-        <Header />
-        <AgeGate />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <AgeGate />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

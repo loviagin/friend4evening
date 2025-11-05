@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './page.module.css';
 
 export default function Agreement() {
@@ -160,7 +161,7 @@ export default function Agreement() {
                 <div className={styles.contacts}>
                     <h3 className={styles.contactsTitle}>Контакты для связи</h3>
                     <p className={styles.contact}>
-                        Email: <a href="mailto:friend4evening@lovigin.com" className={styles.link}>friend4evening@lovigin.com</a>
+                        Email: <Link href="mailto:friend4evening@lovigin.com" className={styles.link}>friend4evening@lovigin.com</Link>
                     </p>
                     <p className={styles.copyright}>
                         © 2025 Friend4Evening — Все права защищены. 18+

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './page.module.css';
 
 export default function Privacy() {
@@ -156,7 +157,7 @@ export default function Privacy() {
                     <h2 className={styles.sectionTitle}>9. Контактная информация</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            По всем вопросам, связанным с обработкой персональных данных, Пользователь может обратиться по адресу: <a href="mailto:friend4evening@lovigin.com" className={styles.link}>friend4evening@lovigin.com</a>
+                            По всем вопросам, связанным с обработкой персональных данных, Пользователь может обратиться по адресу: <Link href="mailto:friend4evening@lovigin.com" className={styles.link}>friend4evening@lovigin.com</Link>
                         </p>
                     </div>
                 </section>

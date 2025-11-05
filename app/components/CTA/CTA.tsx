@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './CTA.module.css';
 
 export default function CTA() {
@@ -9,12 +10,12 @@ export default function CTA() {
                     Присоединяйся к тысячам пользователей, которые уже нашли компанию для вечера
                 </p>
                 <div className={styles.buttons}>
-                    <a href="/login" className={styles.buttonPrimary}>
+                    <Link href="/login" className={styles.buttonPrimary}>
                         Зарегистрироваться
-                    </a>
-                    <a href="/account" className={styles.buttonSecondary}>
+                    </Link>
+                    <Link href="/account" className={styles.buttonSecondary}>
                         Войти
-                    </a>
+                    </Link>
                 </div>
             </div>
         </section>

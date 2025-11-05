@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { analytics, auth } from "@/lib/firebase";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile, User } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, User } from "firebase/auth";
 import GoogleLogin from "./components/GoogleLogin/GoogleLogin";
 import { logEvent } from "firebase/analytics";
 import DatePicker from "react-datepicker";
@@ -12,6 +12,7 @@ import { ru } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import "./datepicker-custom.css";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 registerLocale("ru", ru);
 
@@ -48,18 +49,7 @@ export default function LoginPage() {
         }
 
         fetchDeviceType()
-    })
-
-    // useEffect(() => {
-    //     console.log(`useEffect.LoginPage ${auth.currentUser}`)
-    //     onAuthStateChanged(auth, (user) => {
-    //         if (user) {
-    //             router.push('/account')
-    //         } else {
-    //             setIsLoading(false)
-    //         }
-    //     })
-    // }, [auth])
+    }, [])
 
     const completeLogin = () => {
         clearLoginForm();
@@ -352,9 +342,9 @@ export default function LoginPage() {
 
                 <p className={styles.agreementText}>
                     Регистрируясь и используя сервис, вы подтверждаете, что вам исполнилось 18 лет и вы соглашаетесь с{" "}
-                    <a href="/rules" target="_blank" className={styles.agreementLink}>правилами</a>,{" "}
-                    <a href="/agreement" target="_blank" className={styles.agreementLink}>соглашением</a> и{" "}
-                    <a href="/privacy" target="_blank" className={styles.agreementLink}>политикой конфиденциальности</a>.
+                    <Link href="/rules" target="_blank" className={styles.agreementLink}>правилами</Link>,{" "}
+                    <Link href="/agreement" target="_blank" className={styles.agreementLink}>соглашением</Link> и{" "}
+                    <Link href="/privacy" target="_blank" className={styles.agreementLink}>политикой конфиденциальности</Link>.
                 </p>
             </div>
         </main>

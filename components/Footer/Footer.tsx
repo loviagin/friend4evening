@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -16,30 +17,30 @@ export default function Footer() {
                     <div className={styles.column}>
                         <h4 className={styles.columnTitle}>Навигация</h4>
                         <ul className={styles.links}>
-                            <li><a href="#hero">Главная</a></li>
-                            <li><a href="#how-it-works">Как это работает</a></li>
-                            <li><a href="#features">Преимущества</a></li>
-                            <li><a href="#screenshots">Скриншоты</a></li>
+                            <li><Link href="/#hero">Главная</Link></li>
+                            <li><Link href="/#how-it-works">Как это работает</Link></li>
+                            <li><Link href="/#features">Преимущества</Link></li>
+                            <li><Link href="/#screenshots">Скриншоты</Link></li>
                         </ul>
                     </div>
                     
                     <div className={styles.column}>
                         <h4 className={styles.columnTitle}>Информация</h4>
                         <ul className={styles.links}>
-                            <li><a href="#security">Безопасность</a></li>
-                            <li><a href="#testimonials">Отзывы</a></li>
-                            <li><a href="/account">Личный кабинет</a></li>
-                            <li><a href="/login">Войти</a></li>
+                            <li><Link href="/#security">Безопасность</Link></li>
+                            <li><Link href="/#testimonials">Отзывы</Link></li>
+                            <li><Link href="/account">Личный кабинет</Link></li>
+                            <li><Link href="/login">Войти</Link></li>
                         </ul>
                     </div>
                     
                     <div className={styles.column}>
                         <h4 className={styles.columnTitle}>Контакты</h4>
                         <ul className={styles.links}>
-                            <li><a href="mailto:friend4evening@lovigin.com">Поддержка</a></li>
-                            <li><a href="/agreement">Пользовательское соглашение</a></li>
-                            <li><a href="/privacy">Политика конфиденциальности</a></li>
-                            <li><a href="/rules">Правила поведения пользователей</a></li>
+                            <li><Link href="mailto:friend4evening@lovigin.com">Поддержка</Link></li>
+                            <li><Link href="/agreement">Пользовательское соглашение</Link></li>
+                            <li><Link href="/privacy">Политика конфиденциальности</Link></li>
+                            <li><Link href="/rules">Правила поведения пользователей</Link></li>
                         </ul>
                     </div>
                 </div>
