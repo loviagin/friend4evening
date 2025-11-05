@@ -42,17 +42,17 @@ export default function Header() {
                 {(pathname.includes('account')) ?
                     <>
                         <ul className={styles.navLinks}>
-                            <li><a href="#how-it-works" className={styles.navLink}>Как это работает</a></li>
-                            <li><a href="#features" className={styles.navLink}>Преимущества</a></li>
-                            <li><a href="#testimonials" className={styles.navLink}>Отзывы</a></li>
+                            <li><a href="#how-it-works" className={styles.navLink}>Поиск</a></li>
+                            <li><a href="#features" className={styles.navLink}>Сообщения</a></li>
+                            <li><a href="#testimonials" className={styles.navLink}>Профиль</a></li>
                         </ul>
                     </>
                     :
                     <>
                         <ul className={styles.navLinks}>
-                            <li><a href="#how-it-works" className={styles.navLink}>Как это работает</a></li>
-                            <li><a href="#features" className={styles.navLink}>Преимущества</a></li>
-                            <li><a href="#testimonials" className={styles.navLink}>Отзывы</a></li>
+                            <li><a href="/#how-it-works" className={styles.navLink}>Как это работает</a></li>
+                            <li><a href="/#features" className={styles.navLink}>Преимущества</a></li>
+                            <li><a href="/#testimonials" className={styles.navLink}>Отзывы</a></li>
                         </ul>
                     </>
                 }
