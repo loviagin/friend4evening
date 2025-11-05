@@ -4,7 +4,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import styles from "./GoogleLogin.module.css";
 
 type Props = {
-    onComplete: (userId: string | null, error: string | null) => void;
+    onComplete: (userId: string | null, name: string | null, avatarUrl: string | null, error: string | null) => void;
 }
 
 export default function GoogleLogin({ onComplete }: Props) {
@@ -14,12 +14,12 @@ export default function GoogleLogin({ onComplete }: Props) {
         signInWithPopup(auth, provider)
             .then((result) => {
                 const user = result.user;
-
-                onComplete(user.uid, null);
+                
+                onComplete(user.uid, user.displayName, user.photoURL,null);
             })
             .catch((error) => {
                 const errorMessage = error.message;
-                onComplete(null, errorMessage);
+                onComplete(null, null, null, errorMessage);
             });
     };
 

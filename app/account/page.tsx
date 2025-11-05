@@ -7,7 +7,7 @@ export default function Account() {
     return (
         <main>
             This is your account
-            <button onClick={() => signOut(auth)}>Выйти</button>
+            <button style={{ margin: "80px", color: "black" }} onClick={() => signOut(auth)}>Выйти</button>
         </main>
     );
 }

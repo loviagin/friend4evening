@@ -1,0 +1,120 @@
+/* Кастомные стили для react-datepicker select элементов */
+.react-datepicker select.react-datepicker__month-select,
+.react-datepicker select.react-datepicker__year-select,
+.react-datepicker__header .react-datepicker__month-select,
+.react-datepicker__header .react-datepicker__year-select {
+  background: rgba(255, 255, 255, 1) !important;
+  color: #466C95 !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+  border-radius: 10px !important;
+  padding: 0.625rem 2.5rem 0.625rem 1rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  transition: all 0.2s ease !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23466C95' d='M6 8L2 4h8z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 12px !important;
+  min-width: 115px !important;
+  text-align: left !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+}
+
+
+.react-datepicker select.react-datepicker__month-select:hover,
+.react-datepicker select.react-datepicker__year-select:hover,
+.react-datepicker__header .react-datepicker__month-select:hover,
+.react-datepicker__header .react-datepicker__year-select:hover {
+  background: rgba(255, 255, 255, 1) !important;
+  border-color: rgba(255, 255, 255, 1) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+.react-datepicker select.react-datepicker__month-select:focus,
+.react-datepicker select.react-datepicker__year-select:focus,
+.react-datepicker__header .react-datepicker__month-select:focus,
+.react-datepicker__header .react-datepicker__year-select:focus {
+  outline: none !important;
+  background: rgba(255, 255, 255, 1) !important;
+  border-color: rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 3px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Стили для выпадающих списков (option) */
+.react-datepicker__month-select option,
+.react-datepicker__year-select option {
+  background: #ffffff !important;
+  color: #466C95 !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+.react-datepicker__month-select option:hover,
+.react-datepicker__year-select option:hover {
+  background: rgba(70, 108, 149, 0.1) !important;
+}
+
+.react-datepicker__month-select option:checked,
+.react-datepicker__year-select option:checked {
+  background: linear-gradient(135deg, #466C95 0%, #5DAE8B 100%) !important;
+  color: #ffffff !important;
+}
+
+/* Стили для навигации - стрелки по бокам пикеров */
+.react-datepicker__header {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  position: relative !important;
+  gap: 0 !important;
+  padding-left: 3rem !important;
+  padding-right: 3rem !important;
+}
+
+.react-datepicker button.react-datepicker__navigation--previous,
+.react-datepicker__header button.react-datepicker__navigation--previous {
+  position: absolute !important;
+  left: 0.75rem !important;
+  top: 0.75rem !important;
+  margin: 0 !important;
+  order: 1 !important;
+}
+
+/* Центрируем выпадающие списки */
+.react-datepicker__header .react-datepicker__month-dropdown-container,
+.react-datepicker__header .react-datepicker__year-dropdown-container {
+  display: flex !important;
+  gap: 0.75rem !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 0 auto !important;
+  order: 2 !important;
+  flex: 0 0 auto !important;
+}
+
+.react-datepicker button.react-datepicker__navigation--next,
+.react-datepicker__header button.react-datepicker__navigation--next {
+  position: absolute !important;
+  right: 0.75rem !important;
+  top: 0.75rem !important;
+  margin: 0 !important;
+  order: 3 !important;
+}
+
+.react-datepicker__header select.react-datepicker__month-select,
+.react-datepicker__header select.react-datepicker__year-select {
+  margin: 0 !important;
+}
+
+.react-datepicker__header select.react-datepicker__year-select {
+  margin-left: 0.75rem !important;
+}
+
