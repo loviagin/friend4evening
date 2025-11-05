@@ -1,25 +1,31 @@
 "use client";
 import { auth } from "@/lib/firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 import styles from "./GoogleLogin.module.css";
 
 type Props = {
-    onComplete: (userId: string | null, name: string | null, avatarUrl: string | null, error: string | null) => void;
+    onComplete: (user: User | null, error: string | null) => void;
 }
 
 export default function GoogleLogin({ onComplete }: Props) {
-
+    const router = useRouter();
+    
     const handleGoogleLogin = () => {
+        if (auth.currentUser) {
+            router.push('/account');
+            return
+        }
+
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
                 const user = result.user;
-                
-                onComplete(user.uid, user.displayName, user.photoURL,null);
+                onComplete(user, null);
             })
             .catch((error) => {
                 const errorMessage = error.message;
-                onComplete(null, null, null, errorMessage);
+                onComplete(null, errorMessage);
             });
     };
 

@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 import GoogleLogin from "./components/GoogleLogin/GoogleLogin";
 import { logEvent } from "firebase/analytics";
 import DatePicker from "react-datepicker";
+import bcrypt from "bcryptjs";
 import { registerLocale } from "react-datepicker";
 import { ru } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
@@ -27,7 +28,7 @@ export type RegisterForm = {
 export default function LoginPage() {
     const router = useRouter();
 
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [showMobileBanner, setShowMobileBanner] = useState(false);
     const [loginForm, setLoginForm] = useState<LoginForm>({ email: "", password: "" });
     const [registrationForm, setRegistrationForm] = useState<RegisterForm>({ name: "", birthday: null, email: "", password: "" });
@@ -49,58 +50,78 @@ export default function LoginPage() {
         fetchDeviceType()
     })
 
-    useEffect(() => {
-        console.log(`useEffect.LoginPage ${auth.currentUser}`)
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                router.push('/account')
-            } else {
-                setIsLoading(false)
-            }
-        })
-    }, [auth])
+    // useEffect(() => {
+    //     console.log(`useEffect.LoginPage ${auth.currentUser}`)
+    //     onAuthStateChanged(auth, (user) => {
+    //         if (user) {
+    //             router.push('/account')
+    //         } else {
+    //             setIsLoading(false)
+    //         }
+    //     })
+    // }, [auth])
 
     const completeLogin = () => {
-        clearLoginForm()
+        clearLoginForm();
+        clearRegistrationForm();
         setIsLoading(false);
-        router.push('/account')
+        router.push('/account');
     }
 
-    const completeRegistration = (user: User) => {
-        updateProfile(user, {
-            displayName: registrationForm.name,
-            photoURL: user.photoURL
-        }).then(() => {
-            clearRegistrationForm()
-            setIsLoading(false)
-            router.push('/account')
-        }).catch((e) => {
-            setError(e.message)
-            setIsLoading(false)
+    const checkUserExists = async (user: User, email: string, name: string | null, avatarUrl: string | null, provider: string | null, passwordHash: string | null, birthday: Date | null) => {
+        const resp = await fetch('/api/auth/check', {
+            method: 'POST',
+            body: JSON.stringify({ email, name, avatarUrl, provider, passwordHash, birthday })
         })
+
+        const data = await resp.json();
+        console.log(data['userId']);
+
+        if (resp.status === 202) { // user exists
+            completeLogin();
+        } else if (resp.status === 201) { // new user
+            updateProfile(user, {
+                displayName: registrationForm.name ?? user.displayName,
+                photoURL: user.photoURL
+            }).then(() => {
+                completeLogin();
+            }).catch((e) => {
+                setError(e.message);
+                setIsLoading(false);
+            })
+        } else {
+            setError(`Ошибка ${data['message']}`);
+            setIsLoading(false);
+        }
     }
 
-    const handleSocialAuth = (userId: string, name: string | null, avatarUrl: string | null) => {
-        setError(null);
-        setIsLoading(true);
-
-        completeLogin();
-    };
-
-    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleEmailLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (auth.currentUser) {
+            router.push('/account');
+            return
+        }
 
         setError(null)
         setIsLoading(true)
+        const passwordHash = await bcrypt.hash(loginForm.password, 12);
 
         signInWithEmailAndPassword(auth, loginForm.email, loginForm.password)
             .then((userCredential) => {
-                const email = userCredential.user.email
-                console.log(email)
-                if (analytics) {
-                    logEvent(analytics, `email_login_success ${email}`)
+                const user = userCredential.user
+
+                console.log(user.email)
+                if (!user) {
+                    setError("Пользователь не найден")
+                    return
                 }
-                completeLogin()
+
+                checkUserExists(user, loginForm.email, null, null, "email", passwordHash, null);
+
+                if (analytics) {
+                    logEvent(analytics, `email_login_success ${user.email}`)
+                }
             })
             .catch((e) => {
                 setError(e.message)
@@ -111,7 +132,7 @@ export default function LoginPage() {
             })
     };
 
-    const handleRegistration = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleEmailRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (registrationForm.password.length < 6) {
@@ -119,16 +140,28 @@ export default function LoginPage() {
             return
         }
 
+        if (auth.currentUser) {
+            router.push('/account');
+            return
+        }
+
         setError(null);
         setIsLoading(true);
+        const passwordHash = await bcrypt.hash(loginForm.password, 12);
 
         createUserWithEmailAndPassword(auth, registrationForm.email, registrationForm.password)
             .then((userCredential) => {
                 const user = userCredential.user
-                completeRegistration(user);
+
+                if (!user) {
+                    setError("Ошибка регистрации пользователь. Попробуйте позже");
+                    return
+                }
+
+                checkUserExists(user, registrationForm.email, registrationForm.name, null, "email", passwordHash, registrationForm.birthday);
 
                 if (analytics) {
-                    logEvent(analytics, `email_register_success ${user.email}`)
+                    logEvent(analytics, `email_register_success ${user.email}`);
                 }
             })
             .catch((e) => {
@@ -140,18 +173,21 @@ export default function LoginPage() {
             })
     };
 
-    const handleGoogleAuth = (userId: string | null, name: string | null, avatarUrl: string | null, error: string | null) => {
+    const handleGoogleAuth = (user: User | null, error: string | null) => {
         if (error) {
             setError(error);
             return;
         }
 
-        if (!userId) {
+        if (!user || !user.email) {
             setError("Пользователь не найден");
             return;
         }
 
-        handleSocialAuth(userId, name, avatarUrl)
+        setError(null);
+        setIsLoading(true);
+
+        checkUserExists(user, user.email, user.displayName, user.photoURL, "google", null, null)
     };
 
     const clearLoginForm = () => {
@@ -211,7 +247,7 @@ export default function LoginPage() {
 
                 {isLogin ?
                     <section className={styles.section} id="login" key="login">
-                        <form className={styles.form} id="login-form" onSubmit={handleLogin} autoComplete="on">
+                        <form className={styles.form} id="login-form" onSubmit={handleEmailLogin} autoComplete="on">
                             <input
                                 className={styles.input}
                                 type="email"
@@ -241,7 +277,7 @@ export default function LoginPage() {
                     </section>
                     :
                     <section className={styles.section} id="registration" key="registration">
-                        <form className={styles.form} id="registration-form" onSubmit={handleRegistration} autoComplete="on">
+                        <form className={styles.form} id="registration-form" onSubmit={handleEmailRegistration} autoComplete="on">
                             <input
                                 className={styles.input}
                                 type="text"
