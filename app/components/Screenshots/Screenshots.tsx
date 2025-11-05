@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './Screenshots.module.css';
 
 export default function Screenshots() {
@@ -31,7 +32,7 @@ export default function Screenshots() {
                 </div>
                 
                 <div className={styles.cta}>
-                    <a href="/account" className={styles.button}>Попробовать сейчас</a>
+                    <Link href="/account" className={styles.button}>Попробовать сейчас</Link>
                 </div>
             </div>
         </section>

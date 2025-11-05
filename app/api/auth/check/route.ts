@@ -1,5 +1,6 @@
 import { db } from "@/lib/firebase";
-import { addDoc, collection, doc, getDocs, query, Timestamp, where } from "firebase/firestore";
+import { randomUUID } from "crypto";
+import { collection, doc, getDocs, query, setDoc, Timestamp, where } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -13,20 +14,21 @@ export async function POST(req: NextRequest) {
     const q = query(collection(db, "users"), where("email", "==", email))
     const querySnapshot = await getDocs(q);
 
-    if (querySnapshot.size > 0) { //user registered
+    if (querySnapshot.size > 0) { //user in database
         return NextResponse.json({ userId: querySnapshot.docs[0].data()["id"] }, { status: 202 })
-    } else { //new user
+    } else { //user not in database
         const newUser = {
+            id: randomUUID().toString(),
             name: name ?? "",
             email,
             passwordHash,
             provider: provider ?? "not_provided",
             avatarUrl: avatarUrl ?? "avatar1",
-            birthday: birthday ?? Timestamp.fromDate(new Date()),
+            birthday,
             dateRegistered: Timestamp.fromDate(new Date()),
         };
 
-        const ref = await addDoc(collection(db, "users"), newUser);
-        return NextResponse.json({ userId: ref.id }, { status: 201 });
+        await setDoc(doc(db, "users", newUser.id), newUser);
+        return NextResponse.json({ userId: newUser.id }, { status: 201 });
     }
 }

@@ -1,16 +1,8 @@
 "use client";
-import { auth } from "@/lib/firebase";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { onAuthStateChanged } from "firebase/auth";
 import styles from "./layout.module.css";
-
-export type User = {
-    id: string,
-    email: string | null,
-    name: string | null,
-    lastName: string | null,
-}
+import { useAuth } from "../_providers/AuthProvider";
 
 export default function AccountLayout({
     children,
@@ -18,28 +10,11 @@ export default function AccountLayout({
     children: React.ReactNode;
 }>) {
     const router = useRouter();
-
-    const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<User | undefined>();
+    const { user, loading } = useAuth();
 
     useEffect(() => {
-        console.log("useEffect.Home.WithAuth")
-        onAuthStateChanged(auth, (user) => {
-            console.log("onAuthStateChanged")
-            if (user) {
-                setUser({
-                    id: user.uid,
-                    email: user.email,
-                    name: null,
-                    lastName: null,
-                })
-
-                setLoading(false);
-            } else {
-                router.push('/login');
-            }
-        })
-    }, [auth])
+        if (!loading && !user) router.replace("/login");
+    }, [loading, user, router])
 
     if (loading) {
         return (
@@ -57,9 +32,9 @@ export default function AccountLayout({
                 </div>
             </div>
         );
-    } else {
-        return (
-             children 
-        );
     }
+
+    return (
+        children
+    );
 }

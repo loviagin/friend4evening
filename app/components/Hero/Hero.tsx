@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './Hero.module.css';
 
 export default function HomeHero() {
@@ -11,12 +12,12 @@ export default function HomeHero() {
                     Быстро, безопасно и по интересам.
                 </p>
                 <div className={styles.ctaButtons}>
-                    <a href="/account" className={`${styles.button} ${styles.buttonPrimary}`}>
+                    <Link href="/account" className={`${styles.button} ${styles.buttonPrimary}`}>
                         Начать поиск
-                    </a>
-                    <a href="#how-it-works" className={`${styles.button} ${styles.buttonSecondary}`}>
+                    </Link>
+                    <Link href="#how-it-works" className={`${styles.button} ${styles.buttonSecondary}`}>
                         Узнать больше
-                    </a>
+                    </Link>
                 </div>
             </div>
         </section>

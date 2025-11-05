@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './HowItWorks.module.css';
 
 export default function HowItWorks() {
@@ -46,7 +47,7 @@ export default function HowItWorks() {
                 </div>
                 
                 <div className={styles.cta}>
-                    <a href="/account" className={styles.button}>Начать сейчас</a>
+                    <Link href="/account" className={styles.button}>Начать сейчас</Link>
                 </div>
             </div>
         </section>
