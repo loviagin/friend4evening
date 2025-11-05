@@ -1,7 +1,7 @@
 "use client";
 import { auth } from "@/lib/firebase";
 import { useState, useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -12,7 +12,6 @@ type User = {
 
 export default function Header() {
     const router = useRouter();
-    const pathname = usePathname();
     const [user, setUser] = useState<User | null>();
 
     useEffect(() => {
@@ -39,7 +38,7 @@ export default function Header() {
         <header className={styles.header}>
             <a href="/" className={styles.logo}><img className={styles.favicon} src={'icon.png'} /> Friend4Evening</a>
             <nav className={styles.nav}>
-                {(pathname.includes('account')) ?
+                {(user) ?
                     <>
                         <ul className={styles.navLinks}>
                             <li><a href="#how-it-works" className={styles.navLink}>Поиск</a></li>
