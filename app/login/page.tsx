@@ -200,7 +200,7 @@ export default function LoginPage() {
             <div className={styles.container}>
                 <h1 className={styles.title}>{isLogin ? "Вход" : "Регистрация"}</h1>
 
-                {!showMobileBanner &&
+                {showMobileBanner &&
                     <div className={styles.mobileBanner}>
                         <b>Добавьте иконку Friend4Evening на главный экран</b>
                         Для более быстрого доступа к Аккаунту: <br />
