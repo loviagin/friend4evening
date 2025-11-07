@@ -10,7 +10,7 @@ import bcrypt from "bcryptjs";
 import { registerLocale } from "react-datepicker";
 import { ru } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
-import "./datepicker-custom.css";
+import "@/components/datepicker-custom.css";
 import styles from "./page.module.css";
 import Link from "next/link";
 
@@ -61,7 +61,7 @@ export default function LoginPage() {
     const checkUserExists = async (user: User, email: string, name: string | null, avatarUrl: string | null, provider: string | null, passwordHash: string | null, birthday: Date | null) => {
         const resp = await fetch('/api/auth/check', {
             method: 'POST',
-            body: JSON.stringify({ email, name, avatarUrl, provider, passwordHash, birthday })
+            body: JSON.stringify({ id: user.uid, email, name, avatarUrl, provider, passwordHash, birthday })
         })
 
         const data = await resp.json();

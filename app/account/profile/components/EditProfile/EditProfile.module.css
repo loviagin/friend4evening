@@ -1,0 +1,332 @@
+/* Edit Profile Form Styles */
+.editForm {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.formLabelText {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.formInput {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 50px;
+  background: var(--background);
+  color: var(--foreground);
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(70, 108, 149, 0.1);
+}
+
+.formInput::placeholder {
+  color: rgba(70, 108, 149, 0.5);
+}
+
+.formInput:disabled {
+  background: rgba(70, 108, 149, 0.05);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.formTextarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  background: var(--background);
+  color: var(--foreground);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(70, 108, 149, 0.1);
+}
+
+.formTextarea::placeholder {
+  color: rgba(70, 108, 149, 0.5);
+}
+
+.nicknameInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.nicknamePrefix {
+  position: absolute;
+  left: 1.25rem;
+  color: rgba(70, 108, 149, 0.7);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.nicknameInput {
+  padding-left: 2rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.checkboxInput {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--blue);
+}
+
+.checkboxInput:checked {
+  accent-color: var(--blue);
+}
+
+.formFieldset {
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 0;
+}
+
+.formFieldset:focus-within {
+  border-color: var(--blue);
+}
+
+.formLegend {
+  padding: 0 0.75rem;
+  font-weight: 600;
+  color: var(--blue);
+  font-size: 1rem;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.locationInputs {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.locationInputs .formInput {
+  flex: 1;
+  min-width: 200px;
+}
+
+.avatarSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.avatarSection img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(70, 108, 149, 0.2);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.15);
+}
+
+.drinksInputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.drinksList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.drinkTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.1) 0%, rgba(93, 174, 139, 0.1) 100%);
+  border: 1px solid rgba(70, 108, 149, 0.2);
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.drinkTagButton {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  background: rgba(255, 118, 118, 0.2);
+  color: var(--red);
+  border: 1px solid rgba(255, 118, 118, 0.3);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drinkTagButton:hover {
+  background: rgba(255, 118, 118, 0.3);
+  border-color: var(--red);
+}
+
+.formActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(70, 108, 149, 0.1);
+}
+
+.button {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(70, 108, 149, 0.3);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.buttonSecondary {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: transparent;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.buttonSecondary:hover {
+  background: var(--blue);
+  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.3);
+}
+
+.buttonSecondary:active {
+  transform: translateY(0);
+}
+
+.datePicker {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 50px;
+  background: var(--background);
+  color: var(--foreground);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.datePicker:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(70, 108, 149, 0.1);
+}
+
+.datePickerWrapper {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .editForm {
+    gap: 1.5rem;
+  }
+
+  .formSection {
+    gap: 1.25rem;
+  }
+
+  .locationInputs {
+    flex-direction: column;
+  }
+
+  .locationInputs .formInput {
+    min-width: 100%;
+  }
+
+  .formActions {
+    flex-direction: column;
+  }
+
+  .formActions .button,
+  .formActions .buttonSecondary {
+    width: 100%;
+  }
+
+  .avatarSection {
+    align-items: center;
+  }
+
+  .avatarSection img {
+    width: 100px;
+    height: 100px;
+  }
+}
+

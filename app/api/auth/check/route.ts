@@ -1,24 +1,24 @@
 import { db } from "@/lib/firebase";
-import { randomUUID } from "crypto";
-import { collection, doc, getDocs, query, setDoc, Timestamp, where } from "firebase/firestore";
+import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-    const { email, name, avatarUrl, provider, passwordHash, birthday } = await req.json();
+    const { id, email, name, avatarUrl, provider, passwordHash, birthday } = await req.json();
 
     console.log("email", email);
-    if (!email) {
-        return NextResponse.json({ message: "Email is required" }, { status: 400 })
+    if (!email || !id) {
+        return NextResponse.json({ message: "Email & id is required" }, { status: 400 })
     }
 
-    const q = query(collection(db, "users"), where("email", "==", email))
-    const querySnapshot = await getDocs(q);
+    // const q = query(collection(db, "users"), where("email", "==", email))
+    // const querySnapshot = await getDocs(q);
+    const document = await getDoc(doc(db, "users", id));
 
-    if (querySnapshot.size > 0) { //user in database
-        return NextResponse.json({ userId: querySnapshot.docs[0].data()["id"] }, { status: 202 })
+    if (document.exists()) { //user in database
+        return NextResponse.json({ userId: document.data()["id"] }, { status: 202 })
     } else { //user not in database
         const newUser = {
-            id: randomUUID().toString(),
+            id,
             name: name ?? "",
             email,
             passwordHash,

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import Link from "next/link";
+import Avatar from "../Avatar/Avatar";
 
 export default function Header() {
     const router = useRouter();
@@ -35,7 +36,9 @@ export default function Header() {
                 }
                 <button onClick={handleAccountClick} className={styles.accountButton}>
                     {user?.photoURL ? (
-                        <img src={user.photoURL} alt={user.displayName || "User"} className={styles.avatar} />
+                        <div className={styles.avatar}>
+                            <Avatar avatarUrl={user.photoURL} />
+                        </div>
                     ) : (
                         <svg className={styles.userIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

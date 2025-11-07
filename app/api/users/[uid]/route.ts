@@ -14,5 +14,5 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
         return NextResponse.json({ message: "User not found" }, { status: 400 });
     }
 
-    return NextResponse.json(u);
+    return NextResponse.json(u.data());
 }
