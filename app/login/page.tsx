@@ -55,7 +55,7 @@ export default function LoginPage() {
         clearLoginForm();
         clearRegistrationForm();
         setIsLoading(false);
-        router.push('/account');
+        router.push('/account/profile?tab=edit');
     }
 
     const checkUserExists = async (user: User, email: string, name: string | null, avatarUrl: string | null, provider: string | null, passwordHash: string | null, birthday: Date | null) => {
