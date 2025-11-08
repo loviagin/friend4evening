@@ -97,6 +97,28 @@
   padding-left: 2rem;
 }
 
+.nicknameError {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, rgba(255, 118, 118, 0.1) 0%, rgba(255, 87, 87, 0.1) 100%);
+  border: 2px solid rgba(255, 118, 118, 0.3);
+  border-radius: 10px;
+  color: var(--red, #ff7676);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.nicknameError::before {
+  content: "⚠️";
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
 .checkboxLabel {
   display: flex;
   align-items: center;

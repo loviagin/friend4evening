@@ -1,4 +1,5 @@
 import { MeetTypeLabels, User } from "@/models/User"
+import styles from "./GeneralProfile.module.css"
 
 type Props = {
     user: User | null,
@@ -7,57 +8,70 @@ type Props = {
 export default function GeneralProfile({ user }: Props) {
 
     return (
-        <section>
-            {user?.bio && <p>{user?.bio}</p>}
+        <section className={styles.section}>
+            {user?.bio && <p className={styles.bio}>{user?.bio}</p>}
             {/* Location block */}
             {(user?.location && (user.location.city.length > 0 || user.location.country.length > 0)) &&
-                <div>
-                    <h2>🗺️ Локация</h2>
-                    <span>{user.location.country}</span>
-                    <span>{user.location.city}</span>
+                <div className={styles.infoBlock}>
+                    <h2 className={styles.infoBlockTitle}>🗺️ Локация</h2>
+                    <div className={styles.locationContent}>
+                        <div className={styles.locationText}>
+                            {user.location.country && <span className={styles.locationItem}>{user.location.country}</span>}
+                            {user.location.city && <span className={styles.locationItem}>{user.location.city}</span>}
+                        </div>
+                    </div>
                 </div>
             }
 
             {/* Drink preferences */}
             {((user?.drinkPreferences && user.drinkPreferences.length > 0) || (user?.noAlcohol && user.noAlcohol === true)) &&
-                <div>
-                    <h2>Предпочитаемые напитки</h2>
-                    {user.drinkPreferences && user.drinkPreferences.map((drink) => (
-                        <div key={drink}>
-                            🍹 {drink}
+                <div className={styles.infoBlock}>
+                    <h2 className={styles.infoBlockTitle}>Предпочитаемые напитки</h2>
+                    {user.drinkPreferences && user.drinkPreferences.length > 0 && (
+                        <div className={styles.drinksList}>
+                            {user.drinkPreferences.map((drink) => (
+                                <div key={drink} className={styles.drinkItem}>
+                                    🍹 {drink}
+                                </div>
+                            ))}
                         </div>
-                    ))
-                    }
+                    )}
 
                     {user.noAlcohol && user.noAlcohol === true &&
-                        <p>
-                            Без алкогольных напитки
-                        </p>
+                        <div className={styles.noAlcoholBadge}>
+                            🚫 Без алкогольных напитков
+                        </div>
                     }
                 </div>
             }
 
             {user?.noSmoking && user.noSmoking === true &&
-                <div>
-                    🚭 Не курю
+                <div className={styles.infoBlock}>
+                    <div className={styles.noSmokingBadge}>
+                        🚭 Не курю
+                    </div>
                 </div>
             }
 
             {/* Meet (in) Preferences block */}
             {user?.meetIn && user.meetIn.length > 0 &&
-                <div>
-                    <h2>Готов встретиться:</h2>
-                    {user.meetIn.map((place) => (
-                        <div key={place}>
-                            ✅ {MeetTypeLabels[place]}
-                        </div>
-                    ))}
+                <div className={styles.infoBlock}>
+                    <h2 className={styles.infoBlockTitle}>Готов встретиться:</h2>
+                    <div className={styles.meetInList}>
+                        {user.meetIn.map((place) => (
+                            <div key={place} className={styles.meetInItem}>
+                                ✅ {MeetTypeLabels[place]}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             }
 
             {user?.readyToTrip && user.readyToTrip === true &&
-                <div>
-                    ✅ Готов к поездке в другой город
+                <div className={styles.infoBlock}>
+                    <div className={styles.readyToTripBadge}>
+                        ✅ Готов к поездке в другой город
+                    </div>
                 </div>
             }
 

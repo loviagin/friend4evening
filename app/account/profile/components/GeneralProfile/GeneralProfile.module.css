@@ -1,0 +1,195 @@
+/* General Profile Styles */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Bio Section */
+.bio {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.05) 0%, rgba(93, 174, 139, 0.05) 100%);
+  border: 2px solid rgba(70, 108, 149, 0.1);
+  border-radius: 15px;
+  color: var(--foreground);
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* Info Block */
+.infoBlock {
+  padding: 1.5rem;
+  background: var(--background);
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.infoBlock:hover {
+  border-color: rgba(70, 108, 149, 0.3);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.1);
+}
+
+.infoBlockTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--blue);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Location Block */
+.locationContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.locationText {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.locationItem {
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.locationItem:not(:last-child)::after {
+  content: ",";
+  margin-left: 0.25rem;
+}
+
+/* Drinks Block */
+.drinksList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.drinkItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.1) 0%, rgba(93, 174, 139, 0.1) 100%);
+  border: 1px solid rgba(70, 108, 149, 0.2);
+  border-radius: 50px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.noAlcoholBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, rgba(93, 174, 139, 0.15) 0%, rgba(93, 174, 139, 0.1) 100%);
+  border: 2px solid rgba(93, 174, 139, 0.3);
+  border-radius: 10px;
+  color: var(--green, #5dae8b);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+/* No Smoking Badge */
+.noSmokingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, rgba(93, 174, 139, 0.15) 0%, rgba(93, 174, 139, 0.1) 100%);
+  border: 2px solid rgba(93, 174, 139, 0.3);
+  border-radius: 10px;
+  color: var(--green, #5dae8b);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+/* Meet In Block */
+.meetInList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.meetInItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(70, 108, 149, 0.05);
+  border-left: 3px solid var(--blue);
+  border-radius: 8px;
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.meetInItem:hover {
+  background: rgba(70, 108, 149, 0.1);
+  transform: translateX(5px);
+}
+
+/* Ready to Trip Badge */
+.readyToTripBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.15) 0%, rgba(93, 174, 139, 0.15) 100%);
+  border: 2px solid rgba(70, 108, 149, 0.3);
+  border-radius: 10px;
+  color: var(--blue);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .section {
+    gap: 1.5rem;
+  }
+
+  .bio {
+    padding: 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  .infoBlock {
+    padding: 1.25rem;
+  }
+
+  .infoBlockTitle {
+    font-size: 1.125rem;
+  }
+
+  .drinksList {
+    gap: 0.5rem;
+  }
+
+  .drinkItem {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .meetInList {
+    gap: 0.5rem;
+  }
+
+  .meetInItem {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9375rem;
+  }
+}
+

@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
             provider: provider ?? "not_provided",
             status,
             avatarUrl: avatarUrl ?? "avatar1",
-            birthday,
+            birthday: birthday ? Timestamp.fromDate(new Date(birthday)) : new Date(),
             dateRegistered: Timestamp.fromDate(new Date()),
         };
 
