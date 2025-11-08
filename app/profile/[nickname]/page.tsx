@@ -1,14 +1,15 @@
 
+import { collection, getDocs } from 'firebase/firestore';
 import UserProfilePage from './components/UserProfilePage/UserProfilePage';
+import { db } from '@/lib/firebase';
 
 export async function generateStaticParams() {
-    const base = process.env.NEXT_PUBLIC_URL!;
-    const response = await fetch(`${base}/api/users/nicknames`);
-    const data = await response.json();
-    const nicknames = data["nicknames"];
-    return (nicknames as string[])
-        .filter(n => typeof n === "string" && n.length > 0)
-        .map(nickname => ({ nickname }));
+    const snap = await getDocs(collection(db, "users"));
+    const nicknames = snap.docs
+        .map(d => d.data().nickname)
+        .filter((n): n is string => typeof n === "string" && n.length > 0);
+
+    return nicknames.map(nickname => ({ nickname }));
 }
 
 export default async function UserProfile({ params }: { params: Promise<{ nickname: string }> }) {
