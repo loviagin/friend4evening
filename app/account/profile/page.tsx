@@ -1,18 +1,24 @@
 "use client"
 import { auth } from '@/lib/firebase';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css'
 import { User } from '@/models/User';
 import GeneralProfile from './components/GeneralProfile/GeneralProfile';
 import EditProfile from './components/EditProfile/EditProfile';
 import SettingsProfile from './components/SettingsProfile/SettingsProfile';
 import Avatar from '@/components/Avatar/Avatar';
+import { useSearchParams } from 'next/navigation';
+import HeroProfile from './components/HeroProfile/HeroProfile';
 
 enum ProfileTab {
     general, edit, settings
 }
 
 export default function AccountProfile() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const cTab = searchParams.get('tab');
     const [user, setUser] = useState<User | null>(null);
     const [tab, setTab] = useState<ProfileTab>(ProfileTab.general);
 
@@ -26,6 +32,17 @@ export default function AccountProfile() {
         }
 
         fetchUser()
+        if (cTab) {
+            if (cTab === 'settings') {
+                setTab(ProfileTab.settings);
+            } else if (cTab === 'edit') {
+                setTab(ProfileTab.edit);
+            } else {
+                setTab(ProfileTab.general);
+            }
+
+            router.push('#profile-content');
+        }
     }, []);
 
     let content;
@@ -45,30 +62,7 @@ export default function AccountProfile() {
 
     return (
         <main className={styles.container}>
-            <h1 className={styles.title}>Профиль</h1>
-            <hr className={styles.divider} />
-            {/* hero */}
-            <section className={styles.hero}>
-                {/* left block */}
-                <div className={styles.avatarBlock}>
-                    <Avatar avatarUrl={user?.avatarUrl} />
-                </div>
-                {/* right block */}
-                <div className={styles.infoBlock}>
-                    <div className={styles.nameBlock}>
-                        <h3>{user?.name.length !== 0 ? user?.name : "Имя не задано"}</h3>
-                        {user?.status && <span className={styles.status}>{user?.status}</span>}
-                    </div>
-                    <h5 className={styles.nickname}>@{user?.nickname ? user?.nickname : "Никнейм не задан"}</h5>
-                    {/* Actions block */}
-                    <div className={styles.actionsBlock}>
-                        <button className={styles.button}>Предложить встречу</button>
-                        <button className={styles.button}>Написать сообщение</button>
-                        <button className={styles.buttonSecondary}>Заявка в друзья</button>
-                        <button className={styles.buttonSecondary}>Ссылка на профиль</button>
-                    </div>
-                </div>
-            </section>
+            <HeroProfile user={user} />
 
             <hr className={styles.divider} />
 
@@ -95,7 +89,7 @@ export default function AccountProfile() {
             </section>
 
             {/* navigation content */}
-            <section className={styles.content}>
+            <section className={styles.content} id='profile-content'>
                 { content }
             </section>
         </main>
