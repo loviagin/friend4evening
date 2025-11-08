@@ -17,12 +17,15 @@ export async function POST(req: NextRequest) {
     if (document.exists()) { //user in database
         return NextResponse.json({ userId: document.data()["id"] }, { status: 202 })
     } else { //user not in database
+        const status: Record<string, Date> = { "online": new Date() }
+
         const newUser = {
             id,
             name: name ?? "",
             email,
             passwordHash,
             provider: provider ?? "not_provided",
+            status,
             avatarUrl: avatarUrl ?? "avatar1",
             birthday,
             dateRegistered: Timestamp.fromDate(new Date()),

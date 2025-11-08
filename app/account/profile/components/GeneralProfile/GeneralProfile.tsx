@@ -1,4 +1,4 @@
-import { User } from "@/models/User"
+import { MeetTypeLabels, User } from "@/models/User"
 
 type Props = {
     user: User | null,
@@ -13,7 +13,6 @@ export default function GeneralProfile({ user }: Props) {
             {(user?.location && (user.location.city.length > 0 || user.location.country.length > 0)) &&
                 <div>
                     <h2>🗺️ Локация</h2>
-                    <br />
                     <span>{user.location.country}</span>
                     <span>{user.location.city}</span>
                 </div>
@@ -38,10 +37,36 @@ export default function GeneralProfile({ user }: Props) {
                 </div>
             }
 
+            {user?.noSmoking && user.noSmoking === true &&
+                <div>
+                    🚭 Не курю
+                </div>
+            }
+
             {/* Meet (in) Preferences block */}
+            {user?.meetIn && user.meetIn.length > 0 &&
+                <div>
+                    <h2>Готов встретиться:</h2>
+                    {user.meetIn.map((place) => (
+                        <div key={place}>
+                            ✅ {MeetTypeLabels[place]}
+                        </div>
+                    ))}
+                </div>
+            }
+
+            {user?.readyToTrip && user.readyToTrip === true &&
+                <div>
+                    ✅ Готов к поездке в другой город
+                </div>
+            }
+
             {/* Statistic block */}
+
             {/* Reviews block */}
+
             {/* Additional actions block (жалоба, блокировка/разблокировка, ) */}
+            
         </section>
     )
 }

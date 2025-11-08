@@ -38,6 +38,8 @@ export default function EditProfile({ user }: Props) {
     const auth = useAuth();
 
     const [drinks, setDrinks] = useState("");
+    const [nicknameError, setNicknameError] = useState(false);
+    const [nicknames, setNicknames] = useState<string[]>([]);
     const [form, setForm] = useState<EditForm>({
         avatarUrl: user?.avatarUrl,
         name: user.name,
@@ -62,9 +64,46 @@ export default function EditProfile({ user }: Props) {
             return
         }
 
-        setLoading(true);
-        console.log(form);
-        sendForm();
+        if (nicknameError === true) {
+            alert("Никнейм занят. Пожалуйста укажите другой")
+            return
+        }
+
+        checkNickname(form.nickname, () => {
+            if (nicknameError === false) {
+                setLoading(true);
+                console.log(form);
+                sendForm();
+            } else {
+                return
+            }
+        })
+    }
+
+    const handleNicknameChange = async (value: string) => {
+        checkNickname(value, () => { console.log("User nickname checked") });
+
+        setForm({ ...form, nickname: value })
+    }
+
+    const checkNickname = async (value: string, completion: () => void) => {
+        if (value !== user.nickname) {
+            if (nicknames.length === 0) {
+                const response = await fetch('/api/users/nicknames')
+                const data = await response.json();
+                setNicknames(data["nicknames"]);
+            }
+
+            if (nicknames.includes(value)) {
+                setNicknameError(true);
+            } else {
+                setNicknameError(false);
+            }
+        } else {
+            setNicknameError(false);
+        }
+
+        completion();
     }
 
     const sendForm = async () => {
@@ -168,7 +207,7 @@ export default function EditProfile({ user }: Props) {
     }
 
     return (
-        <section>
+        <section id="edit-form">
             <div className={styles.avatarSection}>
                 <span className={styles.formLabelText}>Аватар профиля</span>
                 <Avatar avatarUrl={user.avatarUrl} />
@@ -202,10 +241,16 @@ export default function EditProfile({ user }: Props) {
                                 placeholder="Придумайте никнейм (например beautifulBoy)"
                                 value={form.nickname}
                                 required
-                                onChange={(e) => setForm({ ...form, nickname: e.target.value.trim() })}
+                                onChange={(e) => handleNicknameChange(e.target.value.trim())}
                                 className={`${styles.formInput} ${styles.nicknameInput}`}
                             />
                         </div>
+
+                        {nicknameError === true &&
+                            <p>
+                                Данный никнейм уже занят. Выберите другой
+                            </p>
+                        }
                     </label>
 
                     <label className={styles.formLabel}>
@@ -345,8 +390,9 @@ export default function EditProfile({ user }: Props) {
                                                 type="button"
                                                 className={styles.drinkTagButton}
                                                 onClick={() => handleDelete(drink)}
+                                                aria-label="Удалить напиток"
                                             >
-                                                ×
+                                                <span className={styles.drinkTagButtonIcon}>×</span>
                                             </button>
                                         </div>
                                     ))}
@@ -354,6 +400,12 @@ export default function EditProfile({ user }: Props) {
                             )}
                         </div>
                     </label>
+
+                    {form.noAlcohol !== true && (
+                        <div className={styles.warningBlock}>
+                            Употребление алкоголя в больших количествах может привезти к фатальным последствиям
+                        </div>
+                    )}
 
                     <label className={styles.checkboxLabel}>
                         <input
@@ -366,6 +418,12 @@ export default function EditProfile({ user }: Props) {
                         />
                         <span>Не употребляю алкоголь</span>
                     </label>
+
+                    {form.noSmoking !== true && (
+                        <div className={styles.warningBlock}>
+                            Курение (парение) вредит Вашему здоровью
+                        </div>
+                    )}
 
                     <label className={styles.checkboxLabel}>
                         <input
