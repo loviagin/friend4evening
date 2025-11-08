@@ -16,7 +16,7 @@ export default function AccountLayout({
         if (!loading && !user) router.replace("/login");
     }, [loading, user, router])
 
-    if (loading) {
+    if (loading && loading === true) {
         return (
             <div className={styles.loader}>
                 <div className={styles.container}>
