@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { MeetType, MeetTypeLabels, User, UserLocation } from "@/models/User"
 import Avatar from "@/components/Avatar/Avatar"
@@ -55,6 +55,10 @@ export default function EditProfile({ user }: Props) {
         noSmoking: user.noSmoking ?? false,
     })
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        console.log(user.birthday)
+    }, [])
 
     const handleEditSave = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -248,7 +252,7 @@ export default function EditProfile({ user }: Props) {
                         </div>
 
                         {nicknameError === true &&
-                            <p>
+                            <p className={styles.nicknameError}>
                                 Данный никнейм уже занят. Выберите другой
                             </p>
                         }
@@ -268,7 +272,7 @@ export default function EditProfile({ user }: Props) {
 
                     <label className={styles.formLabel}>
                         <span className={styles.formLabelText}>Дата Рождения</span>
-                        <DatePicker
+                         <DatePicker
                             id="birthday"
                             placeholderText="Дата рождения"
                             selected={form.birthday}
@@ -284,7 +288,7 @@ export default function EditProfile({ user }: Props) {
                             scrollableYearDropdown
                             minDate={new Date(1900, 0, 1)}
                             maxDate={new Date(new Date().getFullYear() - 18, 11, 31)}
-                        />
+                        /> 
                     </label>
 
                     <label className={styles.checkboxLabel}>

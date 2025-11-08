@@ -7,7 +7,6 @@ import { User } from '@/models/User';
 import GeneralProfile from './components/GeneralProfile/GeneralProfile';
 import EditProfile from './components/EditProfile/EditProfile';
 import SettingsProfile from './components/SettingsProfile/SettingsProfile';
-import Avatar from '@/components/Avatar/Avatar';
 import { useSearchParams } from 'next/navigation';
 import HeroProfile from './components/HeroProfile/HeroProfile';
 
