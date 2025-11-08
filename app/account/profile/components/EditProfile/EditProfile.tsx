@@ -124,6 +124,7 @@ export default function EditProfile({ user }: Props) {
                 photoURL: form.avatarUrl
             })
             window.location.reload();
+            router.push('/account/profile')
         } else {
             alert("Серверная проблема")
         }
