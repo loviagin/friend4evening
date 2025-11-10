@@ -7,7 +7,7 @@ export default function Footer() {
             <div className={styles.container}>
                 <div className={styles.content}>
                     <div className={styles.column}>
-                        <h3 className={styles.logo}>Friend4Evening</h3>
+                        <h3 className={styles.logo}>Friends4Evening</h3>
                         <p className={styles.description}>
                             Сервис знакомств для тех, кто хочет провести вечер в хорошей компании.
                         </p>
@@ -37,7 +37,7 @@ export default function Footer() {
                     <div className={styles.column}>
                         <h4 className={styles.columnTitle}>Контакты</h4>
                         <ul className={styles.links}>
-                            <li><Link href="mailto:friend4evening@lovigin.com">Поддержка</Link></li>
+                            <li><Link href="mailto:Friends4Evening@lovigin.com">Поддержка</Link></li>
                             <li><Link href="/agreement">Пользовательское соглашение</Link></li>
                             <li><Link href="/privacy">Политика конфиденциальности</Link></li>
                             <li><Link href="/rules">Правила поведения пользователей</Link></li>
@@ -47,7 +47,7 @@ export default function Footer() {
                 
                 <div className={styles.bottom}>
                     <p className={styles.copyright}>
-                        © {new Date().getFullYear()} Friend4Evening. Все права защищены.
+                        © {new Date().getFullYear()} Friends4Evening. Все права защищены.
                     </p>
                 </div>
             </div>

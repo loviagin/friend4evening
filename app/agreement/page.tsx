@@ -12,7 +12,7 @@ export default function Agreement() {
 
                 <div className={styles.intro}>
                     <p>
-                        Настоящее Пользовательское соглашение (далее — «Соглашение») регулирует отношения между владельцем сайта friend4evening.online (далее — «Администрация») и пользователем сайта, мобильного приложения или иных сервисов проекта Friend4Evening (далее — «Пользователь»).
+                        Настоящее Пользовательское соглашение (далее — «Соглашение») регулирует отношения между владельцем сайта Friends4Evening.online (далее — «Администрация») и пользователем сайта, мобильного приложения или иных сервисов проекта Friends4Evening (далее — «Пользователь»).
                     </p>
                     <p>
                         Используя сайт или приложение, Пользователь подтверждает, что ознакомился с данным Соглашением, понимает его условия и безоговорочно принимает их.
@@ -23,7 +23,7 @@ export default function Agreement() {
                     <h2 className={styles.sectionTitle}>1. Общие положения</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            <strong>1.1.</strong> Friend4Evening — это онлайн-платформа для знакомств и общения между совершеннолетними пользователями, предназначенная для поиска компании на вечер, совместного отдыха или общения по интересам.
+                            <strong>1.1.</strong> Friends4Evening — это онлайн-платформа для знакомств и общения между совершеннолетними пользователями, предназначенная для поиска компании на вечер, совместного отдыха или общения по интересам.
                         </p>
                         <p className={styles.paragraph}>
                             <strong>1.2.</strong> Сервис не является организатором встреч, не оказывает услуг по продаже, доставке или продвижению алкогольной продукции и не несёт ответственности за действия пользователей вне платформы.
@@ -135,7 +135,7 @@ export default function Agreement() {
                             <strong>7.1.</strong> Администрация вправе изменять настоящее Соглашение в одностороннем порядке.
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>7.2.</strong> Новая редакция вступает в силу с момента публикации на сайте friend4evening.
+                            <strong>7.2.</strong> Новая редакция вступает в силу с момента публикации на сайте Friends4Evening.
                         </p>
                         <p className={styles.paragraph}>
                             <strong>7.3.</strong> Продолжение использования сервиса после изменения условий означает согласие Пользователя с новой редакцией.
@@ -161,10 +161,10 @@ export default function Agreement() {
                 <div className={styles.contacts}>
                     <h3 className={styles.contactsTitle}>Контакты для связи</h3>
                     <p className={styles.contact}>
-                        Email: <Link href="mailto:friend4evening@lovigin.com" className={styles.link}>friend4evening@lovigin.com</Link>
+                        Email: <Link href="mailto:Friends4Evening@lovigin.com" className={styles.link}>Friends4Evening@lovigin.com</Link>
                     </p>
                     <p className={styles.copyright}>
-                        © 2025 Friend4Evening — Все права защищены. 18+
+                        © 2025 Friends4Evening — Все права защищены. 18+
                     </p>
                 </div>
             </div>

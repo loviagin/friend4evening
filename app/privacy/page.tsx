@@ -12,7 +12,7 @@ export default function Privacy() {
 
                 <div className={styles.intro}>
                     <p>
-                        Настоящая Политика конфиденциальности (далее — «Политика») регулирует порядок обработки и защиты персональных данных пользователей сайта friend4evening, мобильного приложения и связанных сервисов (далее — «Сервис»), принадлежащих Администрации проекта Friend4Evening (далее — «Администрация»).
+                        Настоящая Политика конфиденциальности (далее — «Политика») регулирует порядок обработки и защиты персональных данных пользователей сайта Friends4Evening, мобильного приложения и связанных сервисов (далее — «Сервис»), принадлежащих Администрации проекта Friends4Evening (далее — «Администрация»).
                     </p>
                     <p>
                         Используя Сервис, Пользователь выражает согласие с условиями данной Политики.
@@ -121,7 +121,7 @@ export default function Privacy() {
                             <li>требовать прекращения рассылок.</li>
                         </ul>
                         <p className={styles.paragraph}>
-                            <strong>6.2.</strong> Для реализации этих прав Пользователь может направить обращение на электронную почту friend4evening@lovigin.com.
+                            <strong>6.2.</strong> Для реализации этих прав Пользователь может направить обращение на электронную почту Friends4Evening@lovigin.com.
                         </p>
                     </div>
                 </section>
@@ -145,7 +145,7 @@ export default function Privacy() {
                             <strong>8.1.</strong> Администрация вправе изменять настоящую Политику в одностороннем порядке.
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>8.2.</strong> Новая редакция вступает в силу с момента публикации на сайте friend4evening.
+                            <strong>8.2.</strong> Новая редакция вступает в силу с момента публикации на сайте Friends4Evening.
                         </p>
                         <p className={styles.paragraph}>
                             <strong>8.3.</strong> Продолжение использования Сервиса после изменения Политики означает согласие Пользователя с её новой редакцией.
@@ -157,14 +157,14 @@ export default function Privacy() {
                     <h2 className={styles.sectionTitle}>9. Контактная информация</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            По всем вопросам, связанным с обработкой персональных данных, Пользователь может обратиться по адресу: <Link href="mailto:friend4evening@lovigin.com" className={styles.link}>friend4evening@lovigin.com</Link>
+                            По всем вопросам, связанным с обработкой персональных данных, Пользователь может обратиться по адресу: <Link href="mailto:Friends4Evening@lovigin.com" className={styles.link}>Friends4Evening@lovigin.com</Link>
                         </p>
                     </div>
                 </section>
 
                 <div className={styles.contacts}>
                     <p className={styles.copyright}>
-                        © 2025 Friend4Evening — Все права защищены.<br />
+                        © 2025 Friends4Evening — Все права защищены.<br />
                         Возрастное ограничение: 18+
                     </p>
                 </div>

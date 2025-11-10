@@ -2,6 +2,7 @@
 import { collection, getDocs } from 'firebase/firestore';
 import UserProfilePage from './components/UserProfilePage/UserProfilePage';
 import { db } from '@/lib/firebase';
+import styles from './page.module.css';
 
 export async function generateStaticParams() {
     const snap = await getDocs(collection(db, "users"));
@@ -17,16 +18,14 @@ export default async function UserProfile({ params }: { params: Promise<{ nickna
 
     if (!nickname) {
         return (
-            <main>
+            <main className={styles.container}>
                 Пользователь не найден
             </main>
         )
     }
 
     return (
-        <main>
-            <h1>Профиль</h1>
-            <hr />
+        <main className={styles.container}>
             <UserProfilePage nickname={nickname} />
         </main>
     )

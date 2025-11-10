@@ -228,7 +228,7 @@ export default function LoginPage() {
 
                 {showMobileBanner &&
                     <div className={styles.mobileBanner}>
-                        <b>Добавьте иконку Friend4Evening на главный экран</b>
+                        <b>Добавьте иконку Friends4Evening на главный экран</b>
                         Для более быстрого доступа к Аккаунту: <br />
                         1. Нажмите поделиться или откройте меню доп действий <br />
                         2. Нажмите Добавить на главный экран

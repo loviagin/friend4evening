@@ -13,7 +13,12 @@ export default function AccountLayout({
     const { user, loading } = useAuth();
 
     useEffect(() => {
-        if (!loading && !user) router.replace("/login");
+        if (!loading && !user) {
+            router.replace("/login");
+        }
+        if (user) {
+            router.replace("/account/profile");
+        }
     }, [loading, user, router])
 
     if ((loading && loading === true) || user === null || user === undefined) {

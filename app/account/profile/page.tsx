@@ -53,7 +53,7 @@ export default function AccountProfile() {
             content = user ? <EditProfile user={user}/> : <>Загрузка...</>
             break;
         case ProfileTab.settings:
-            content = <SettingsProfile user={user} />
+            content = <SettingsProfile />
             break;
         default:
             break;

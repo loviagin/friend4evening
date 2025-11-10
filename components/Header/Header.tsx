@@ -10,12 +10,12 @@ export default function Header() {
     const { user } = useAuth();
 
     const handleAccountClick = () => {
-        router.push('/account')
+        router.push('/account/profile')
     }
 
     return (
         <header className={styles.header}>
-            <Link href="/" className={styles.logo}><img className={styles.favicon} src={'/icon.png'} /> Friend4Evening</Link>
+            <Link href="/" className={styles.logo}><img className={styles.favicon} src={'/icon.png'} /> Friends4Evening</Link>
             <nav className={styles.nav}>
                 {(user) ?
                     <>

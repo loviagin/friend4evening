@@ -5,7 +5,7 @@ export default function HomeHero() {
     return (
         <section className={styles.hero} id="hero">
             <div className={styles.content}>
-                <h1 className={styles.title}>Friend4Evening</h1>
+                <h1 className={styles.title}>Friends4Evening</h1>
                 <p className={styles.subtitle}>Найди компанию для вечера</p>
                 <p className={styles.description}>
                     Сервис знакомств для тех, кто хочет провести вечер в хорошей компании. 
