@@ -156,6 +156,68 @@
   font-weight: 600;
 }
 
+/* Reviews Block */
+.reviewsBlock {
+  padding: 1.5rem;
+  background: var(--background);
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.reviewsBlock:hover {
+  border-color: rgba(70, 108, 149, 0.3);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.1);
+}
+
+.averageRating {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.1) 0%, rgba(93, 174, 139, 0.1) 100%);
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.averageStars {
+  display: flex;
+  gap: 0.25rem;
+  font-size: 1.25rem;
+}
+
+.averageValue {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.averageValue b {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.reviewsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.emptyReviews {
+  padding: 2rem;
+  text-align: center;
+  color: var(--foreground);
+  opacity: 0.6;
+  font-size: 1rem;
+  font-style: italic;
+  background: rgba(70, 108, 149, 0.05);
+  border-radius: 10px;
+}
+
 @media (max-width: 768px) {
   .section {
     gap: 1.5rem;
@@ -189,6 +251,39 @@
 
   .meetInItem {
     padding: 0.625rem 0.875rem;
+    font-size: 0.9375rem;
+  }
+
+  .reviewsBlock {
+    padding: 1.25rem;
+  }
+
+  .averageRating {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.875rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .averageStars {
+    font-size: 1.125rem;
+  }
+
+  .averageValue {
+    font-size: 0.9375rem;
+  }
+
+  .averageValue b {
+    font-size: 1.125rem;
+  }
+
+  .reviewsList {
+    gap: 0.875rem;
+  }
+
+  .emptyReviews {
+    padding: 1.5rem;
     font-size: 0.9375rem;
   }
 }

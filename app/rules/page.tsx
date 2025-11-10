@@ -12,7 +12,7 @@ export default function Rules() {
 
                 <div className={styles.intro}>
                     <p>
-                        Настоящие Правила поведения (далее — «Правила») устанавливают нормы общения и использования сервиса Friend4Evening (далее — «Сервис»). Цель Правил — обеспечить безопасное, уважительное и комфортное общение между пользователями.
+                        Настоящие Правила поведения (далее — «Правила») устанавливают нормы общения и использования сервиса Friends4Evening (далее — «Сервис»). Цель Правил — обеспечить безопасное, уважительное и комфортное общение между пользователями.
                     </p>
                 </div>
 
@@ -23,7 +23,7 @@ export default function Rules() {
                             <strong>1.1.</strong> Сервис предназначен исключительно для совершеннолетних пользователей (18+).
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>1.2.</strong> Friend4Evening — это платформа для знакомств, общения и поиска компании на вечер.
+                            <strong>1.2.</strong> Friends4Evening — это платформа для знакомств, общения и поиска компании на вечер.
                         </p>
                         <p className={styles.paragraph}>
                             <strong>1.3.</strong> Пользуясь Сервисом, вы соглашаетесь соблюдать настоящие Правила, Пользовательское соглашение и Политику конфиденциальности.
@@ -120,7 +120,7 @@ export default function Rules() {
                             <strong>7.1.</strong> Администрация вправе вносить изменения в настоящие Правила без предварительного уведомления.
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>7.2.</strong> Новая версия вступает в силу с момента публикации на сайте friend4evening.
+                            <strong>7.2.</strong> Новая версия вступает в силу с момента публикации на сайте Friends4Evening.
                         </p>
                     </div>
                 </section>
@@ -129,14 +129,14 @@ export default function Rules() {
                     <h2 className={styles.sectionTitle}>8. Контакты</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            По вопросам, связанным с использованием Сервиса или нарушением Правил, обращайтесь по адресу: <Link href="mailto:friend4evening@lovigin.com" className={styles.link}>friend4evening@lovigin.com</Link>
+                            По вопросам, связанным с использованием Сервиса или нарушением Правил, обращайтесь по адресу: <Link href="mailto:Friends4Evening@lovigin.com" className={styles.link}>Friends4Evening@lovigin.com</Link>
                         </p>
                     </div>
                 </section>
 
                 <div className={styles.contacts}>
                     <p className={styles.copyright}>
-                        © 2025 Friend4Evening — Все права защищены.<br />
+                        © 2025 Friends4Evening — Все права защищены.<br />
                         Возрастное ограничение: 18+
                     </p>
                 </div>
