@@ -81,7 +81,10 @@ export default function AdminProfile() {
                             ) : (
                                 <>{user.name || "Имя не указано"}</>
                             )}
-
+                            {user?.tags && user.tags.includes("verified") && (
+                                <img src={'/verified.webp'} className={styles.verifiedBadge} alt="Verified" />
+                            )}
+                            
                             {user.tags && user.tags.includes("admin") && (
                                 <span className={styles.adminBadge}>👑 Admin</span>
                             )}
