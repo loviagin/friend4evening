@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
             avatarUrl: avatarUrl ?? "avatar1",
             birthday: birthday ? Timestamp.fromDate(new Date(birthday)) : new Date(),
             dateRegistered: Timestamp.fromDate(new Date()),
+            tags: ["user"],
         };
 
         await setDoc(doc(db, "users", newUser.id), newUser);

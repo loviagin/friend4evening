@@ -10,9 +10,10 @@ import SettingsProfile from './components/SettingsProfile/SettingsProfile';
 import { useSearchParams } from 'next/navigation';
 import HeroProfile from './components/HeroProfile/HeroProfile';
 import BlockedProfile from './components/BlockedProfile/BlockedProfile';
+import AdminProfile from './components/AdminProfile/AdminProfile';
 
 enum ProfileTab {
-    general, edit, settings
+    general, edit, settings, admin
 }
 
 export default function AccountProfile() {
@@ -37,6 +38,8 @@ export default function AccountProfile() {
                 setTab(ProfileTab.settings);
             } else if (cTab === 'edit') {
                 setTab(ProfileTab.edit);
+            } else if (cTab == 'admin') {
+                setTab(ProfileTab.admin);
             } else {
                 setTab(ProfileTab.general);
             }
@@ -51,10 +54,13 @@ export default function AccountProfile() {
             content = <GeneralProfile user={user} />
             break;
         case ProfileTab.edit:
-            content = user ? <EditProfile user={user}/> : <>Загрузка...</>
+            content = user ? <EditProfile user={user} /> : <>Загрузка...</>
             break;
         case ProfileTab.settings:
             content = <SettingsProfile />
+            break;
+        case ProfileTab.admin:
+            content = <AdminProfile />
             break;
         default:
             break;
@@ -76,20 +82,28 @@ export default function AccountProfile() {
 
             {/* navigation */}
             <section className={styles.navigation}>
-                <button 
-                    className={`${styles.navButton} ${tab === ProfileTab.general ? styles.navButtonActive : ''}`} 
+                <button
+                    className={`${styles.navButton} ${tab === ProfileTab.general ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(ProfileTab.general)}
                 >
                     Основное
                 </button>
-                <button 
-                    className={`${styles.navButton} ${tab === ProfileTab.edit ? styles.navButtonActive : ''}`} 
+                {user?.tags && user.tags.includes("admin") && (
+                    <button
+                        className={`${styles.navButton} ${tab === ProfileTab.admin ? styles.navButtonActive : ''}`}
+                        onClick={() => setTab(ProfileTab.admin)}
+                    >
+                        👨‍💻 Админ панель
+                    </button>
+                )}
+                <button
+                    className={`${styles.navButton} ${tab === ProfileTab.edit ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(ProfileTab.edit)}
                 >
                     Редактировать Профиль
                 </button>
-                <button 
-                    className={`${styles.navButton} ${tab === ProfileTab.settings ? styles.navButtonActive : ''}`} 
+                <button
+                    className={`${styles.navButton} ${tab === ProfileTab.settings ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(ProfileTab.settings)}
                 >
                     Настройки
@@ -98,7 +112,7 @@ export default function AccountProfile() {
 
             {/* navigation content */}
             <section className={styles.content} id='profile-content'>
-                { content }
+                {content}
             </section>
         </main>
     );

@@ -8,7 +8,7 @@ import styles from './page.module.css'
 export default function FriendsPage() {
     const auth = useAuth();
     const [user, setUser] = useState<User | null>(null);
-    const [friends, setFriends] = useState<Set<User>>(new Set());
+    const [friends, setFriends] = useState<User[]>([]);
 
     useEffect(() => {
         const fetchUser = async (id: string) => {
@@ -20,7 +20,7 @@ export default function FriendsPage() {
                 setUser(u)
 
                 if (u?.friends && u.friends.length !== 0) {
-                    setFriends(new Set())
+                    setFriends([])
                     fetchFriends(u.friends)
                 }
             }
@@ -28,14 +28,16 @@ export default function FriendsPage() {
 
         const fetchFriends = (ids: string[]) => {
             console.log(ids)
-            
-            const fs: User[] = []
+
             ids.forEach(async (i) => {
                 const r = await fetch(`/api/users/${i}`)
                 const d = await r.json()
 
                 if (r.status === 200) {
-                    fs.push(d as User)
+                    const user1 = d as User
+                    if (!friends.includes(user1)) {
+                        setFriends((prev) => ([...prev, user1]))
+                    }
                 }
             });
         }
@@ -47,12 +49,12 @@ export default function FriendsPage() {
 
     return (
         <main className={styles.container}>
-            {/* {friends.ma((friend) => (
+            {friends.map((friend) => (
                 <div key={friend.id}>
                     {friend.name}
                 </div>
             ))}
-            {friends.length} */}
+            {friends.length}
         </main>
     )
 }

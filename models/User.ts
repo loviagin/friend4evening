@@ -21,7 +21,7 @@ export type User = {
     tag: string | null,
     blockedUsers: string[] | null,
     blocked: string | null,
-
+    tags: string[],
 }
 
 export enum MeetType {

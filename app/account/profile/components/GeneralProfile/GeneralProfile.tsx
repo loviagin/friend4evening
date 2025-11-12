@@ -251,14 +251,18 @@ export default function GeneralProfile({ user }: Props) {
             {/* Additional actions block (жалоба, блокировка/разблокировка, ) */}
             {(user?.id !== auth.user?.uid && user) && (
                 <div className={styles.actionsBlock}>
-                    {blockedUsers.includes(user.id) ? (
-                        <button className={styles.buttonUnblock} onClick={handleUnblock}>
-                            🔓 Разблокировать
-                        </button>
-                    ) : (
-                        <button className={styles.buttonBlock} onClick={handleBlock}>
-                            🚫 Заблокировать
-                        </button>
+                    {blockedUsers && auth.user && (
+                        <>
+                            {blockedUsers.includes(user.id) ? (
+                                <button className={styles.buttonUnblock} onClick={handleUnblock}>
+                                    🔓 Разблокировать
+                                </button>
+                            ) : (
+                                <button className={styles.buttonBlock} onClick={handleBlock}>
+                                    🚫 Заблокировать
+                                </button>
+                            )}
+                        </>
                     )}
                 </div>
             )}
