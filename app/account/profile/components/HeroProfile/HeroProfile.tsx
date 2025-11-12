@@ -69,6 +69,9 @@ export default function HeroProfile({ user }: HeroProps) {
                 <div className={styles.infoBlock}>
                     <div className={styles.nameBlock}>
                         <h3>{user?.name.length !== 0 ? user?.name : "Имя не задано"}</h3>
+                        {user?.tags && user.tags.includes("verified") && (
+                            <img src={'/verified.webp'} className={styles.verifiedBadge} alt="Verified" />
+                        )}
                         {user?.tag && <span className={styles.tag}>{user?.tag}</span>}
                     </div>
                     <h5 className={styles.nickname}>@{user?.nickname ? user?.nickname : "Никнейм не задан"}{userAge()}</h5>
@@ -85,7 +88,7 @@ export default function HeroProfile({ user }: HeroProps) {
                                 )}
                             </>
                         }
-                        
+
                         {user?.nickname && (
                             <ShareProfile userNickname={user?.nickname} />
                         )}
