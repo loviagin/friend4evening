@@ -4,6 +4,7 @@ import GeneralProfile from "@/app/account/profile/components/GeneralProfile/Gene
 import { User } from "@/models/User";
 import { useEffect, useState } from "react";
 import HeroProfile from "@/app/account/profile/components/HeroProfile/HeroProfile";
+import BlockedProfile from "@/app/account/profile/components/BlockedProfile/BlockedProfile";
 
 type Props = {
     nickname: string
@@ -24,6 +25,12 @@ export default function UserProfilePage({ nickname }: Props) {
             fetchUserByNickname()
         }
     }, [nickname])
+
+    if (user?.blocked && user.blocked !== undefined) {
+        return (
+            <BlockedProfile />
+        )
+    }
 
     return (
         <>

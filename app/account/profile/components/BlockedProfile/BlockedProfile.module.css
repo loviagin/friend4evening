@@ -1,0 +1,135 @@
+/* Blocked Profile Styles */
+.section {
+  display: flex;
+  margin: 6rem 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 4rem;
+}
+
+.blockedContainer {
+  max-width: 700px;
+  width: 100%;
+  padding: 3rem 2rem;
+  background: var(--background);
+  border: 3px solid var(--red);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(255, 118, 118, 0.2);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.blockedContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--red) 0%, rgba(255, 118, 118, 0.5) 100%);
+}
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.message {
+  font-size: 1.125rem;
+  color: var(--foreground);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.message a {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid var(--blue);
+  transition: all 0.3s ease;
+}
+
+.message a:hover {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+
+.warningBox {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 118, 118, 0.1) 0%, rgba(255, 118, 118, 0.05) 100%);
+  border-left: 4px solid var(--red);
+  border-radius: 10px;
+  text-align: left;
+}
+
+.warningText {
+  font-size: 0.9375rem;
+  color: var(--red);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 1.5rem;
+    min-height: 50vh;
+  }
+
+  .blockedContainer {
+    padding: 2rem 1.5rem;
+    border-width: 2px;
+  }
+
+  .icon {
+    font-size: 3rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .message {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .warningBox {
+    padding: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .warningText {
+    font-size: 0.875rem;
+  }
+}
+
