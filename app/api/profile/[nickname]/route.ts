@@ -15,6 +15,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ nick
     let user = docs.docs[0].data();
     const date = user["birthday"] as Timestamp;
     user["birthday"] = date.toDate();
+    const r = user["dateRegistered"] as Timestamp
+    user["dateRegistered"] = r.toDate();
 
     if (docs.docs.length === 1) {
         return NextResponse.json({ user }, { status: 200 });

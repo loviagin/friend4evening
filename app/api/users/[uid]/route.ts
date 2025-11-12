@@ -17,6 +17,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
     const b = data["birthday"] as Timestamp
     data["birthday"] = b.toDate();
     console.log(data["birthday"]);
+    const r = data["dateRegistered"] as Timestamp
+    data["dateRegistered"] = r.toDate();
 
     if (!u.exists) {
         return NextResponse.json({ message: "User not found" }, { status: 400 });

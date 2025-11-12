@@ -9,6 +9,7 @@ import EditProfile from './components/EditProfile/EditProfile';
 import SettingsProfile from './components/SettingsProfile/SettingsProfile';
 import { useSearchParams } from 'next/navigation';
 import HeroProfile from './components/HeroProfile/HeroProfile';
+import BlockedProfile from './components/BlockedProfile/BlockedProfile';
 
 enum ProfileTab {
     general, edit, settings
@@ -57,6 +58,14 @@ export default function AccountProfile() {
             break;
         default:
             break;
+    }
+
+    if (user && (user.blocked !== undefined)) {
+        return (
+            <>
+                <BlockedProfile />
+            </>
+        )
     }
 
     return (

@@ -156,6 +156,132 @@
   font-weight: 600;
 }
 
+/* Statistics Block */
+.statisticsBlock {
+  padding: 1.5rem;
+  background: var(--background);
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.statisticsBlock:hover {
+  border-color: rgba(70, 108, 149, 0.3);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.1);
+}
+
+.statisticsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.statisticItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.1) 0%, rgba(93, 174, 139, 0.1) 100%);
+  border: 1px solid rgba(70, 108, 149, 0.2);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.statisticItem:hover {
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.15) 0%, rgba(93, 174, 139, 0.15) 100%);
+  border-color: rgba(70, 108, 149, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.15);
+}
+
+.statisticNumber {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.statisticLabel {
+  font-size: 0.9375rem;
+  color: var(--foreground);
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Actions Block */
+.actionsBlock {
+  padding: 1.5rem;
+  background: var(--background);
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.actionsBlock:hover {
+  border-color: rgba(70, 108, 149, 0.3);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.1);
+}
+
+.buttonBlock {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: transparent;
+  color: var(--red);
+  border: 2px solid var(--red);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.buttonBlock:hover {
+  background: var(--red);
+  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 118, 118, 0.3);
+}
+
+.buttonBlock:active {
+  transform: translateY(0);
+}
+
+.buttonUnblock {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.buttonUnblock:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(70, 108, 149, 0.3);
+}
+
+.buttonUnblock:active {
+  transform: translateY(0);
+}
+
 /* Reviews Block */
 .reviewsBlock {
   padding: 1.5rem;
@@ -285,6 +411,40 @@
   .emptyReviews {
     padding: 1.5rem;
     font-size: 0.9375rem;
+  }
+
+  .statisticsBlock {
+    padding: 1.25rem;
+  }
+
+  .statisticsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .statisticItem {
+    padding: 1.25rem 0.875rem;
+  }
+
+  .statisticNumber {
+    font-size: 2rem;
+  }
+
+  .statisticLabel {
+    font-size: 0.875rem;
+  }
+
+  .actionsBlock {
+    padding: 1.25rem;
+    gap: 0.75rem;
+  }
+
+  .buttonBlock,
+  .buttonUnblock {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    width: 100%;
+    justify-content: center;
   }
 }
 

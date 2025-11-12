@@ -1,7 +1,7 @@
 export type Application = {
     id: string,
     userId: string,
-    members: [ApplicationMember],
+    members: ApplicationMember[],
     blocked: string | null,
 }
 

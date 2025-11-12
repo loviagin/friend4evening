@@ -1,0 +1,214 @@
+/* Email Template Styles - All Classes */
+
+.emailBody {
+  font-family: 'Nunito', Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+  color: #000000;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.emailHeader {
+  background: linear-gradient(135deg, #466C95 0%, #5DAE8B 100%);
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #ffffff !important;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.favicon {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #466C95;
+  margin: 2rem 2rem 1rem;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.titleLink {
+  color: #466C95;
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 2px solid #5DAE8B;
+}
+
+.divider {
+  border: none;
+  border-top: 2px solid rgba(70, 108, 149, 0.2);
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.paragraph {
+  font-size: 1.125rem;
+  color: #000000;
+  margin: 1.5rem 2rem;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.warning {
+  font-size: 0.9375rem;
+  color: #FF7676;
+  margin: 1.5rem 2rem;
+  text-align: center;
+  font-weight: 600;
+  font-style: italic;
+  padding: 1rem;
+  background: rgba(255, 118, 118, 0.1);
+  border-left: 3px solid #FF7676;
+  border-radius: 8px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.emailFooter {
+  background-color: #ffffff;
+  padding: 2rem;
+  text-align: center;
+  border-top: 2px solid rgba(70, 108, 149, 0.1);
+  margin-top: 3rem;
+  font-size: 0.875rem;
+  color: #000000;
+  opacity: 0.7;
+}
+
+.footerLink {
+  display: block;
+  margin-top: 0.5rem;
+  color: #466C95;
+  text-decoration: none;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  max-width: 500px;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0 2rem;
+}
+
+.buttonAccept,
+.buttonDecline {
+  display: inline-block;
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 50px;
+  text-align: center;
+  transition: all 0.3s ease;
+  min-width: 150px;
+  flex: 0 0 auto;
+}
+
+.buttonAccept {
+  background: linear-gradient(135deg, #466C95 0%, #5DAE8B 100%);
+  color: #ffffff !important;
+  border: none;
+}
+
+.buttonDecline {
+  background: #ffffff;
+  color: #FF7676 !important;
+  border: 2px solid #FF7676;
+}
+
+.buttonAccept:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.3);
+}
+
+.buttonDecline:hover {
+  background: #FF7676;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 118, 118, 0.3);
+}
+
+.infoText {
+  font-size: 0.9375rem;
+  color: #000000;
+  margin: 1.5rem 2rem;
+  text-align: center;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 600px) {
+  .emailHeader {
+    padding: 1.5rem 1rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin: 1.5rem 1rem 1rem;
+  }
+
+  .paragraph {
+    font-size: 1rem;
+    margin: 1.25rem 1rem;
+  }
+
+  .warning {
+    font-size: 0.875rem;
+    margin: 1.25rem 1rem;
+    padding: 0.875rem;
+  }
+
+  .emailFooter {
+    padding: 1.5rem 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .buttonsContainer {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.5rem 1rem;
+  }
+
+  .buttonAccept,
+  .buttonDecline {
+    width: 100%;
+    min-width: auto;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .infoText {
+    font-size: 0.875rem;
+    margin: 1.25rem 1rem;
+  }
+}

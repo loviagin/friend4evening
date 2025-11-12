@@ -16,10 +16,7 @@ export default function AccountLayout({
         if (!loading && !user) {
             router.replace("/login");
         }
-        if (user) {
-            router.replace("/account/profile");
-        }
-    }, [loading, user, router])
+    }, [loading, user, router]);
 
     if ((loading && loading === true) || user === null || user === undefined) {
         return (

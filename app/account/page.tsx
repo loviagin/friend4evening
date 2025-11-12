@@ -1,11 +1,19 @@
-import { Metadata } from "next";
+"use client"
 
-export const metadata: Metadata = {
-    title: "Кабинет Friends4Evening – найти друга на вечер",
-    description: "Удобный поиск и фильтр по нужным параметрам, чаты и многое другое на Friends4Evening. 18+",
-}
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../_providers/AuthProvider";
 
 export default function Account() {
+    const auth = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (auth.user) {
+            router.replace("/account/profile");
+        }
+    }, [router]);
+
     return (
         <main>
         </main>

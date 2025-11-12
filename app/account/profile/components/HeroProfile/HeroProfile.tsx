@@ -3,6 +3,7 @@ import Avatar from '@/components/Avatar/Avatar';
 import styles from './HeroProfile.module.css';
 import { User } from '@/models/User';
 import { useAuth } from '@/app/_providers/AuthProvider';
+import ShareProfile from './components/ShareProfile/ShareProfile';
 
 type HeroProps = {
     user: User | null,
@@ -38,6 +39,22 @@ export default function HeroProfile({ user }: HeroProps) {
         }
     };
 
+    const handleFriendAppend = async () => {
+        if (!user || !auth.user) return
+        const response = await fetch(`/api/users/${auth.user.uid}/friend`, {
+            method: "POST",
+            body: JSON.stringify({ userId: user.id })
+        })
+        const data = await response.json();
+        if (response.status === 409) {
+            alert("Заявка уже отправлена. Дождитесь ответа")
+        } else if (response.status === 200) {
+            alert("Заявка успешно отправлена")
+        } else {
+            alert("Ошибка отправки заявки в друзья")
+        }
+    }
+
     return (
         <section>
             <h1 className={styles.title}>Профиль</h1>
@@ -57,14 +74,21 @@ export default function HeroProfile({ user }: HeroProps) {
                     <h5 className={styles.nickname}>@{user?.nickname ? user?.nickname : "Никнейм не задан"}{userAge()}</h5>
                     {/* Actions block */}
                     <div className={styles.actionsBlock}>
-                        {auth.user?.uid !== user?.id &&
+                        {auth.user && user && auth.user?.uid !== user?.id &&
                             <>
                                 <button className={styles.button}>Предложить встречу</button>
                                 <button className={styles.button}>Написать сообщение</button>
-                                <button className={styles.buttonSecondary}>Заявка в друзья</button>
+                                {user.friends && user.friends.includes(auth.user?.uid) ? (
+                                    <button className={styles.buttonSecondary}>Вы друзья</button>
+                                ) : (
+                                    <button className={styles.buttonSecondary} onClick={handleFriendAppend}>Заявка в друзья</button>
+                                )}
                             </>
                         }
-                        <button className={styles.buttonSecondary}>Поделиться профилем</button>
+                        
+                        {user?.nickname && (
+                            <ShareProfile userNickname={user?.nickname} />
+                        )}
                     </div>
                 </div>
             </section>
