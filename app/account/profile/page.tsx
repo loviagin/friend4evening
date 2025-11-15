@@ -66,7 +66,7 @@ export default function AccountProfile() {
             break;
     }
 
-    if (user && (user.blocked !== undefined)) {
+    if (user?.blocked && user.blocked !== undefined) {
         return (
             <>
                 <BlockedProfile />

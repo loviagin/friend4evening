@@ -32,6 +32,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 70px;
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

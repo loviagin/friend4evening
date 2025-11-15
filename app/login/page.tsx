@@ -34,6 +34,7 @@ export default function LoginPage() {
     const [loginForm, setLoginForm] = useState<LoginForm>({ email: "", password: "" });
     const [registrationForm, setRegistrationForm] = useState<RegisterForm>({ name: "", birthday: null, email: "", password: "" });
     const [isLogin, setIsLogin] = useState(true);
+    const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -47,38 +48,48 @@ export default function LoginPage() {
                 setShowMobileBanner(false);
             }
         }
-
+        console.log(user)
         fetchDeviceType()
     }, [])
 
-    const completeLogin = () => {
+    const completeLogin = (isRegistering: boolean) => {
         clearLoginForm();
         clearRegistrationForm();
         setIsLoading(false);
-        router.push('/account/profile?tab=edit');
+        router.push(`/account/${isRegistering ? 'profile?tab=edit' : 'search'}`);
     }
 
     const checkUserExists = async (user: User, email: string, name: string | null, avatarUrl: string | null, provider: string | null, passwordHash: string | null, birthday: Date | null) => {
+        setIsLoading(true);
         const resp = await fetch('/api/auth/check', {
             method: 'POST',
-            body: JSON.stringify({ id: user.uid, email, name, avatarUrl, provider, passwordHash, birthday })
+            body: JSON.stringify({ id: user.uid, email })
         })
 
         const data = await resp.json();
-        console.log(data['userId']);
 
         if (resp.status === 202) { // user exists
-            completeLogin();
-        } else if (resp.status === 201) { // new user
-            updateProfile(user, {
-                displayName: registrationForm.name ?? user.displayName,
-                photoURL: user.photoURL
-            }).then(() => {
-                completeLogin();
-            }).catch((e) => {
-                setError(e.message);
+            completeLogin(false);
+        } else if (resp.status === 404) { // new user
+            if (!name || !birthday) { // show complete registration
                 setIsLoading(false);
-            })
+            } else {
+                const resp = await fetch('/api/users/register', {
+                    method: 'POST',
+                    body: JSON.stringify({ id: user.uid, email, name, avatarUrl, provider, passwordHash, birthday })
+                })
+                const data = await resp.json();
+
+                updateProfile(user, {
+                    displayName: registrationForm.name ?? user.displayName,
+                    photoURL: user.photoURL
+                }).then(() => {
+                    completeLogin(true);
+                }).catch((e) => {
+                    setError(e.message);
+                    setIsLoading(false);
+                })
+            }
         } else {
             setError(`Ошибка ${data['message']}`);
             setIsLoading(false);
@@ -176,7 +187,9 @@ export default function LoginPage() {
 
         setError(null);
         setIsLoading(true);
-
+        setUser(user);
+        setIsLogin(false);
+        setRegistrationForm((prev) => ({ ...prev, name: user.displayName ?? "", email: user.email ?? "" }))
         checkUserExists(user, user.email, user.displayName, user.photoURL, "google", null, null)
     };
 
@@ -291,6 +304,7 @@ export default function LoginPage() {
                                 dateFormat="dd.MM.yyyy"
                                 locale="ru"
                                 showYearDropdown
+                                required
                                 showMonthDropdown
                                 dropdownMode="select"
                                 yearDropdownItemNumber={100}
@@ -307,38 +321,49 @@ export default function LoginPage() {
                                 required
                                 placeholder="Ваш email"
                                 autoComplete="section-register email"
+                                disabled={user !== null && user !== undefined}
                                 value={registrationForm.email}
                                 onChange={(event) => setRegistrationForm({ ...registrationForm, email: event.target.value })}
                             />
 
-                            <input
-                                className={styles.input}
-                                type="password"
-                                id="register-password"
-                                name="password"
-                                required
-                                placeholder="Придумайте пароль"
-                                autoComplete="section-register new-password"
-                                value={registrationForm.password}
-                                onChange={(event) => setRegistrationForm({ ...registrationForm, password: event.target.value })}
-                            />
+                            {user === null && (
+                                <input
+                                    className={styles.input}
+                                    type="password"
+                                    id="register-password"
+                                    name="password"
+                                    required
+                                    placeholder="Придумайте пароль"
+                                    autoComplete="section-register new-password"
+                                    value={registrationForm.password}
+                                    onChange={(event) => setRegistrationForm({ ...registrationForm, password: event.target.value })}
+                                />
+                            )}
 
-                            <button className={styles.submitButton} type="submit">Зарегистрироваться</button>
+                            {user !== null && user !== undefined ? (
+                                <button className={styles.submitButton} onClick={() => checkUserExists(user!, registrationForm.email, registrationForm.name, user!.photoURL, "google", null, registrationForm.birthday)} type="button">Продолжить</button>
+                            ) : (
+                                <button className={styles.submitButton} type="submit">Зарегистрироваться</button>
+                            )}
                         </form>
                     </section>
                 }
 
                 {error !== null && (<div className={styles.error}>Ошибка: {error}</div>)}
 
-                <hr className={styles.divider} />
+                {user === null && (
+                    <>
+                        <hr className={styles.divider} />
 
-                <button className={styles.switchButton} onClick={switchAuthMode}>{isLogin ? "Зарегистрироваться через email" : "Войти по email"}</button>
+                        <button className={styles.switchButton} onClick={switchAuthMode}>{isLogin ? "Зарегистрироваться через email" : "Войти по email"}</button>
 
-                <section className={styles.socialLogin} id="social-login">
-                    <GoogleLogin onComplete={handleGoogleAuth} />
-                    {/* <YandexLogin /> */}
-                    {/* <PhoneLogin /> */}
-                </section>
+                        <section className={styles.socialLogin} id="social-login">
+                            <GoogleLogin onComplete={handleGoogleAuth} />
+                            {/* <YandexLogin /> */}
+                            {/* <PhoneLogin /> */}
+                        </section>
+                    </>
+                )}
 
                 <p className={styles.agreementText}>
                     Регистрируясь и используя сервис, вы подтверждаете, что вам исполнилось 18 лет и вы соглашаетесь с{" "}
