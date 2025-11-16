@@ -1,0 +1,69 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.mainButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--background);
+  border: 1px solid var(--blue);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--blue);
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.mainButton:hover {
+  background: var(--blue);
+  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.3);
+}
+
+.mainButton:active {
+  transform: translateY(0);
+}
+
+.arrow {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  transition: transform 0.3s ease;
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: var(--background);
+  border: 1px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  padding: 0.5rem 0;
+  box-shadow: 0 10px 30px rgba(70, 108, 149, 0.15);
+  z-index: 999;
+  overflow: hidden;
+}
+
+.item {
+  padding: 0.625rem 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  transition: all 0.3s ease;
+}
+
+.item:hover {
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.1) 0%, rgba(93, 174, 139, 0.1) 100%);
+  color: var(--blue);
+}
+
+.item:active {
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.15) 0%, rgba(93, 174, 139, 0.15) 100%);
+}

@@ -253,7 +253,7 @@ export default function GeneralProfile({ user }: Props) {
                 <div className={styles.actionsBlock}>
                     {blockedUsers && auth.user && (
                         <>
-                            {blockedUsers.includes(user.id) ? (
+                            {(blockedUsers ?? []).includes(user.id) ? (
                                 <button className={styles.buttonUnblock} onClick={handleUnblock}>
                                     🔓 Разблокировать
                                 </button>

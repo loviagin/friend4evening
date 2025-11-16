@@ -4,7 +4,7 @@ import styles from './HeroProfile.module.css';
 import { User } from '@/models/User';
 import { useAuth } from '@/app/_providers/AuthProvider';
 import ShareProfile from './components/ShareProfile/ShareProfile';
-import Link from 'next/link';
+import Dropdown from '@/components/Dropdown/Dropdown';
 
 type HeroProps = {
     user: User | null,
@@ -56,6 +56,25 @@ export default function HeroProfile({ user }: HeroProps) {
         }
     }
 
+    const handleTagChange = async (tag: string) => {
+        const resp = await fetch(`/api/users/${user?.id}/tags`, {
+            method: "POST",
+            body: JSON.stringify({ tag })
+        })
+        const data = await resp.json()
+
+        if (resp.status === 200) {
+            window.location.reload();
+        }
+    }
+
+    const tags = [
+        { key: "READY", label: "Готов к встрече" },
+        { key: "CURRENT", label: "На встрече" },
+        { key: "BUSY", label: "Занят" },
+        { key: "INTENSIVE_SEARCH", label: "В активном поиске" }
+    ];
+
     return (
         <section>
             <h1 className={styles.title}>Профиль</h1>
@@ -73,7 +92,18 @@ export default function HeroProfile({ user }: HeroProps) {
                         {user?.tags && user.tags.includes("verified") && (
                             <img src={'/verified.webp'} className={styles.verifiedBadge} alt="Verified" />
                         )}
-                        {user?.tag && <span className={styles.tag}>{user?.tag}</span>}
+                        {user && auth.user && user.id === auth.user.uid ? (
+                            <Dropdown
+                                source={tags}
+                                current={user.tag ?? "Установить статус"}
+                                onChange={handleTagChange}
+                            />
+                        ) : (
+                            <>
+                                {user?.tag && <span className={styles.tag}>{tags.find(s => s.key === user.tag)?.label}</span>}
+                            </>
+                        )}
+
                     </div>
                     <div className={styles.nicknameBlock}>
                         <h5 className={styles.nickname}>@{user?.nickname ? user?.nickname : "Никнейм не задан"}{userAge()}</h5>
