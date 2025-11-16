@@ -3,7 +3,7 @@ export type User = {
     name: string,
     provider: string,
     email: string | null,
-    nickname: string | null,
+    nickname: string,
     passwordHash: string | null,
     avatarUrl: string,
     birthday: Date | null,
