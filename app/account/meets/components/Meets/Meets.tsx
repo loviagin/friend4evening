@@ -5,6 +5,7 @@ import Dropdown from "@/components/Dropdown/Dropdown";
 import { tags, User } from "@/models/User";
 import { useEffect, useState } from "react";
 import styles from "./Meets.module.css";
+import Link from "next/link";
 
 const ages: { key: string, label: string }[] = [
     { key: "none", label: "Не важно" },
@@ -17,45 +18,45 @@ const ages: { key: string, label: string }[] = [
 ]
 
 function sortUsersByAgeRange(users: User[], range: string): User[] {
-  if (range === "none") return [...users];
+    if (range === "none") return [...users];
 
-  const [minStr, maxStr] = range.split("-");
-  const min = Number(minStr);
-  const max = maxStr ? Number(maxStr) : Infinity; // для "60" → 60+
+    const [minStr, maxStr] = range.split("-");
+    const min = Number(minStr);
+    const max = maxStr ? Number(maxStr) : Infinity; // для "60" → 60+
 
-  const calcAge = (birthday: Date | string | null | undefined) => {
-    if (!birthday) return Infinity; // у кого нет даты – в конец списка
+    const calcAge = (birthday: Date | string | null | undefined) => {
+        if (!birthday) return Infinity; // у кого нет даты – в конец списка
 
-    const d = new Date(birthday);
-    if (isNaN(d.getTime())) return Infinity;
+        const d = new Date(birthday);
+        if (isNaN(d.getTime())) return Infinity;
 
-    const today = new Date();
-    let age = today.getFullYear() - d.getFullYear();
-    const m = today.getMonth() - d.getMonth();
+        const today = new Date();
+        let age = today.getFullYear() - d.getFullYear();
+        const m = today.getMonth() - d.getMonth();
 
-    if (m < 0 || (m === 0 && today.getDate() < d.getDate())) {
-      age--;
-    }
-    return age;
-  };
+        if (m < 0 || (m === 0 && today.getDate() < d.getDate())) {
+            age--;
+        }
+        return age;
+    };
 
-  // Не мутируем исходный массив
-  const copy = [...users];
+    // Не мутируем исходный массив
+    const copy = [...users];
 
-  return copy.sort((a, b) => {
-    const ageA = calcAge(a.birthday);
-    const ageB = calcAge(b.birthday);
+    return copy.sort((a, b) => {
+        const ageA = calcAge(a.birthday);
+        const ageB = calcAge(b.birthday);
 
-    const inRangeA = ageA >= min && ageA <= max;
-    const inRangeB = ageB >= min && ageB <= max;
+        const inRangeA = ageA >= min && ageA <= max;
+        const inRangeB = ageB >= min && ageB <= max;
 
-    // 1. Сначала те, кто в диапазоне
-    if (inRangeA && !inRangeB) return -1;
-    if (!inRangeA && inRangeB) return 1;
+        // 1. Сначала те, кто в диапазоне
+        if (inRangeA && !inRangeB) return -1;
+        if (!inRangeA && inRangeB) return 1;
 
-    // 2. Внутри групп сортируем по возрасту (моложе → старше)
-    return ageA - ageB;
-  });
+        // 2. Внутри групп сортируем по возрасту (моложе → старше)
+        return ageA - ageB;
+    });
 }
 
 export default function Meets() {
@@ -136,33 +137,35 @@ export default function Meets() {
                 ) : (
                     sortedUsers.map((user) => (
                         <div key={user.id} className={styles.userCard}>
-                            <div className={styles.userHeader}>
-                                <div className={styles.userAvatarWrapper}>
-                                    <Avatar avatarUrl={user.avatarUrl} />
-                                    {user.tag && (
-                                        <span className={styles.userTag}>{tags.find(s => s.key === user.tag)?.label}</span>
-                                    )}
-                                </div>
-                                <div className={styles.userInfo}>
-                                    <div className={styles.userName}>
-                                        {user.name}
-                                        {userAge(user)}
+                            <Link href={`/profile/${user.nickname}`} target="_blank">
+                                <div className={styles.userHeader}>
+                                    <div className={styles.userAvatarWrapper}>
+                                        <Avatar avatarUrl={user.avatarUrl} />
+                                        {user.tag && (
+                                            <span className={styles.userTag}>{tags.find(s => s.key === user.tag)?.label}</span>
+                                        )}
                                     </div>
-                                    {user.location?.city && (
-                                        <div className={styles.userLocation}>
-                                            🌆 {user.location.city}
+                                    <div className={styles.userInfo}>
+                                        <div className={styles.userName}>
+                                            {user.name}
+                                            {userAge(user)}
                                         </div>
-                                    )}
-                                    <div className={styles.userNickname}>
-                                        @{user.nickname}
+                                        {user.location?.city && (
+                                            <div className={styles.userLocation}>
+                                                🌆 {user.location.city}
+                                            </div>
+                                        )}
+                                        <div className={styles.userNickname}>
+                                            @{user.nickname}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            {user.bio && (
-                                <p className={styles.userBio}>
-                                    {user.bio.length > 100 ? `${user.bio.substring(0, 100)}...` : user.bio}
-                                </p>
-                            )}
+                                {user.bio && (
+                                    <p className={styles.userBio}>
+                                        {user.bio.length > 100 ? `${user.bio.substring(0, 100)}...` : user.bio}
+                                    </p>
+                                )}
+                            </Link>
                         </div>
                     ))
                 )}
