@@ -62,11 +62,27 @@
   font-weight: 500;
   transition: color 0.3s ease;
   opacity: 0.8;
+  position: relative;
 }
 
 .navLink:hover {
   color: var(--blue);
   opacity: 1;
+}
+
+.navLink.active {
+  opacity: 1;
+}
+
+.navLink.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  border-radius: 2px;
 }
 
 .accountButton {

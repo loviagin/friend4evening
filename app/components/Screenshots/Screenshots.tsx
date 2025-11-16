@@ -11,7 +11,7 @@ export default function Screenshots() {
                 <div className={styles.screenshotsGrid}>
                     <div className={styles.screenshot}>
                         <div className={styles.placeholder}>
-                            <span className={styles.placeholderText}>Скриншот профиля</span>
+                            <img src={'/screenshot1.webp'} alt="Профиль пользователя"/>
                         </div>
                         <p className={styles.caption}>Профиль пользователя</p>
                     </div>

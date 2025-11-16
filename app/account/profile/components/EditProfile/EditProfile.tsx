@@ -43,7 +43,7 @@ export default function EditProfile({ user }: Props) {
     const [form, setForm] = useState<EditForm>({
         avatarUrl: user?.avatarUrl,
         name: user.name,
-        nickname: user.nickname ?? "",
+        nickname: user.nickname,
         birthday: user.birthday ?? new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
         showBirthday: user.showBirthday ?? false,
         bio: user.bio ?? "",
@@ -140,7 +140,7 @@ export default function EditProfile({ user }: Props) {
         setForm({
             avatarUrl: user?.avatarUrl,
             name: user.name,
-            nickname: user.nickname ?? "",
+            nickname: user.nickname,
             birthday: user.birthday ?? new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
             showBirthday: user.showBirthday ?? false,
             bio: user.bio ?? "",

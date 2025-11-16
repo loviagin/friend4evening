@@ -6,7 +6,7 @@ export type User = {
     nickname: string,
     passwordHash: string | null,
     avatarUrl: string,
-    birthday: Date | null,
+    birthday: Date,
     showBirthday: boolean | null,
     dateRegistered: Date,
     location: UserLocation | null,
@@ -48,3 +48,10 @@ export type UserLocation = {
     country: string,
     city: string,
 }
+
+export const tags = [
+    { key: "READY", label: "Готов к встрече" },
+    { key: "CURRENT", label: "На встрече" },
+    { key: "BUSY", label: "Занят" },
+    { key: "INTENSIVE_SEARCH", label: "В активном поиске" }
+];

@@ -1,7 +1,7 @@
 "use client"
 import Avatar from '@/components/Avatar/Avatar';
 import styles from './HeroProfile.module.css';
-import { User } from '@/models/User';
+import { tags, User } from '@/models/User';
 import { useAuth } from '@/app/_providers/AuthProvider';
 import ShareProfile from './components/ShareProfile/ShareProfile';
 import Dropdown from '@/components/Dropdown/Dropdown';
@@ -68,13 +68,6 @@ export default function HeroProfile({ user }: HeroProps) {
         }
     }
 
-    const tags = [
-        { key: "READY", label: "Готов к встрече" },
-        { key: "CURRENT", label: "На встрече" },
-        { key: "BUSY", label: "Занят" },
-        { key: "INTENSIVE_SEARCH", label: "В активном поиске" }
-    ];
-
     return (
         <section>
             <h1 className={styles.title}>Профиль</h1>
@@ -107,11 +100,11 @@ export default function HeroProfile({ user }: HeroProps) {
                     </div>
                     <div className={styles.nicknameBlock}>
                         <h5 className={styles.nickname}>@{user?.nickname ? user?.nickname : "Никнейм не задан"}{userAge()}</h5>
-                        {!user?.nickname && auth.user?.uid === user?.id && (
+                        {/* {!user?.nickname && auth.user?.uid === user?.id && (
                             <a href={'/account/profile?tab=edit#nickname'} className={styles.setNicknameLink}>
                                 Задать никнейм
                             </a>
-                        )}
+                        )} */}
                     </div>
                     {/* Actions block */}
                     <div className={styles.actionsBlock}>

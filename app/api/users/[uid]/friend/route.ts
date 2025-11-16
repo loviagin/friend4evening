@@ -39,7 +39,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uid
             senderName: u.name, 
             senderId: uid, 
             userId, 
-            senderNickname: u.nickname ?? "" 
+            senderNickname: u.nickname
         });
         
         // Dynamic import to avoid Next.js build issues

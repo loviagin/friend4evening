@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import styles from "./Header.module.css";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import Link from "next/link";
@@ -7,6 +7,7 @@ import Avatar from "../Avatar/Avatar";
 
 export default function Header() {
     const router = useRouter();
+    const pathname = usePathname();
     const { user } = useAuth();
 
     const handleAccountClick = () => {
@@ -20,9 +21,9 @@ export default function Header() {
                 {(user) ?
                     <>
                         <ul className={styles.navLinks}>
-                            <li><Link href="/account/meets" className={styles.navLink}>Встречи</Link></li>
-                            <li><Link href="/account/messages" className={styles.navLink}>Сообщения</Link></li>
-                            <li><Link href="/account/profile" className={styles.navLink}>Профиль</Link></li>
+                            <li><Link href="/account/meets" className={`${styles.navLink} ${pathname === '/account/meets' ? styles.active : ''}`}>Встречи</Link></li>
+                            <li><Link href="/account/messages" className={`${styles.navLink} ${pathname === '/account/messages' ? styles.active : ''}`}>Сообщения</Link></li>
+                            <li><Link href="/account/profile" className={`${styles.navLink} ${pathname === '/account/profile' || pathname?.startsWith('/account/profile/') ? styles.active : ''}`}>Профиль</Link></li>
                         </ul>
                     </>
                     :

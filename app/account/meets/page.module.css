@@ -1,3 +1,103 @@
 .container {
-    padding: 80px;
+  min-height: calc(100vh - 80px);
+  padding: calc(80px + 2rem) 2rem 5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.container h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.tabButton {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: transparent;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.tabButton:hover {
+  background: var(--blue);
+  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.3);
+}
+
+.tabButton:active {
+  transform: translateY(0);
+}
+
+.tabButtonActive {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+  border-color: transparent;
+}
+
+.tabButtonActive:hover {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  opacity: 0.9;
+}
+
+.content {
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: calc(80px + 1rem) 1rem 3rem;
+  }
+
+  .container h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tabs {
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+
+  .tabButton {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: calc(80px + 0.75rem) 0.75rem 2rem;
+  }
+
+  .container h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tabs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tabButton {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+  }
 }

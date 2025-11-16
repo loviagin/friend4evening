@@ -26,3 +26,53 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: "Not found" }, { status: 404 })
     }
 }
+
+export async function GET() {
+    const documents = await getDocs(collection(db, "users"));
+
+    if (!documents) {
+        return NextResponse.json({ message: "Documents not found" }, { status: 400 });
+    }
+
+    const users = documents.docs.map((u) => {
+        const user = u.data()
+
+        if (user.blocked != null) {      // <- обратное условие, != ловит и null, и undefined
+            console.log("SKIP blocked", user.id);
+            return null;
+        }
+
+        const b = user["birthday"] as Timestamp
+        user["birthday"] = b.toDate();
+        console.log(user["birthday"]);
+        const r = user["dateRegistered"] as Timestamp
+        user["dateRegistered"] = r.toDate();
+
+        return user;
+    })
+        .filter((u): u is typeof u & {} => u !== null)
+        .sort((a, b) => {
+            // 1. Сортировка по наличию city
+            const hasCityA = Boolean(a.location?.city);
+            const hasCityB = Boolean(b.location?.city);
+
+            if (hasCityA && !hasCityB) return -1;
+            if (!hasCityA && hasCityB) return 1;
+
+            // 2. Сортировка по bio: сначала непустые
+            const hasBioA = Boolean(a.bio && a.bio.trim().length > 0);
+            const hasBioB = Boolean(b.bio && b.bio.trim().length > 0);
+
+            if (hasBioA && !hasBioB) return -1;
+            if (!hasBioA && hasBioB) return 1;
+
+            // 3. Альфавитная сортировка по bio (если обе есть)
+            if (hasBioA && hasBioB) {
+                return a.bio!.localeCompare(b.bio!);
+            }
+
+            return 0;
+        });
+
+    return NextResponse.json({ users: users }, { status: 200 });
+}

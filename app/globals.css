@@ -49,6 +49,10 @@ a {
   text-decoration: none;
 }
 
+button {
+  color: blue;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
