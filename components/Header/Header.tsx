@@ -20,7 +20,7 @@ export default function Header() {
                 {(user) ?
                     <>
                         <ul className={styles.navLinks}>
-                            <li><Link href="/account/search" className={styles.navLink}>Поиск</Link></li>
+                            <li><Link href="/account/meets" className={styles.navLink}>Встречи</Link></li>
                             <li><Link href="/account/messages" className={styles.navLink}>Сообщения</Link></li>
                             <li><Link href="/account/profile" className={styles.navLink}>Профиль</Link></li>
                         </ul>

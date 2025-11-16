@@ -38,7 +38,7 @@ export const MeetTypeLabels: Record<MeetType, string> = {
     [MeetType.currentHome]: "У себя дома",
     [MeetType.userHome]: "У других дома",
     [MeetType.street]: "На улице",
-    [MeetType.publicPlaces]: "В обшественных местах",
+    [MeetType.publicPlaces]: "В общественных местах",
     [MeetType.parks]: "В парках",
     [MeetType.cafes]: "В кафе/ресторанах",
     [MeetType.online]: "Онлайн"

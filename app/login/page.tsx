@@ -56,7 +56,7 @@ export default function LoginPage() {
         clearLoginForm();
         clearRegistrationForm();
         setIsLoading(false);
-        router.push(`/account/${isRegistering ? 'profile?tab=edit' : 'search'}`);
+        router.push(`/account/${isRegistering ? 'profile?tab=edit' : 'meets'}`);
     }
 
     const checkUserExists = async (user: User, email: string, name: string | null, avatarUrl: string | null, provider: string | null, passwordHash: string | null, birthday: Date | null) => {

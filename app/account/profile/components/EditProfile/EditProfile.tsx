@@ -235,7 +235,7 @@ export default function EditProfile({ user }: Props) {
                         />
                     </label>
 
-                    <label className={styles.formLabel}>
+                    <label className={styles.formLabel} id="nickname">
                         <span className={styles.formLabelText}>Ваш никнейм</span>
                         <div className={styles.nicknameInputWrapper}>
                             <span className={styles.nicknamePrefix}>@</span>

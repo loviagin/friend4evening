@@ -86,11 +86,42 @@
   border: 1px solid rgba(70, 108, 149, 0.2);
 }
 
+.nicknameBlock {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .nickname {
   font-size: 1.125rem;
   font-weight: 600;
   color: rgba(70, 108, 149, 0.7);
   margin: 0;
+}
+
+.setNicknameLink {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+  border: 1px solid var(--blue);
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.setNicknameLink:hover {
+  background: var(--blue);
+  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.3);
+}
+
+.setNicknameLink:active {
+  transform: translateY(0);
 }
 
 .actionsBlock {
@@ -186,5 +217,11 @@
   .buttonSecondary {
     padding: 0.75rem 1.5rem;
     font-size: 0.95rem;
+  }
+
+  .nicknameBlock {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
   }
 }

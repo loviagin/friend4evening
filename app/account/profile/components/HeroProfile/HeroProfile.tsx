@@ -4,6 +4,7 @@ import styles from './HeroProfile.module.css';
 import { User } from '@/models/User';
 import { useAuth } from '@/app/_providers/AuthProvider';
 import ShareProfile from './components/ShareProfile/ShareProfile';
+import Link from 'next/link';
 
 type HeroProps = {
     user: User | null,
@@ -74,7 +75,14 @@ export default function HeroProfile({ user }: HeroProps) {
                         )}
                         {user?.tag && <span className={styles.tag}>{user?.tag}</span>}
                     </div>
-                    <h5 className={styles.nickname}>@{user?.nickname ? user?.nickname : "Никнейм не задан"}{userAge()}</h5>
+                    <div className={styles.nicknameBlock}>
+                        <h5 className={styles.nickname}>@{user?.nickname ? user?.nickname : "Никнейм не задан"}{userAge()}</h5>
+                        {!user?.nickname && auth.user?.uid === user?.id && (
+                            <a href={'/account/profile?tab=edit#nickname'} className={styles.setNicknameLink}>
+                                Задать никнейм
+                            </a>
+                        )}
+                    </div>
                     {/* Actions block */}
                     <div className={styles.actionsBlock}>
                         {auth.user && user && auth.user?.uid !== user?.id &&

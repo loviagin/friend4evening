@@ -19,10 +19,10 @@ export default function MobileMenuBar() {
             <nav className={styles.nav}>
                 <Link 
                     href={'/account/search'} 
-                    className={`${styles.link} ${isActive('/account/search') ? styles.active : ''}`}
+                    className={`${styles.link} ${isActive('/account/meets') ? styles.active : ''}`}
                 >
                     <AiOutlineHome className={styles.icon} />
-                    Поиск
+                    Встречи
                 </Link>
                 <Link 
                     href={'/account/messages'} 
