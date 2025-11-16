@@ -18,7 +18,7 @@ export default function Screenshots() {
                     
                     <div className={styles.screenshot}>
                         <div className={styles.placeholder}>
-                            <span className={styles.placeholderText}>Скриншот поиска</span>
+                            <img src={'/screenshot2.webp'} alt="Поиск и фильтры"/>
                         </div>
                         <p className={styles.caption}>Поиск и фильтры</p>
                     </div>
