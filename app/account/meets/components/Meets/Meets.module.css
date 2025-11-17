@@ -194,10 +194,10 @@
   line-height: 1.7;
   color: var(--foreground);
   opacity: 0.75;
-  margin-top: 0.25rem;
+  margin-top: 0.75rem;
   padding-top: 1rem;
   border-top: 1px solid rgba(70, 108, 149, 0.1);
-  text-align: left;
+  text-align: center;
 }
 
 .emptyState {

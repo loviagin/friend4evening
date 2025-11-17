@@ -37,7 +37,7 @@ export default function AccountMeets() {
                 >
                     Поиск встречи
                 </button>
-                {/* <button 
+                <button 
                     className={`${styles.tabButton} ${currentTab === MeetsPageType.myMeets ? styles.tabButtonActive : ''}`}
                     onClick={() => setCurrentTab(MeetsPageType.myMeets)}
                 >
@@ -48,7 +48,7 @@ export default function AccountMeets() {
                     onClick={() => setCurrentTab(MeetsPageType.myApplications)}
                 >
                     Мои заявки
-                </button> */}
+                </button>
             </div>
 
             <div className={styles.content}>

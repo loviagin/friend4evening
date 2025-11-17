@@ -11,6 +11,9 @@ import styles from "./EditProfile.module.css"
 import DatePicker from "react-datepicker"
 import { updateProfile } from "firebase/auth"
 import { useAuth } from "@/app/_providers/AuthProvider"
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
+import { db, storage } from "@/lib/firebase"
+import { doc, updateDoc } from "firebase/firestore"
 
 registerLocale("ru", ru);
 
@@ -55,6 +58,8 @@ export default function EditProfile({ user }: Props) {
         noSmoking: user.noSmoking ?? false,
     })
     const [loading, setLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
+
 
     useEffect(() => {
         console.log(user.birthday)
@@ -193,6 +198,44 @@ export default function EditProfile({ user }: Props) {
         setForm((prev) => ({ ...prev, drinkPreferences: prev.drinkPreferences.filter((v) => v !== drink) }))
     }
 
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        const user = auth.user;
+
+        if (!file || !user) return;
+
+        try {
+            setUploading(true);
+
+            // путь: avatars/uid/timestamp.png
+            const charSlice = file.type.indexOf('/') + 1;
+            const name = file.type.slice(charSlice, file.type.length)
+            const storageRef = ref(storage, `avatars/${user.uid}/avatar.${name}`);
+
+            // загрузка файла
+            await uploadBytes(storageRef, file);
+
+            // получаем URL
+            const url = await getDownloadURL(storageRef);
+
+            // сохраняем в users
+            await updateDoc(doc(db, "users", user.uid), {
+                avatarUrl: url,
+            });
+            setForm((prev) => ({ ...prev, avatarUrl: url }))
+            updateProfile(auth.user!, {
+                photoURL: url,
+            })
+
+            alert("Аватар обновлён ✨");
+        } catch (err) {
+            console.error(err);
+            alert("Ошибка при загрузке аватара");
+        } finally {
+            setUploading(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className={styles.loader}>
@@ -215,8 +258,15 @@ export default function EditProfile({ user }: Props) {
         <section id="edit-form">
             <div className={styles.avatarSection}>
                 <span className={styles.formLabelText}>Аватар профиля</span>
-                <Avatar avatarUrl={user.avatarUrl} />
-                <button className={styles.button}>Сменить аватар</button>
+                <Avatar avatarUrl={form.avatarUrl} />
+                <input
+                    type="file"
+                    accept="image/*"
+                    className={styles.button}
+                    onChange={handleFileChange}
+                    disabled={uploading}
+                />
+                {uploading && <p>Загружаем...</p>}
             </div>
 
             <form id="edit-profile-form" onSubmit={handleEditSave} className={styles.editForm}>
@@ -272,7 +322,7 @@ export default function EditProfile({ user }: Props) {
 
                     <label className={styles.formLabel}>
                         <span className={styles.formLabelText}>Дата Рождения</span>
-                         <DatePicker
+                        <DatePicker
                             id="birthday"
                             placeholderText="Дата рождения"
                             selected={form.birthday}
@@ -288,7 +338,7 @@ export default function EditProfile({ user }: Props) {
                             scrollableYearDropdown
                             minDate={new Date(1900, 0, 1)}
                             maxDate={new Date(new Date().getFullYear() - 18, 11, 31)}
-                        /> 
+                        />
                     </label>
 
                     <label className={styles.checkboxLabel}>
