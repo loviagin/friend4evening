@@ -43,7 +43,8 @@ export default function Dropdown({ source, current, onChange }: {
                         <div
                             key={s.key}
                             className={styles.item}
-                            onClick={() => {
+                            onMouseDown={(e) => {
+                                e.stopPropagation();
                                 onChange(s.key);
                                 setOpen(false);
                             }}

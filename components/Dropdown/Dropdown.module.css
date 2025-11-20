@@ -1,6 +1,7 @@
 .wrapper {
   position: relative;
   display: inline-block;
+  min-width: 150px;
 }
 
 .mainButton {
@@ -17,6 +18,8 @@
   color: var(--blue);
   font-family: inherit;
   transition: all 0.3s ease;
+  width: 100%;
+  min-width: 150px;
 }
 
 .mainButton:hover {

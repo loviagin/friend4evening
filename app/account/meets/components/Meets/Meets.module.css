@@ -31,6 +31,75 @@
   opacity: 0.8;
 }
 
+.filterInput {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--background);
+  border: 1px solid var(--blue);
+  border-radius: 50px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.filterInput::placeholder {
+  color: rgba(70, 108, 149, 0.5);
+  font-weight: 500;
+}
+
+.filterInput:hover {
+  border-color: rgba(70, 108, 149, 0.5);
+  box-shadow: 0 2px 8px rgba(70, 108, 149, 0.15);
+}
+
+.filterInput:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(70, 108, 149, 0.1);
+  background: var(--background);
+}
+
+.cityInputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.citySuggestions {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: var(--background);
+  border: 1px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  padding: 0.5rem 0;
+  box-shadow: 0 10px 30px rgba(70, 108, 149, 0.15);
+  z-index: 999;
+  overflow: hidden;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.citySuggestionItem {
+  padding: 0.625rem 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  transition: all 0.3s ease;
+}
+
+.citySuggestionItem:hover {
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.1) 0%, rgba(93, 174, 139, 0.1) 100%);
+  color: var(--blue);
+}
+
+.citySuggestionItem:active {
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.15) 0%, rgba(93, 174, 139, 0.15) 100%);
+}
+
 .usersGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -199,6 +268,69 @@
 }
 
 .carIcon:hover svg {
+  filter: drop-shadow(0 4px 8px rgba(70, 108, 149, 0.4));
+}
+
+.noAlcoholIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  font-size: 1.125rem;
+  margin-left: 0.25rem;
+  cursor: help;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.noAlcoholIcon:hover {
+  color: var(--blue);
+  transform: scale(1.2);
+}
+
+.noAlcoholIcon svg:first-child {
+  filter: drop-shadow(0 2px 4px rgba(93, 174, 139, 0.3));
+  transition: all 0.3s ease;
+}
+
+.noAlcoholIcon:hover svg:first-child {
+  filter: drop-shadow(0 4px 8px rgba(70, 108, 149, 0.4));
+}
+
+.noAlcoholCross {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  font-size: 1.5rem;
+  color: rgba(220, 53, 69, 0.9);
+  pointer-events: none;
+  font-weight: bold;
+}
+
+.noSmokingIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  font-size: 1.125rem;
+  margin-left: 0.25rem;
+  cursor: help;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.noSmokingIcon:hover {
+  color: var(--blue);
+  transform: scale(1.2);
+}
+
+.noSmokingIcon svg {
+  filter: drop-shadow(0 2px 4px rgba(93, 174, 139, 0.3));
+  transition: all 0.3s ease;
+}
+
+.noSmokingIcon:hover svg {
   filter: drop-shadow(0 4px 8px rgba(70, 108, 149, 0.4));
 }
 
