@@ -1,5 +1,6 @@
 export type Meets = {
     id: string,
+    ownerId: string,
     members: string[],
     date: Date,
     status: MeetsType,

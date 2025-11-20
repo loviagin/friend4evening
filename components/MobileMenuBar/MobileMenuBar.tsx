@@ -18,7 +18,7 @@ export default function MobileMenuBar() {
         <div className={styles.mobileMenuBar}>
             <nav className={styles.nav}>
                 <Link 
-                    href={'/account/search'} 
+                    href={'/account/meets'} 
                     className={`${styles.link} ${isActive('/account/meets') ? styles.active : ''}`}
                 >
                     <AiOutlineHome className={styles.icon} />

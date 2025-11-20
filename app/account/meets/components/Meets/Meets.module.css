@@ -10,6 +10,11 @@
   border: 2px solid rgba(70, 108, 149, 0.2);
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(70, 108, 149, 0.1);
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .filterLabel {
@@ -171,6 +176,32 @@
   font-weight: 500;
 }
 
+.carIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  font-size: 1.125rem;
+  margin-left: 0.25rem;
+  cursor: help;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.carIcon:hover {
+  color: var(--blue);
+  transform: scale(1.2);
+}
+
+.carIcon svg {
+  filter: drop-shadow(0 2px 4px rgba(93, 174, 139, 0.3));
+  transition: all 0.3s ease;
+}
+
+.carIcon:hover svg {
+  filter: drop-shadow(0 4px 8px rgba(70, 108, 149, 0.4));
+}
+
 .userAge {
   font-size: 0.875rem;
   color: var(--foreground);
@@ -216,6 +247,7 @@
   .filters {
     padding: 1.25rem;
     border-radius: 15px;
+    gap: 1.5rem;
   }
 
   .usersGrid {
@@ -246,6 +278,7 @@
 @media (max-width: 480px) {
   .filters {
     padding: 1rem;
+    gap: 1rem;
   }
 
   .userCard {

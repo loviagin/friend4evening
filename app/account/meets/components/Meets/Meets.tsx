@@ -6,6 +6,7 @@ import { tags, User } from "@/models/User";
 import { useEffect, useState } from "react";
 import styles from "./Meets.module.css";
 import Link from "next/link";
+import { AiFillCar } from "react-icons/ai";
 
 const ages: { key: string, label: string }[] = [
     { key: "none", label: "Не важно" },
@@ -17,15 +18,28 @@ const ages: { key: string, label: string }[] = [
     { key: "60", label: "60 +" },
 ]
 
-function sortUsersByAgeRange(users: User[], range: string): User[] {
-    if (range === "none") return [...users];
+const statuses: { key: string, label: string }[] = [
+    { key: "none", label: "Не важно" },
+    { key: "READY", label: "Готов к встрече" },
+    { key: "INTENSIVE_SEARCH", label: "В активном поиске" }
+]
 
-    const [minStr, maxStr] = range.split("-");
-    const min = Number(minStr);
-    const max = maxStr ? Number(maxStr) : Infinity; // для "60" → 60+
+function sortUsers(
+    users: User[],
+    ageRange: string,   // "none" | "18-22" | ...
+    status: string      // "none" | "READY" | "INTENSIVE_SEARCH"
+): User[] {
+    // если фильтров нет — просто возвращаем копию списка
+    if (ageRange === "none" && status === "none") {
+        return [...users];
+    }
+
+    const [minStr, maxStr] = ageRange !== "none" ? ageRange.split("-") : [undefined, undefined];
+    const min = minStr ? Number(minStr) : -Infinity;
+    const max = maxStr ? Number(maxStr) : (ageRange === "60" ? Infinity : Infinity);
 
     const calcAge = (birthday: Date | string | null | undefined) => {
-        if (!birthday) return Infinity; // у кого нет даты – в конец списка
+        if (!birthday) return Infinity;
 
         const d = new Date(birthday);
         if (isNaN(d.getTime())) return Infinity;
@@ -40,22 +54,36 @@ function sortUsersByAgeRange(users: User[], range: string): User[] {
         return age;
     };
 
-    // Не мутируем исходный массив
     const copy = [...users];
 
     return copy.sort((a, b) => {
         const ageA = calcAge(a.birthday);
         const ageB = calcAge(b.birthday);
 
-        const inRangeA = ageA >= min && ageA <= max;
-        const inRangeB = ageB >= min && ageB <= max;
+        const inAgeA =
+            ageRange === "none" ? true : ageA >= min && ageA <= max;
+        const inAgeB =
+            ageRange === "none" ? true : ageB >= min && ageB <= max;
 
-        // 1. Сначала те, кто в диапазоне
-        if (inRangeA && !inRangeB) return -1;
-        if (!inRangeA && inRangeB) return 1;
+        // тут поле статуса подгони под свою модель:
+        // например, user.statusKey или user.status или user.searchStatus
+        const statusA = (a as any).statusKey || (a as any).tag || (a as any).searchStatus;
+        const statusB = (b as any).statusKey || (b as any).tag || (b as any).searchStatus;
+
+        const inStatusA = status === "none" ? true : statusA === status;
+        const inStatusB = status === "none" ? true : statusB === status;
+
+        // 1. Ранг: 0 — и возраст попал, и статус попал; 1 — остальные
+        const rankA = inAgeA && inStatusA ? 0 : 1;
+        const rankB = inAgeB && inStatusB ? 0 : 1;
+
+        if (rankA !== rankB) return rankA - rankB;
 
         // 2. Внутри групп сортируем по возрасту (моложе → старше)
-        return ageA - ageB;
+        if (ageA !== ageB) return ageA - ageB;
+
+        // 3. На всякий случай — по имени, чтобы порядок был стабильнее
+        return (a.name || "").localeCompare(b.name || "");
     });
 }
 
@@ -63,6 +91,7 @@ export default function Meets() {
     const [users, setUsers] = useState<User[]>([]);
     const [sortedUsers, setSortedUsers] = useState<User[]>([]);
     const [age, setAge] = useState<string>("none");
+    const [status, setStatus] = useState<string>("none");
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -78,17 +107,11 @@ export default function Meets() {
         }
 
         fetchUsers();
-    }, [])
+    }, []);
 
-    const handleChangeAge = (newAge: string) => {
-        if (newAge === "none") {
-            setSortedUsers(users);
-        } else {
-            setSortedUsers(sortUsersByAgeRange(users, newAge));
-        }
-        console.log(newAge)
-        setAge(newAge);
-    }
+    useEffect(() => {
+        applyFilters(age, status);
+    }, [users]);
 
     const pluralizeYears = (age: number) => {
         const mod10 = age % 10;
@@ -117,6 +140,21 @@ export default function Meets() {
         }
     };
 
+    const applyFilters = (ageValue: string, statusValue: string) => {
+        const sorted = sortUsers(users, ageValue, statusValue);
+        setSortedUsers(sorted);
+    };
+
+    const handleChangeAge = (newAge: string) => {
+        setAge(newAge);
+        applyFilters(newAge, status);
+    };
+
+    const handleStatusChange = (newStatus: string) => {
+        setStatus(newStatus);
+        applyFilters(age, newStatus);
+    };
+
     return (
         <section className={styles.section}>
             <div className={styles.filters}>
@@ -126,6 +164,14 @@ export default function Meets() {
                         source={ages}
                         current={age}
                         onChange={handleChangeAge}
+                    />
+                </label>
+                <label className={styles.filterLabel}>
+                    <span>Статус</span>
+                    <Dropdown
+                        source={statuses}
+                        current={status}
+                        onChange={handleStatusChange}
                     />
                 </label>
             </div>
@@ -152,7 +198,11 @@ export default function Meets() {
                                         </div>
                                         {user.location?.city && (
                                             <div className={styles.userLocation}>
-                                                🌆 {user.location.city}
+                                                🌆 {user.location.city} {user.readyToTrip === true && (
+                                                    <span className={styles.carIcon} title="готов к поездке">
+                                                        <AiFillCar />
+                                                    </span>
+                                                )}
                                             </div>
                                         )}
                                         <div className={styles.userNickname}>
