@@ -1,0 +1,88 @@
+import { User, tags } from "@/models/User";
+import Link from "next/link";
+import Avatar from "../Avatar/Avatar";
+import styles from './UserCard.module.css'
+import { AiFillCar, AiOutlineClose } from "react-icons/ai";
+import { FaSmokingBan, FaWineBottle } from "react-icons/fa";
+
+export default function UserCard({ user }: { user: User }) {
+
+    const pluralizeYears = (age: number) => {
+        const mod10 = age % 10;
+        const mod100 = age % 100;
+
+        if (mod100 >= 11 && mod100 <= 14) return "лет";
+        if (mod10 === 1) return "год";
+        if (mod10 >= 2 && mod10 <= 4) return "года";
+        return "лет";
+    };
+
+    const userAge = (user: User) => {
+        if (user?.showBirthday && user.birthday) {
+            const birthday = new Date(user.birthday);
+            if (isNaN(birthday.getTime())) return;
+
+            const today = new Date();
+            let age = today.getFullYear() - birthday.getFullYear();
+            const m = today.getMonth() - birthday.getMonth();
+
+            if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
+                age--;
+            }
+
+            return ` • ${age} ${pluralizeYears(age)}`;
+        }
+    };
+
+    return (
+        <div key={user.id} className={styles.userCard}>
+            <Link href={`/profile/${user.nickname}`} target="_blank">
+                <div className={styles.userHeader}>
+                    <div className={styles.userAvatarWrapper}>
+                        <Avatar avatarUrl={user.avatarUrl} />
+                        {user.tag && (
+                            <span className={styles.userTag}>{tags.find(s => s.key === user.tag)?.label}</span>
+                        )}
+                    </div>
+                    <div className={styles.userInfo}>
+                        <div className={styles.userName}>
+                            {user.name}
+                            {userAge(user)}
+                        </div>
+                        {(user.location?.city || user.readyToTrip === true || user.noAlcohol === true || user.noSmoking === true) && (
+                            <div className={styles.userLocation}>
+                                {user.location?.city && (
+                                    <>🌆 {user.location.city}</>
+                                )}
+                                {user.readyToTrip === true && (
+                                    <span className={styles.carIcon} title="Готов к поездке">
+                                        <AiFillCar />
+                                    </span>
+                                )}
+                                {user.noAlcohol === true && (
+                                    <span className={styles.noAlcoholIcon} title="Не употребляю алкоголь">
+                                        <FaWineBottle />
+                                        <AiOutlineClose className={styles.noAlcoholCross} />
+                                    </span>
+                                )}
+                                {user.noSmoking === true && (
+                                    <span className={styles.noSmokingIcon} title="Не курю">
+                                        <FaSmokingBan />
+                                    </span>
+                                )}
+                            </div>
+                        )}
+                        <div className={styles.userNickname}>
+                            @{user.nickname}
+                        </div>
+                    </div>
+                </div>
+                {user.bio && (
+                    <p className={styles.userBio}>
+                        {user.bio.length > 100 ? `${user.bio.substring(0, 100)}...` : user.bio}
+                    </p>
+                )}
+            </Link>
+        </div>
+    )
+}

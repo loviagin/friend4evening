@@ -3,6 +3,8 @@ import { useState } from 'react';
 import styles from './page.module.css'
 import Meets from './components/Meets/Meets';
 import MyMeets from './components/MyMeets/MyMeets';
+import CreateMeetPortal from './components/CreateMeetPortal/CreateMeetPortal';
+import MyApplications from './components/MyApplications/MyApplications';
 
 enum MeetsPageType {
     meets = "Поиск встречи",
@@ -18,10 +20,10 @@ export default function AccountMeets() {
             content = <Meets />
             break;
         case MeetsPageType.myMeets:
-            content = true ? <MyMeets /> : <>Загрузка...</>
+            content = <MyMeets />
             break;
         case MeetsPageType.myApplications:
-            content = <MyMeets />
+            content = <MyApplications />
             break;
         default:
             break;
@@ -31,24 +33,26 @@ export default function AccountMeets() {
         <main className={styles.container}>
             <h1>{currentTab.toString()}</h1>
             <div className={styles.tabs}>
-                <button 
+                <button
                     className={`${styles.tabButton} ${currentTab === MeetsPageType.meets ? styles.tabButtonActive : ''}`}
                     onClick={() => setCurrentTab(MeetsPageType.meets)}
                 >
                     Поиск встречи
                 </button>
-                <button 
+                <button
                     className={`${styles.tabButton} ${currentTab === MeetsPageType.myMeets ? styles.tabButtonActive : ''}`}
                     onClick={() => setCurrentTab(MeetsPageType.myMeets)}
                 >
                     Мои встречи
                 </button>
-                <button 
+                <button
                     className={`${styles.tabButton} ${currentTab === MeetsPageType.myApplications ? styles.tabButtonActive : ''}`}
                     onClick={() => setCurrentTab(MeetsPageType.myApplications)}
                 >
                     Мои заявки
                 </button>
+
+                <CreateMeetPortal />
             </div>
 
             <div className={styles.content}>

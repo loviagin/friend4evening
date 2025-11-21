@@ -11,9 +11,10 @@ import { useSearchParams } from 'next/navigation';
 import HeroProfile from './components/HeroProfile/HeroProfile';
 import BlockedProfile from './components/BlockedProfile/BlockedProfile';
 import AdminProfile from './components/AdminProfile/AdminProfile';
+import Friends from './components/Friends/Friends';
 
 enum ProfileTab {
-    general, edit, settings, admin
+    general, edit, settings, admin, friends
 }
 
 export default function AccountProfile() {
@@ -40,6 +41,8 @@ export default function AccountProfile() {
                 setTab(ProfileTab.edit);
             } else if (cTab == 'admin') {
                 setTab(ProfileTab.admin);
+            } else if (cTab == 'friends') {
+                setTab(ProfileTab.friends);
             } else {
                 setTab(ProfileTab.general);
             }
@@ -52,6 +55,9 @@ export default function AccountProfile() {
     switch (tab) {
         case ProfileTab.general:
             content = <GeneralProfile user={user} />
+            break;
+        case ProfileTab.friends:
+            content = user ? <Friends user={user} /> : <>Загрузка...</>
             break;
         case ProfileTab.edit:
             content = user ? <EditProfile user={user} /> : <>Загрузка...</>
@@ -87,6 +93,12 @@ export default function AccountProfile() {
                     onClick={() => setTab(ProfileTab.general)}
                 >
                     Основное
+                </button>
+                <button
+                    className={`${styles.navButton} ${tab === ProfileTab.friends ? styles.navButtonActive : ''}`}
+                    onClick={() => setTab(ProfileTab.friends)}
+                >
+                    Друзья
                 </button>
                 {user?.tags && user.tags.includes("admin") && (
                     <button

@@ -3,6 +3,7 @@ import { Meets } from "@/models/Meet";
 import { collection, getDocs, query, Timestamp, where } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
+//GETTING ALL MEETS BY USER ID
 export async function GET(req: NextRequest, { params }: { params: Promise<{ userId: string }> }) {
     const { userId } = await params;
 

@@ -1,0 +1,393 @@
+/* Кастомные стили для react-day-picker */
+
+.rdp {
+  --rdp-cell-size: 2rem;
+  --rdp-accent-color: #466C95;
+  --rdp-background-color: var(--background);
+  --rdp-accent-color-dark: #5DAE8B;
+  --rdp-background-color-dark: var(--background);
+  --rdp-outline: 2px solid var(--rdp-accent-color);
+  --rdp-outline-selected: 2px solid var(--rdp-accent-color-dark);
+  margin: 0;
+  font-family: inherit;
+}
+
+.rdp-button_reset {
+  appearance: none;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.rdp-button {
+  border: 2px solid transparent;
+}
+
+.rdp-button:hover:not([disabled]) {
+  background-color: rgba(70, 108, 149, 0.1);
+}
+
+.rdp-button:focus:not([disabled]) {
+  color: inherit;
+  background-color: rgba(70, 108, 149, 0.1);
+  border-color: var(--rdp-accent-color);
+}
+
+.rdp-button[disabled] {
+  opacity: 0.3;
+}
+
+.rdp-months {
+  display: flex;
+}
+
+.rdp-month {
+  margin: 0;
+  width: 100%;
+}
+
+.rdp-table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.rdp-with_weeknumber .rdp-table {
+  max-width: calc(100% - var(--rdp-cell-size));
+}
+
+.rdp-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.5rem;
+  text-align: left;
+}
+
+.rdp-multiple_months .rdp-caption {
+  position: relative;
+  display: block;
+  text-align: center;
+}
+
+.rdp-caption_label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0 0.25rem;
+  white-space: nowrap;
+  color: #466C95;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: 0;
+  border: 2px solid transparent;
+  background-color: transparent;
+}
+
+.rdp-nav {
+  display: flex;
+  align-items: center;
+}
+
+.rdp-multiple_months .rdp-caption_start .rdp-nav {
+  position: absolute;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rdp-multiple_months .rdp-caption_end .rdp-nav {
+  position: absolute;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rdp-button_previous,
+.rdp-button_next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0.25rem;
+  border-radius: 50%;
+  background: rgba(70, 108, 149, 0.1);
+  transition: all 0.3s ease;
+}
+
+.rdp-button_previous:hover,
+.rdp-button_next:hover {
+  background: rgba(70, 108, 149, 0.2);
+  transform: scale(1.1);
+}
+
+.rdp-button_previous:focus,
+.rdp-button_next:focus {
+  background: rgba(70, 108, 149, 0.2);
+}
+
+.rdp-nav_icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  fill: #466C95;
+}
+
+.rdp-head_cell {
+  vertical-align: middle;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  height: var(--rdp-cell-size);
+  padding: 0;
+  color: rgba(70, 108, 149, 0.7);
+}
+
+.rdp-tbody {
+  border: 0;
+}
+
+.rdp-tfoot {
+  margin: 0.5rem;
+}
+
+.rdp-cell {
+  width: var(--rdp-cell-size);
+  height: 100%;
+  position: relative;
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+.rdp-button_cell {
+  width: var(--rdp-cell-size);
+  height: var(--rdp-cell-size);
+}
+
+.rdp-day {
+  width: var(--rdp-cell-size);
+  height: var(--rdp-cell-size);
+  border-radius: 50%;
+  font-weight: 500;
+  color: var(--foreground);
+  transition: all 0.2s ease;
+}
+
+.rdp-day:hover:not([disabled]):not(.rdp-day_selected):not(.rdp-day_outside) {
+  background-color: rgba(70, 108, 149, 0.1);
+  border-radius: 50%;
+}
+
+.rdp-day_selected,
+.rdp-day_selected:focus-visible,
+.rdp-day_selected:hover {
+  color: white;
+  opacity: 1;
+  background: linear-gradient(135deg, #466C95 0%, #5DAE8B 100%);
+  border-radius: 50%;
+  font-weight: 600;
+}
+
+.rdp-day_today:not(.rdp-day_outside) {
+  font-weight: 700;
+  color: #466C95;
+}
+
+.rdp-day_today:not(.rdp-day_selected):not(.rdp-day_outside) {
+  background-color: rgba(70, 108, 149, 0.05);
+}
+
+.rdp-day_outside {
+  color: rgba(70, 108, 149, 0.3);
+}
+
+.rdp-day_disabled {
+  color: rgba(70, 108, 149, 0.3);
+  opacity: 0.3;
+}
+
+.rdp-day_hidden {
+  visibility: hidden;
+}
+
+.rdp-day_range_start:not(.rdp-day_range_end) .rdp-day,
+.rdp-day_range_end:not(.rdp-day_range_start) .rdp-day {
+  border-radius: 50%;
+}
+
+.rdp-day_range_middle {
+  border-radius: 0;
+}
+
+.rdp-day_range_middle:hover {
+  border-radius: 0;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day,
+.rdp-day_range_start.rdp-day_range_end .rdp-day:hover {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start .rdp-day,
+.rdp-day_range_end .rdp-day {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected:hover {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected:focus-visible {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected:active {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected:disabled {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today:hover {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today:focus-visible {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today:active {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today:disabled {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_range_start {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_range_start:hover {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_range_start:focus-visible {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_range_start:active {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_range_start:disabled {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_range_end {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_range_end:hover {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_range_end:focus-visible {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_range_end:active {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_range_end:disabled {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today.rdp-day_range_start {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today.rdp-day_range_start:hover {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today.rdp-day_range_start:focus-visible {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today.rdp-day_range_start:active {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today.rdp-day_range_start:disabled {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today.rdp-day_range_end {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today.rdp-day_range_end:hover {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today.rdp-day_range_end:focus-visible {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today.rdp-day_range_end:active {
+  border-radius: 50%;
+}
+
+.rdp-day_range_start.rdp-day_range_end .rdp-day_selected.rdp-day_today.rdp-day_range_end:disabled {
+  border-radius: 50%;
+}
+
+/* Общие стили для календаря */
+.rdp {
+  background: var(--background);
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(70, 108, 149, 0.15);
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .rdp {
+    font-size: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .rdp-button_previous,
+  .rdp-button_next {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .rdp-caption_label {
+    font-size: 0.75rem;
+  }
+
+  .rdp-head_cell {
+    font-size: 0.6875rem;
+  }
+
+  .rdp-day {
+    font-size: 0.75rem;
+  }
+}
+

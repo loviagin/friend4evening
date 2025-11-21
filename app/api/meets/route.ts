@@ -9,6 +9,7 @@ export type MeetsDTO = {
     status: MeetsType,
 }
 
+//CREATE NEW MEET 
 export async function POST(req: NextRequest) {
     const data = await req.json();
 

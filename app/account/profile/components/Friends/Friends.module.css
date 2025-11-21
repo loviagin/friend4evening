@@ -1,0 +1,74 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  text-align: left;
+}
+
+.friendsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--foreground);
+  opacity: 0.7;
+  font-size: 1.125rem;
+  background: var(--background);
+  border: 2px solid rgba(70, 108, 149, 0.15);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(70, 108, 149, 0.08);
+}
+
+@media (max-width: 768px) {
+  .container {
+    gap: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .friendsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .emptyState {
+    padding: 2rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    gap: 1.25rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .friendsGrid {
+    gap: 1rem;
+  }
+
+  .emptyState {
+    padding: 1.5rem 1rem;
+    font-size: 0.9375rem;
+  }
+}

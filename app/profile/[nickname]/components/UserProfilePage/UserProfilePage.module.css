@@ -1,34 +1,27 @@
 .container {
-  min-height: calc(100vh - 80px);
-  padding: calc(80px + 2rem) 2rem 5rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.container h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--blue);
-  margin-bottom: 2rem;
-  text-align: left;
+.divider {
+  height: 1px;
+  background: rgba(70, 108, 149, 0.2);
+  border: none;
+  margin: 2rem 0;
 }
 
-.tabs {
+/* Navigation Section */
+.navigation {
   display: flex;
   gap: 0;
   margin-bottom: 2rem;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
   border-bottom: 2px solid rgba(70, 108, 149, 0.2);
   position: relative;
 }
 
-.tabs > :last-child {
-  margin-left: auto;
-}
-
-.tabButton {
+.navButton {
   padding: 1rem 2rem;
   font-size: 1rem;
   font-weight: 600;
@@ -44,52 +37,46 @@
   margin-bottom: -2px;
 }
 
-.tabButton:hover {
+.navButton:hover {
   color: var(--blue);
   background: rgba(70, 108, 149, 0.05);
 }
 
-.tabButton:active {
+.navButton:active {
   transform: none;
 }
 
-.tabButtonActive {
+.navButtonActive {
   color: var(--blue);
   border-bottom-color: var(--blue);
   background: transparent;
 }
 
-.tabButtonActive:hover {
+.navButtonActive:hover {
   color: var(--blue);
   background: rgba(70, 108, 149, 0.05);
 }
 
+/* Content Section */
 .content {
-  margin-top: 2rem;
+  padding: 2.5rem;
+  background: var(--background);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(70, 108, 149, 0.1);
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: calc(80px + 1rem) 1rem 3rem;
-  }
-
-  .container h1 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .tabs {
+  .navigation {
     justify-content: flex-start;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    gap: 0;
   }
 
-  .tabs > :last-child {
-    margin-left: auto;
+  .content {
+    padding: 2rem 1rem;
   }
 
-  .tabButton {
+  .navButton {
     padding: 0.875rem 1.5rem;
     font-size: 0.95rem;
     white-space: nowrap;
@@ -97,21 +84,23 @@
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: calc(80px + 0.75rem) 0.75rem 2rem;
+  .divider {
+    margin: 1.5rem 0;
   }
 
-  .container h1 {
-    font-size: 1.75rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .tabs {
+  .navigation {
+    margin-bottom: 1.5rem;
     gap: 0;
   }
 
-  .tabButton {
+  .content {
+    padding: 1.5rem 0.75rem;
+    border-radius: 15px;
+  }
+
+  .navButton {
     padding: 0.75rem 1rem;
     font-size: 0.875rem;
   }
 }
+

@@ -456,12 +456,6 @@ export default function EditProfile({ user }: Props) {
                         </div>
                     </label>
 
-                    {form.noAlcohol !== true && (
-                        <div className={styles.warningBlock}>
-                            Употребление алкоголя в больших количествах может привезти к фатальным последствиям
-                        </div>
-                    )}
-
                     <label className={styles.checkboxLabel}>
                         <input
                             id="no-alcohol"
@@ -474,9 +468,9 @@ export default function EditProfile({ user }: Props) {
                         <span>Не употребляю алкоголь</span>
                     </label>
 
-                    {form.noSmoking !== true && (
+                    {form.noAlcohol !== true && (
                         <div className={styles.warningBlock}>
-                            Курение (парение) вредит Вашему здоровью
+                            Употребление алкоголя в больших количествах может привезти к фатальным последствиям
                         </div>
                     )}
 
@@ -491,6 +485,12 @@ export default function EditProfile({ user }: Props) {
                         />
                         <span>Не курю</span>
                     </label>
+
+                    {form.noSmoking !== true && (
+                        <div className={styles.warningBlock}>
+                            Курение (парение) вредит Вашему здоровью
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.formActions}>

@@ -205,7 +205,7 @@ export default function GeneralProfile({ user }: Props) {
                         <div className={styles.statisticNumber}>{statisticDTO.meetsCount}</div>
                         <p className={styles.statisticLabel}>Завершенных встреч</p>
                     </div>
-
+            
                     <div className={styles.statisticItem}>
                         <div className={styles.statisticNumber}>{statisticDTO.friendsCount}</div>
                         <p className={styles.statisticLabel}>Друзей в сервисе</p>

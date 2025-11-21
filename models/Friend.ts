@@ -16,5 +16,4 @@ export const FriendStatusLabel: Record<FriendStatus, string> = {
     [FriendStatus.waiting]: "Ожидает",
     [FriendStatus.approved]: "Друг",
     [FriendStatus.declined]: "Отклонен"
-
 }

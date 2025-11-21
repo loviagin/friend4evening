@@ -30,6 +30,7 @@ export default function Dropdown({ source, current, onChange }: {
     return (
         <div className={styles.wrapper} ref={wrapperRef}>
             <button
+                type="button"
                 className={styles.mainButton}
                 onClick={() => setOpen(!open)}
             >

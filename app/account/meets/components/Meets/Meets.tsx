@@ -1,16 +1,12 @@
 "use client";
 
-import Avatar from "@/components/Avatar/Avatar";
 import Dropdown from "@/components/Dropdown/Dropdown";
-import { tags, User } from "@/models/User";
+import { User } from "@/models/User";
 import { useEffect, useState, useRef } from "react";
 import styles from "./Meets.module.css";
-import Link from "next/link";
-import { AiFillCar } from "react-icons/ai";
-import { FaWineBottle, FaSmokingBan } from "react-icons/fa";
-import { AiOutlineClose } from "react-icons/ai";
+import UserCard from "@/components/UserCard/UserCard";
 
-const ages: { key: string, label: string }[] = [
+export const ages: { key: string, label: string }[] = [
     { key: "none", label: "Не важно" },
     { key: "18-22", label: "18 – 22" },
     { key: "23-27", label: "23 – 27" },
@@ -26,7 +22,7 @@ const statuses: { key: string, label: string }[] = [
     { key: "INTENSIVE_SEARCH", label: "В активном поиске" }
 ]
 
-const meetType: { key: string, label: string }[] = [
+export const meetType: { key: string, label: string }[] = [
     { key: "none", label: "Не важно" },
     { key: "CURRENT_HOME", label: "У себя дома" },
     { key: "USER_HOME", label: "У других дома" },
@@ -107,33 +103,6 @@ export default function Meets() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [showCitySuggestions]);
-
-    const pluralizeYears = (age: number) => {
-        const mod10 = age % 10;
-        const mod100 = age % 100;
-
-        if (mod100 >= 11 && mod100 <= 14) return "лет";
-        if (mod10 === 1) return "год";
-        if (mod10 >= 2 && mod10 <= 4) return "года";
-        return "лет";
-    };
-
-    const userAge = (user: User) => {
-        if (user?.showBirthday && user.birthday) {
-            const birthday = new Date(user.birthday);
-            if (isNaN(birthday.getTime())) return;
-
-            const today = new Date();
-            let age = today.getFullYear() - birthday.getFullYear();
-            const m = today.getMonth() - birthday.getMonth();
-
-            if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
-                age--;
-            }
-
-            return ` • ${age} ${pluralizeYears(age)}`;
-        }
-    };
 
     const applyFilters = (
         ageValue: string,
@@ -374,55 +343,7 @@ export default function Meets() {
                     </div>
                 ) : (
                     sortedUsers.map((user) => (
-                        <div key={user.id} className={styles.userCard}>
-                            <Link href={`/profile/${user.nickname}`} target="_blank">
-                                <div className={styles.userHeader}>
-                                    <div className={styles.userAvatarWrapper}>
-                                        <Avatar avatarUrl={user.avatarUrl} />
-                                        {user.tag && (
-                                            <span className={styles.userTag}>{tags.find(s => s.key === user.tag)?.label}</span>
-                                        )}
-                                    </div>
-                                    <div className={styles.userInfo}>
-                                        <div className={styles.userName}>
-                                            {user.name}
-                                            {userAge(user)}
-                                        </div>
-                                        {(user.location?.city || user.readyToTrip === true || user.noAlcohol === true || user.noSmoking === true) && (
-                                            <div className={styles.userLocation}>
-                                                {user.location?.city && (
-                                                    <>🌆 {user.location.city}</>
-                                                )}
-                                                {user.readyToTrip === true && (
-                                                    <span className={styles.carIcon} title="Готов к поездке">
-                                                        <AiFillCar />
-                                                    </span>
-                                                )}
-                                                {user.noAlcohol === true && (
-                                                    <span className={styles.noAlcoholIcon} title="Не употребляю алкоголь">
-                                                        <FaWineBottle />
-                                                        <AiOutlineClose className={styles.noAlcoholCross} />
-                                                    </span>
-                                                )}
-                                                {user.noSmoking === true && (
-                                                    <span className={styles.noSmokingIcon} title="Не курю">
-                                                        <FaSmokingBan />
-                                                    </span>
-                                                )}
-                                            </div>
-                                        )}
-                                        <div className={styles.userNickname}>
-                                            @{user.nickname}
-                                        </div>
-                                    </div>
-                                </div>
-                                {user.bio && (
-                                    <p className={styles.userBio}>
-                                        {user.bio.length > 100 ? `${user.bio.substring(0, 100)}...` : user.bio}
-                                    </p>
-                                )}
-                            </Link>
-                        </div>
+                        <UserCard key={user.id} user={user} />
                     ))
                 )}
             </div>

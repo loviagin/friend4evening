@@ -5,6 +5,13 @@ import { User } from "@/models/User";
 import { useEffect, useState } from "react";
 import HeroProfile from "@/app/account/profile/components/HeroProfile/HeroProfile";
 import BlockedProfile from "@/app/account/profile/components/BlockedProfile/BlockedProfile";
+import Friends from "@/app/account/profile/components/Friends/Friends";
+import styles from "./UserProfilePage.module.css";
+
+enum ProfileTab {
+    general,
+    friends
+}
 
 type Props = {
     nickname: string
@@ -12,6 +19,7 @@ type Props = {
 
 export default function UserProfilePage({ nickname }: Props) {
     const [user, setUser] = useState<User|null>(null);
+    const [tab, setTab] = useState<ProfileTab>(ProfileTab.general);
 
     useEffect(() => {
         if (nickname) {
@@ -26,6 +34,18 @@ export default function UserProfilePage({ nickname }: Props) {
         }
     }, [nickname])
 
+    let content;
+    switch (tab) {
+        case ProfileTab.general:
+            content = <GeneralProfile user={user} />
+            break;
+        case ProfileTab.friends:
+            content = user ? <Friends user={user} /> : <>Загрузка...</>
+            break;
+        default:
+            break;
+    }
+
     if (user?.blocked && user.blocked !== undefined) {
         return (
             <BlockedProfile />
@@ -33,9 +53,31 @@ export default function UserProfilePage({ nickname }: Props) {
     }
 
     return (
-        <>
+        <div className={styles.container}>
             <HeroProfile user={user} />
-            <GeneralProfile user={user} />
-        </>
+
+            <hr className={styles.divider} />
+
+            {/* navigation */}
+            <section className={styles.navigation}>
+                <button
+                    className={`${styles.navButton} ${tab === ProfileTab.general ? styles.navButtonActive : ''}`}
+                    onClick={() => setTab(ProfileTab.general)}
+                >
+                    Основное
+                </button>
+                <button
+                    className={`${styles.navButton} ${tab === ProfileTab.friends ? styles.navButtonActive : ''}`}
+                    onClick={() => setTab(ProfileTab.friends)}
+                >
+                    Друзья
+                </button>
+            </section>
+
+            {/* navigation content */}
+            <section className={styles.content} id='profile-content'>
+                {content}
+            </section>
+        </div>
     )
 }
