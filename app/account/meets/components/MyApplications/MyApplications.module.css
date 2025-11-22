@@ -63,13 +63,18 @@
   width: fit-content;
 }
 
-.statusOpen {
+.statusPlan {
   background: linear-gradient(135deg, var(--green) 0%, rgba(93, 174, 139, 0.8) 100%);
   color: var(--background);
 }
 
-.statusClosed {
+.statusCurrent {
   background: rgba(70, 108, 149, 0.2);
+  color: var(--blue);
+}
+
+.statusCompleted {
+  background: rgba(80, 148, 2, 0.2);
   color: var(--blue);
 }
 
@@ -124,6 +129,16 @@
 .infoIcon {
   font-size: 1.125rem;
   color: var(--blue);
+}
+
+.waitingBadge {
+  padding: 0.25rem 0.625rem;
+  background: rgba(255, 165, 0, 0.15);
+  color: #ff8c00;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-left: 0.5rem;
 }
 
 .emptyState {

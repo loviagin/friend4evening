@@ -1,4 +1,4 @@
-import { Meets } from "@/models/Meet";
+import { Meet } from "@/models/Meet";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ userId: string, uid: string }> }) {
@@ -13,9 +13,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
     const data = await response.json();
 
     if (response.status === 200) {
-        const allMeets = (data["meets"] ?? []) as Meets[];
-        const meets = allMeets.filter((mm) => mm.members.includes(uid))
-        const completed = meets.filter((mm) => mm.status === 'COMPLETED')
+        const allMeets = (data["meets"] ?? []) as Meet[];
+        const meets = allMeets.filter((mm) => mm.members.some(member => member.userId === uid))
+        const completed = meets.filter((mm) => mm.status === 'completed')
         return NextResponse.json({ completed: completed.length > 0 }, { status: 200 })
     } else {
         return NextResponse.json({ message: "Not found" }, { status: 404 })

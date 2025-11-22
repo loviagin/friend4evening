@@ -1,24 +1,23 @@
 "use client"
 
 import { useAuth } from "@/app/_providers/AuthProvider"
-import { Application, ApplicationStatusLabels, ApplicationStatus } from "@/models/Application";
-import { tags } from "@/models/User";
 import { useEffect, useState } from "react"
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import styles from "./MyApplications.module.css";
+import { Meet, MeetStatusLabels } from "@/models/Meet";
 
 export default function MyApplications() {
     const auth = useAuth();
-    const [applications, setApplications] = useState<Application[]>([]);
+    const [applications, setApplications] = useState<Meet[]>([]);
 
     useEffect(() => {
         const fetchApplications = async (userId: string) => {
-            const resp = await fetch(`/api/applications/${userId}`);
+            const resp = await fetch(`/api/meets/${userId}`);
             const data = await resp.json();
 
             if (resp.status === 200) {
-                console.log("APPLICATIONS", data as Application[])
-                setApplications(data["applications"] as Application[]);
+                console.log("MEETS", data as Meet[])
+                setApplications(data["meets"] as Meet[]);
             }
         }
 
@@ -49,7 +48,7 @@ export default function MyApplications() {
                         <div key={ap.id} className={styles.applicationCard}>
                             <div className={styles.cardHeader}>
                                 <span className={`${styles.statusBadge} ${styles[`status${ap.status.charAt(0).toUpperCase() + ap.status.slice(1)}`]}`}>
-                                    {ApplicationStatusLabels[ap.status]}
+                                    {MeetStatusLabels[ap.status]}
                                 </span>
                                 {ap.title && (
                                     <h3 className={styles.cardTitle}>{ap.title}</h3>
@@ -66,7 +65,10 @@ export default function MyApplications() {
                                 <div className={styles.cardInfo}>
                                     <div className={styles.infoItem}>
                                         <AiOutlineUsergroupAdd className={styles.infoIcon} />
-                                        <span>{ap.members.length} / {ap.membersCount || '∞'} участников</span>
+                                        <span>{ap.members.filter((m) => m.status === "approved").length} / {ap.membersCount || '∞'} участников</span>
+                                        {ap.members.filter((m) => m.status === "waiting").length > 0 && (
+                                            <span className={styles.waitingBadge}>{ap.members.filter((m) => m.status === "waiting").length} ожидает</span>
+                                        )}
                                     </div>
 
                                     {ap.location && (

@@ -4,12 +4,11 @@ import { useEffect, useState } from "react";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { ages, meetType } from "../Meets/Meets";
 import styles from "./CreateMeetPortal.module.css";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlinePlusCircle } from "react-icons/ai";
 import { DayPicker } from "react-day-picker";
 import { ru } from "date-fns/locale";
 import "react-day-picker/dist/style.css";
 import "@/components/daypicker-custom.css";
-import { Timestamp } from 'firebase/firestore';
 import { useAuth } from '@/app/_providers/AuthProvider';
 
 type Props = {
@@ -29,7 +28,7 @@ export default function CreateMeetPortal() {
     return (
         <>
             <button className={styles.openButton} onClick={() => setShowPortal(true)}>
-                + Заявка на встречу
+                <AiOutlinePlusCircle /> Заявка на встречу
             </button>
             {showPortal && mounted && createPortal(
                 <CreateMeetContent close={() => setShowPortal(false)} />,
@@ -76,14 +75,10 @@ export function CreateMeetContent({ close }: Props) {
         e.preventDefault();
         console.log(form);
 
-        // if (Timestamp.fromDate(form.date) === undefined) {
-        //     alert("Необходимо указать время")
-        //     return
-        // }
         console.log(form.date)
         if (!auth.user) return;
 
-        const response = await fetch(`/api/applications`, {
+        const response = await fetch(`/api/meets`, {
             method: "POST",
             body: JSON.stringify({
                 ...form,

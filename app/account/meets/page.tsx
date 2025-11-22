@@ -1,26 +1,45 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './page.module.css'
 import Meets from './components/Meets/Meets';
-import MyMeets from './components/MyMeets/MyMeets';
 import CreateMeetPortal from './components/CreateMeetPortal/CreateMeetPortal';
 import MyApplications from './components/MyApplications/MyApplications';
+import { useAuth } from '@/app/_providers/AuthProvider';
+import { Meet } from '@/models/Meet';
 
 enum MeetsPageType {
     meets = "Поиск встречи",
-    myMeets = "Мои встречи",
-    myApplications = "Мои заявки"
+    myApplications = "Встречи и заявки"
 }
+
 export default function AccountMeets() {
+    const auth = useAuth();
     const [currentTab, setCurrentTab] = useState<MeetsPageType>(MeetsPageType.meets);
+    const [similarMeets, setSimilarMeets] = useState<Meet[]>([]);
+
+    useEffect(() => {
+        const fetchSimilarMeets = async (userId: string) => {
+            const r = await fetch(`/api/meets/${userId}/similar`);
+
+            if (r.status === 200) {
+                const data = await r.json();
+                const meets = data["meets"] as Meet[];
+                console.log(meets)
+                setSimilarMeets(meets);
+            } else {
+                console.log("NO SIMILAR MEETs")
+            }
+        }
+
+        if (auth.user) {
+            fetchSimilarMeets(auth.user.uid);
+        }
+    }, [auth])
 
     let content;
     switch (currentTab) {
         case MeetsPageType.meets:
             content = <Meets />
-            break;
-        case MeetsPageType.myMeets:
-            content = <MyMeets />
             break;
         case MeetsPageType.myApplications:
             content = <MyApplications />
@@ -40,16 +59,10 @@ export default function AccountMeets() {
                     Поиск встречи
                 </button>
                 <button
-                    className={`${styles.tabButton} ${currentTab === MeetsPageType.myMeets ? styles.tabButtonActive : ''}`}
-                    onClick={() => setCurrentTab(MeetsPageType.myMeets)}
-                >
-                    Мои встречи
-                </button>
-                <button
                     className={`${styles.tabButton} ${currentTab === MeetsPageType.myApplications ? styles.tabButtonActive : ''}`}
                     onClick={() => setCurrentTab(MeetsPageType.myApplications)}
                 >
-                    Мои заявки
+                    Встречи и заявки
                 </button>
 
                 <CreateMeetPortal />

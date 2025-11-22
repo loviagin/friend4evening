@@ -1,22 +1,43 @@
-export type Meets = {
+export type Meet = {
     id: string,
     ownerId: string,
-    members: string[],
+    members: ApplicationMember[],
+    location: string | null,
+    membersCount: number | null,
+    noAlcohol: boolean,
+    ageRange: string | null,
+    blocked: string | null,
+    title: string,
+    description: string | null,
+    meetType: string | null,
     date: Date,
-    status: MeetsType,
+    duration: string | null,
+    status: MeetStatus,
     createdAt: Date
 }
 
-export enum MeetsType {
-    plan = "PLAN",
-    current = "CURRENT",
-    completed = "COMPLETED",
-    canceled = "CANCELED"
+export type ApplicationMember = {
+    id: string,
+    userId: string,
+    status: ApplicationMemberStatus
 }
 
-export const MeetsTypeLabels: Record<MeetsType, string> = {
-    [MeetsType.plan]: "Запланировано",
-    [MeetsType.current]: "Сейчас идет",
-    [MeetsType.completed]: "Завершена",
-    [MeetsType.canceled]: "Отменена",
+export enum ApplicationMemberStatus {
+    approved = "approved",
+    waiting = "waiting",
+    declined = "declined"
+}
+
+export enum MeetStatus {
+    plan = "plan",
+    current = "current",
+    completed = "completed",
+    canceled = "canceled"
+}
+
+export const MeetStatusLabels: Record<MeetStatus, string> = {
+    [MeetStatus.plan]: "Запланировано",
+    [MeetStatus.current]: "Сейчас идет",
+    [MeetStatus.completed]: "Завершена",
+    [MeetStatus.canceled]: "Отменена",
 }

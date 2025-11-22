@@ -296,6 +296,14 @@
   transition: all 0.3s ease;
   font-family: inherit;
   box-shadow: 0 4px 15px rgba(70, 108, 149, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.openButton svg {
+  font-size: 1rem;
+  vertical-align: middle;
 }
 
 .openButton:hover {
