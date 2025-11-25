@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
         title: application.title === "" ? `Встреча #${count}` : application.title,
         description: application.description === "" ? null : application.description,
         meetType: application.meetType === "none" ? null : application.meetType,
+        type: application.type,
         date: Timestamp.fromDate(new Date(application.date)),
         duration: application.duration === "" ? null : application.duration,
         createdAt: Timestamp.fromDate(new Date())

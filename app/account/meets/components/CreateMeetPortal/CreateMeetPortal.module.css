@@ -21,8 +21,10 @@
   max-width: 700px;
   max-height: 90vh;
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   border: 2px solid rgba(70, 108, 149, 0.2);
+  box-sizing: border-box;
 }
 
 .header {
@@ -69,18 +71,28 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  overflow-x: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .formRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .label {
@@ -90,6 +102,10 @@
   font-size: 1rem;
   font-weight: 600;
   color: var(--blue);
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .label span {
@@ -141,26 +157,38 @@
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .dayPicker {
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .timePicker {
   width: 100%;
+  max-width: 100%;
   max-height: 200px;
   overflow-y: auto;
+  overflow-x: hidden;
   border: 2px solid rgba(70, 108, 149, 0.2);
   border-radius: 20px;
   padding: 0.75rem;
   background: var(--background);
+  box-sizing: border-box;
 }
 
 .timeGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .timeButton {
@@ -299,11 +327,21 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .openButton svg {
   font-size: 1rem;
   vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.buttonText {
+  white-space: nowrap;
 }
 
 .openButton:hover {
@@ -317,9 +355,31 @@
 }
 
 @media (max-width: 768px) {
+  .openButton {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.75rem;
+    gap: 0.375rem;
+  }
+
+  .openButton svg {
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+
+  .buttonText {
+    display: none;
+  }
+
   .modal {
     max-width: 100%;
+    width: calc(100% - 2rem);
+    max-width: calc(100vw - 2rem);
     border-radius: 20px;
+    box-sizing: border-box;
+  }
+
+  .overlay {
+    box-sizing: border-box;
   }
 
   .header {
@@ -333,11 +393,96 @@
   .form {
     padding: 1.5rem;
     gap: 1.25rem;
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   .formRow {
     grid-template-columns: 1fr;
     gap: 1.25rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .formGroup {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .label {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .dateTimePicker {
+    gap: 0.75rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .dayPicker {
+    font-size: 0.875rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .dayPicker :global(.rdp) {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .dayPicker :global(.rdp-months) {
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow-x: hidden;
+  }
+
+  .dayPicker :global(.rdp-month) {
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow-x: hidden;
+  }
+
+  .dayPicker :global(.rdp-table) {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed;
+  }
+
+  .dayPicker :global(.rdp-cell) {
+    --rdp-cell-size: 1.5rem;
+    max-width: calc(100% / 7);
+    box-sizing: border-box;
+  }
+
+  .dayPicker :global(.rdp-head_cell) {
+    max-width: calc(100% / 7);
+    box-sizing: border-box;
+  }
+
+  .timePicker {
+    max-height: 150px;
+    padding: 0.5rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .timeGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.375rem;
+    max-width: 100%;
+  }
+
+  .timeButton {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.75rem;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .formActions {
@@ -351,8 +496,30 @@
 }
 
 @media (max-width: 480px) {
+  .openButton {
+    padding: 0.5625rem 0.75rem;
+    font-size: 0.6875rem;
+    gap: 0.25rem;
+  }
+
+  .openButton svg {
+    font-size: 0.8125rem;
+    flex-shrink: 0;
+  }
+
+  .buttonText {
+    display: none;
+  }
+
   .overlay {
     padding: 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .modal {
+    width: calc(100% - 1rem);
+    max-width: calc(100vw - 1rem);
+    box-sizing: border-box;
   }
 
   .header {
@@ -361,6 +528,105 @@
 
   .form {
     padding: 1.25rem;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  .formRow {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .formGroup {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .label {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .dateTimePicker {
+    gap: 0.625rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .dayPicker {
+    font-size: 0.8125rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .dayPicker :global(.rdp) {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0.375rem;
+    font-size: 0.6875rem;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .dayPicker :global(.rdp-months) {
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow-x: hidden;
+  }
+
+  .dayPicker :global(.rdp-month) {
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow-x: hidden;
+  }
+
+  .dayPicker :global(.rdp-table) {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed;
+  }
+
+  .dayPicker :global(.rdp-cell) {
+    --rdp-cell-size: 1.25rem;
+    max-width: calc(100% / 7);
+    box-sizing: border-box;
+  }
+
+  .dayPicker :global(.rdp-head_cell) {
+    font-size: 0.625rem;
+    max-width: calc(100% / 7);
+    box-sizing: border-box;
+  }
+
+  .dayPicker :global(.rdp-day) {
+    font-size: 0.6875rem;
+  }
+
+  .dayPicker :global(.rdp-button_previous),
+  .dayPicker :global(.rdp-button_next) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .timePicker {
+    max-height: 120px;
+    padding: 0.375rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .timeGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+    max-width: 100%;
+  }
+
+  .timeButton {
+    padding: 0.3125rem 0.4375rem;
+    font-size: 0.6875rem;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

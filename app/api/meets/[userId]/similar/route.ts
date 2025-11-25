@@ -38,7 +38,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
     const allMeets = await getDocs(q);
     const readyMeets: Meet[] = []
 
-    for (const m of allMeets.docs) { 
+    for (const m of allMeets.docs) {
         const d1 = m.data();
 
         const time = d1['date'] as Timestamp
@@ -48,9 +48,22 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
 
         const meet = d1 as Meet
 
+        //if blocked
+        if (meet.blocked && meet.blocked !== null) {
+            console.log("SKIPPED BLOCKED")
+            continue;
+        }
+
+        //if already maximum of members Count
         if (meet.membersCount && meet.members.filter((f1) => f1.status === "approved").length >= meet.membersCount) continue;
-        
+
+        //if user is already in members
         if (meet.members.filter((f) => f.userId === userId).length > 0) continue;
+
+        //if meet is in past 
+        if (meet.date < new Date()) {
+            continue;
+        }
 
         if (meet.ageRange && meet.ageRange !== null && meet.ageRange !== "none") {
             if (isAgeInRange(meet.ageRange, age)) {
@@ -63,6 +76,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
                             if (meet.meetType && meet.meetType !== "none" && user.meetIn && user.meetIn !== null) {
                                 if (user.meetIn.includes(meet.meetType as MeetType)) {
                                     readyMeets.push(meet);
+                                    continue;
                                 } else {
                                     continue
                                 }

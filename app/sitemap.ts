@@ -9,7 +9,6 @@ export default async function sitemap() {
         "", 
         "/account/meets", 
         "/account/messages", 
-        "/account/profile/friends",
         "/account/profile",
         "/agreement",
         "/login",

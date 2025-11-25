@@ -39,17 +39,26 @@
 
 .rdp-months {
   display: flex;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .rdp-month {
   margin: 0;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .rdp-table {
   width: 100%;
   max-width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
+  box-sizing: border-box;
 }
 
 .rdp-with_weeknumber .rdp-table {
@@ -145,6 +154,9 @@
   height: var(--rdp-cell-size);
   padding: 0;
   color: rgba(70, 108, 149, 0.7);
+  max-width: calc(100% / 7);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .rdp-tbody {
@@ -157,10 +169,13 @@
 
 .rdp-cell {
   width: var(--rdp-cell-size);
+  max-width: calc(100% / 7);
   height: 100%;
   position: relative;
   font-size: 0.8125rem;
   text-align: center;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .rdp-button_cell {
@@ -369,7 +384,25 @@
 @media (max-width: 768px) {
   .rdp {
     font-size: 0.75rem;
-    padding: 0.75rem;
+    padding: 0.5rem;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .rdp-months {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .rdp-month {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .rdp-table {
+    max-width: 100%;
+    table-layout: fixed;
   }
 
   .rdp-button_previous,
@@ -388,6 +421,57 @@
 
   .rdp-day {
     font-size: 0.75rem;
+  }
+
+  .rdp-cell {
+    --rdp-cell-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .rdp {
+    font-size: 0.6875rem;
+    padding: 0.375rem;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .rdp-months {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .rdp-month {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .rdp-table {
+    max-width: 100%;
+    table-layout: fixed;
+  }
+
+  .rdp-button_previous,
+  .rdp-button_next {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .rdp-caption_label {
+    font-size: 0.6875rem;
+  }
+
+  .rdp-head_cell {
+    font-size: 0.625rem;
+  }
+
+  .rdp-day {
+    font-size: 0.6875rem;
+  }
+
+  .rdp-cell {
+    --rdp-cell-size: 1.25rem;
   }
 }
 

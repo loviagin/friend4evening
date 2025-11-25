@@ -10,137 +10,6 @@
   gap: 1.5rem;
 }
 
-.applicationCard {
-  padding: 2rem 1.5rem;
-  background: var(--background);
-  border: 2px solid rgba(70, 108, 149, 0.15);
-  border-radius: 24px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  box-shadow: 0 4px 20px rgba(70, 108, 149, 0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.applicationCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.applicationCard:hover {
-  border-color: rgba(70, 108, 149, 0.3);
-  box-shadow: 0 12px 40px rgba(70, 108, 149, 0.2);
-  transform: translateY(-8px);
-}
-
-.applicationCard:hover::before {
-  opacity: 1;
-}
-
-.cardHeader {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.statusBadge {
-  display: inline-block;
-  padding: 0.375rem 0.875rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  border-radius: 50px;
-  box-shadow: 0 2px 8px rgba(70, 108, 149, 0.2);
-  white-space: nowrap;
-  width: fit-content;
-}
-
-.statusPlan {
-  background: linear-gradient(135deg, var(--green) 0%, rgba(93, 174, 139, 0.8) 100%);
-  color: var(--background);
-}
-
-.statusCurrent {
-  background: rgba(70, 108, 149, 0.2);
-  color: var(--blue);
-}
-
-.statusCompleted {
-  background: rgba(80, 148, 2, 0.2);
-  color: var(--blue);
-}
-
-.statusCanceled {
-  background: rgba(220, 53, 69, 0.1);
-  color: rgba(220, 53, 69, 0.9);
-}
-
-.cardTitle {
-  font-size: 1.375rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 0;
-  line-height: 1.3;
-}
-
-.cardBody {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.description {
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  color: var(--foreground);
-  opacity: 0.75;
-  margin: 0;
-}
-
-.cardInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(70, 108, 149, 0.1);
-}
-
-.infoItem {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9375rem;
-  color: var(--foreground);
-  opacity: 0.8;
-  font-weight: 500;
-}
-
-.infoIcon {
-  font-size: 1.125rem;
-  color: var(--blue);
-}
-
-.waitingBadge {
-  padding: 0.25rem 0.625rem;
-  background: rgba(255, 165, 0, 0.15);
-  color: #ff8c00;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 0.875rem;
-  margin-left: 0.5rem;
-}
-
 .emptyState {
   text-align: center;
   padding: 3rem 2rem;
@@ -162,30 +31,11 @@
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
-
-  .applicationCard {
-    padding: 1.75rem 1.25rem;
-    border-radius: 20px;
-  }
-
-  .cardTitle {
-    font-size: 1.25rem;
-  }
 }
 
 @media (max-width: 480px) {
-  .applicationCard {
-    padding: 1.5rem 1rem;
-    border-radius: 18px;
-  }
-
-  .cardTitle {
-    font-size: 1.125rem;
-  }
-
   .emptyState {
     padding: 2rem 1.5rem;
     font-size: 1rem;
   }
 }
-

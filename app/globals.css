@@ -183,3 +183,12 @@ button {
   border-color: rgba(255, 255, 255, 1) !important;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6), 0 4px 12px rgba(0, 0, 0, 0.25) !important;
 }
+
+/* Keen Slider Styles - Allow shadows to be visible */
+.keen-slider {
+  overflow: visible !important;
+}
+
+.keen-slider__slide {
+  overflow: visible !important;
+}

@@ -2,9 +2,9 @@
 
 import { useAuth } from "@/app/_providers/AuthProvider"
 import { useEffect, useState } from "react"
-import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import styles from "./MyApplications.module.css";
-import { Meet, MeetStatusLabels } from "@/models/Meet";
+import { Meet } from "@/models/Meet";
+import MeetCard from "@/components/MeetCard/MeetCard";
 
 export default function MyApplications() {
     const auth = useAuth();
@@ -21,20 +21,20 @@ export default function MyApplications() {
             }
         }
 
+        const checkIfMeetInPast = async (userId: string) => {
+            const resp = await fetch(`/api/meets/${userId}/check`);
+
+            if (resp.status === 200) {
+                const data = await resp.json();
+                console.log("check completed", data)
+            }
+        }
+
         if (auth.user) {
             fetchApplications(auth.user.uid)
+            checkIfMeetInPast(auth.user.uid)
         }
     }, [auth]);
-
-    const formatDate = (date: Date) => {
-        const d = new Date(date);
-        const day = String(d.getDate()).padStart(2, '0');
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const year = d.getFullYear();
-        const hours = String(d.getHours()).padStart(2, '0');
-        const minutes = String(d.getMinutes()).padStart(2, '0');
-        return `${day}.${month}.${year} ${hours}:${minutes}`;
-    };
 
     return (
         <section className={styles.section}>
@@ -45,48 +45,7 @@ export default function MyApplications() {
             ) : (
                 <div className={styles.applicationsGrid}>
                     {applications.map((ap) => (
-                        <div key={ap.id} className={styles.applicationCard}>
-                            <div className={styles.cardHeader}>
-                                <span className={`${styles.statusBadge} ${styles[`status${ap.status.charAt(0).toUpperCase() + ap.status.slice(1)}`]}`}>
-                                    {MeetStatusLabels[ap.status]}
-                                </span>
-                                {ap.title && (
-                                    <h3 className={styles.cardTitle}>{ap.title}</h3>
-                                )}
-                            </div>
-
-                            <div className={styles.cardBody}>
-                                {ap.description && (
-                                    <p className={styles.description}>
-                                        {ap.description}
-                                    </p>
-                                )}
-
-                                <div className={styles.cardInfo}>
-                                    <div className={styles.infoItem}>
-                                        <AiOutlineUsergroupAdd className={styles.infoIcon} />
-                                        <span>{ap.members.filter((m) => m.status === "approved").length} / {ap.membersCount || '∞'} участников</span>
-                                        {ap.members.filter((m) => m.status === "waiting").length > 0 && (
-                                            <span className={styles.waitingBadge}>{ap.members.filter((m) => m.status === "waiting").length} ожидает</span>
-                                        )}
-                                    </div>
-
-                                    {ap.location && (
-                                        <div className={styles.infoItem}>
-                                            <span>🌆</span>
-                                            <span>{ap.location}</span>
-                                        </div>
-                                    )}
-
-                                    {ap.date && (
-                                        <div className={styles.infoItem}>
-                                            <span>📅</span>
-                                            <span>{formatDate(ap.date)}</span>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+                        <MeetCard key={ap.id} application={ap} />
                     ))}
                 </div>
             )}

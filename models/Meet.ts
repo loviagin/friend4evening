@@ -9,6 +9,7 @@ export type Meet = {
     blocked: string | null,
     title: string,
     description: string | null,
+    type: string,
     meetType: string | null,
     date: Date,
     duration: string | null,

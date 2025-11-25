@@ -11,6 +11,7 @@
     "bcryptjs": "^3.0.3",
     "date-fns": "^4.1.0",
     "firebase": "^12.6.0",
+    "keen-slider": "^6.8.6",
     "next": "16.0.3",
     "react": "19.2.0",
     "react-datepicker": "^8.9.0",

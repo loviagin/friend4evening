@@ -28,7 +28,8 @@ export default function CreateMeetPortal() {
     return (
         <>
             <button className={styles.openButton} onClick={() => setShowPortal(true)}>
-                <AiOutlinePlusCircle /> Заявка на встречу
+                <AiOutlinePlusCircle />
+                <span className={styles.buttonText}>Заявка на встречу</span>
             </button>
             {showPortal && mounted && createPortal(
                 <CreateMeetContent close={() => setShowPortal(false)} />,
@@ -82,6 +83,7 @@ export function CreateMeetContent({ close }: Props) {
             method: "POST",
             body: JSON.stringify({
                 ...form,
+                type: 'open',
                 ownerId: auth.user.uid,
                 date: form.date instanceof Date ? form.date.toISOString() : form.date
             })
@@ -207,11 +209,11 @@ export function CreateMeetContent({ close }: Props) {
                                     />
                                     <div className={styles.timePicker}>
                                         <div className={styles.timeGrid}>
-                                            {Array.from({ length: 24 * 4 }, (_, i) => {
-                                                const hours = Math.floor(i / 4);
-                                                const minutes = (i % 4) * 15;
+                                            {Array.from({ length: 24 }, (_, i) => {
+                                                const hours = i;
+                                                const minutes = 0;
                                                 const timeString = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-                                                const isSelected = form.date.getHours() === hours && form.date.getMinutes() === minutes;
+                                                const isSelected = form.date.getHours() === hours && form.date.getMinutes() === 0;
 
                                                 return (
                                                     <button
@@ -221,7 +223,9 @@ export function CreateMeetContent({ close }: Props) {
                                                         onClick={() => {
                                                             const newDate = new Date(form.date);
                                                             newDate.setHours(hours);
-                                                            newDate.setMinutes(minutes);
+                                                            newDate.setMinutes(0);
+                                                            newDate.setSeconds(0);
+                                                            newDate.setMilliseconds(0);
                                                             setForm({ ...form, date: newDate });
                                                         }}
                                                     >
