@@ -83,7 +83,9 @@
   min-width: 0;
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: visible;
   box-sizing: border-box;
+  position: relative;
 }
 
 .formRow {
@@ -105,7 +107,9 @@
   min-width: 0;
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: visible;
   box-sizing: border-box;
+  position: relative;
 }
 
 .label span {

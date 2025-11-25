@@ -49,8 +49,12 @@
   border-radius: 15px;
   padding: 0.5rem 0;
   box-shadow: 0 10px 30px rgba(70, 108, 149, 0.15);
-  z-index: 999;
+  z-index: 10001;
   overflow: hidden;
+}
+
+.menu[style*="position: fixed"] {
+  z-index: 10001;
 }
 
 .item {

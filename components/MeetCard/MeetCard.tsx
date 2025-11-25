@@ -2,6 +2,7 @@ import { Meet, MeetStatusLabels } from "@/models/Meet";
 import styles from './MeetCard.module.css'
 import { AiOutlineMenu, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { Menu, MenuItem } from "../Menu/Menu";
+import Link from "next/link";
 
 export default function MeetCard({ application }: { application: Meet }) {
 
@@ -20,23 +21,25 @@ export default function MeetCard({ application }: { application: Meet }) {
             <div className={styles.cardHeader}>
                 <div className={styles.badgesRow}>
                     <span className={`${styles.statusBadge} ${styles[`status${application.status.charAt(0).toUpperCase() + application.status.slice(1)}`]}`}>
-                        {MeetStatusLabels[application.status]} 
+                        {MeetStatusLabels[application.status]}
                     </span>
                     <span className={`${styles.typeBadge} ${application.type === 'open' ? styles.typeOpen : styles.typeClosed}`}>
                         {application.type === 'open' ? 'Публичная' : 'Закрытая'}
                     </span>
                 </div>
-                {application.title && (
-                    <h3 className={styles.cardTitle}>{application.title}</h3>
-                )}
+                <Link href={`meets/${application.id}`} >
+                    {application.title && (
+                        <h3 className={styles.cardTitle}>{application.title}</h3>
+                    )}
+                </Link>
             </div>
 
             {/* MENU */}
             <div>
-                <Menu 
+                <Menu
                     label={
                         <>
-                        <AiOutlineMenu />
+                            <AiOutlineMenu />
                         </>
                     }
                 >
@@ -76,6 +79,7 @@ export default function MeetCard({ application }: { application: Meet }) {
                     )}
                 </div>
             </div>
+
         </div>
     );
 }

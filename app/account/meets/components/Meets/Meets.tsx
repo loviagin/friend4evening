@@ -5,6 +5,8 @@ import { User } from "@/models/User";
 import { useEffect, useState, useRef } from "react";
 import styles from "./Meets.module.css";
 import UserCard from "@/components/UserCard/UserCard";
+import MeetSuggestions from "../MeetSuggestions/MeetSuggestions";
+import LoadingView from "@/components/LoadingView/LoadingView";
 
 export const ages: { key: string, label: string }[] = [
     { key: "none", label: "Не важно" },
@@ -49,6 +51,7 @@ export default function Meets() {
     const [filteredCities, setFilteredCities] = useState<string[]>([]);
     const cityInputRef = useRef<HTMLInputElement>(null);
     const citySuggestionsRef = useRef<HTMLDivElement>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -61,6 +64,7 @@ export default function Meets() {
                 setUsers(users);
                 setSortedUsers(users);
             }
+
         }
 
         const fetchCities = async () => {
@@ -73,6 +77,8 @@ export default function Meets() {
                 setCities(cities);
                 setFilteredCities(cities);
             }
+
+            setLoading(false);
         }
 
         fetchUsers();
@@ -276,8 +282,16 @@ export default function Meets() {
         });
     }
 
+    if (loading) {
+        return (
+            <LoadingView />
+        );
+    }
+
     return (
         <section className={styles.section}>
+            <MeetSuggestions />
+
             <div className={styles.filters}>
                 <label className={styles.filterLabel}>
                     <span>Возраст</span>

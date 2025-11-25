@@ -1,10 +1,12 @@
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import styles from "./SettingsProfile.module.css";
+import PushNotificationManager from "@/components/PushNotificationManager/PushNotificationManager";
 
 export default function SettingsProfile() {
     return (
         <section className={styles.section}>
+            <PushNotificationManager />
             <div className={styles.settingBlock}>
                 <span className={styles.settingText}>Нужна помощь?</span>
                 <button className={styles.button}>Написать в службу поддержки</button>

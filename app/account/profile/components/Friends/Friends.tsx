@@ -43,9 +43,9 @@ export default function Friends({ user }: { user: User }) {
                 </div>
             ) : (
                 <div className={styles.friendsGrid}>
-                    {friends.map((friend) => (
-                        <UserCard key={friend.id} user={friend} />
-                    ))}
+            {friends.map((friend) => (
+                <UserCard key={friend.id} user={friend} />
+            ))}
                 </div>
             )}
         </main>

@@ -14,6 +14,7 @@ import { useAuth } from "@/app/_providers/AuthProvider"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import { db, storage } from "@/lib/firebase"
 import { doc, updateDoc } from "firebase/firestore"
+import LoadingView from "@/components/LoadingView/LoadingView"
 
 registerLocale("ru", ru);
 
@@ -59,7 +60,6 @@ export default function EditProfile({ user }: Props) {
     })
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
-
 
     useEffect(() => {
         console.log(user.birthday)
@@ -238,19 +238,7 @@ export default function EditProfile({ user }: Props) {
 
     if (loading) {
         return (
-            <div className={styles.loader}>
-                <div className={styles.loaderContainer}>
-                    <div className={styles.spinner}></div>
-                    <div>
-                        <div className={styles.text}>Загрузка</div>
-                        <div className={styles.dots}>
-                            <div className={styles.dot}></div>
-                            <div className={styles.dot}></div>
-                            <div className={styles.dot}></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <LoadingView />
         )
     }
 

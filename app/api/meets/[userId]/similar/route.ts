@@ -17,14 +17,6 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
         return NextResponse.json({ message: "Not found" }, { status: 404 })
     }
 
-    /**
-     * birthday
-     * location: string | null;
-    readyToTrip: boolean | null;
-    meetIn: MeetType[] | null;
-    noAlcohol: boolean | null;
-     */
-
     const data = d.data()!
     const b = data["birthday"] as Timestamp
     data["birthday"] = b.toDate();
@@ -34,66 +26,54 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
     const age = getAge(user.birthday);
 
     // query 
-    const q = query(collection(db, "meets"), where("status", "==", "plan"))
+    const q = query(collection(db, "meets"), where("status", "==", "plan"), where("type", "==", "open"));
     const allMeets = await getDocs(q);
     const readyMeets: Meet[] = []
 
     for (const m of allMeets.docs) {
         const d1 = m.data();
+        d1.date = (d1['date'] as Timestamp).toDate();
+        d1.createdAt = (d1['createdAt'] as Timestamp).toDate();
 
-        const time = d1['date'] as Timestamp
-        const created = d1['createdAt'] as Timestamp
-        d1.date = time.toDate()
-        d1.createdAt = created.toDate();
+        const meet = d1 as Meet;
 
-        const meet = d1 as Meet
+        // blocked
+        if (meet.blocked) continue;
 
-        //if blocked
-        if (meet.blocked && meet.blocked !== null) {
-            console.log("SKIPPED BLOCKED")
-            continue;
+        // members limit
+        if (meet.membersCount && meet.members.filter(f => f.status === "approved").length >= meet.membersCount) continue;
+
+        // already in meet
+        if (meet.members.some(f => f.userId === userId)) continue;
+
+        // past date
+        if (meet.date < new Date()) continue;
+
+        // AGE filter
+        if (meet.ageRange && meet.ageRange !== "none") {
+            if (!isAgeInRange(meet.ageRange, age)) continue;
         }
 
-        //if already maximum of members Count
-        if (meet.membersCount && meet.members.filter((f1) => f1.status === "approved").length >= meet.membersCount) continue;
+        // CITY filter — ВСЕГДА
+        const userCity = user.location?.city?.trim().toLowerCase();
+        const meetCity = meet.location?.trim().toLowerCase();
 
-        //if user is already in members
-        if (meet.members.filter((f) => f.userId === userId).length > 0) continue;
+        const isCityMatch = userCity && meetCity && userCity === meetCity;
+        const isReadyToTrip = user.readyToTrip === true;
 
-        //if meet is in past 
-        if (meet.date < new Date()) {
-            continue;
+        if (!isCityMatch && !isReadyToTrip) continue;
+
+        // ALCOHOL filter — ВСЕГДА
+        if (user.noAlcohol === true) {
+            if (meet.noAlcohol !== true) continue;
         }
 
-        if (meet.ageRange && meet.ageRange !== null && meet.ageRange !== "none") {
-            if (isAgeInRange(meet.ageRange, age)) {
-                if ((meet.location && meet.location !== null && meet.location.length > 0) &&
-                    (user.location && user.location.city != null && user.location.city.length > 0)) {
-                    if ((user.location.city.toLowerCase().includes(meet.location.toLowerCase())) ||
-                        (user.readyToTrip && user.readyToTrip !== null && user.readyToTrip === true)) {
-                        if ((user.noAlcohol && meet.noAlcohol === user.noAlcohol) ||
-                            (!user.noAlcohol || user.noAlcohol === null)) {
-                            if (meet.meetType && meet.meetType !== "none" && user.meetIn && user.meetIn !== null) {
-                                if (user.meetIn.includes(meet.meetType as MeetType)) {
-                                    readyMeets.push(meet);
-                                    continue;
-                                } else {
-                                    continue
-                                }
-                            }
-                        } else {
-                            continue
-                        }
-                    } else {
-                        continue
-                    }
-                }
-            } else {
-                continue
-            }
+        // MEET TYPE filter — ВСЕГДА
+        if (meet.meetType && meet.meetType !== "none") {
+            if (!user.meetIn?.includes(meet.meetType as MeetType)) continue;
         }
 
-        readyMeets.push(meet)
+        readyMeets.push(meet);
     }
 
     if (readyMeets.length > 0) {

@@ -5,10 +5,12 @@ import { useEffect, useState } from "react"
 import styles from "./MyApplications.module.css";
 import { Meet } from "@/models/Meet";
 import MeetCard from "@/components/MeetCard/MeetCard";
+import LoadingView from "@/components/LoadingView/LoadingView";
 
 export default function MyApplications() {
     const auth = useAuth();
     const [applications, setApplications] = useState<Meet[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchApplications = async (userId: string) => {
@@ -28,6 +30,8 @@ export default function MyApplications() {
                 const data = await resp.json();
                 console.log("check completed", data)
             }
+
+            setLoading(false)
         }
 
         if (auth.user) {
@@ -35,6 +39,12 @@ export default function MyApplications() {
             checkIfMeetInPast(auth.user.uid)
         }
     }, [auth]);
+
+    if (loading) {
+        return(
+            <LoadingView />
+        )
+    }
 
     return (
         <section className={styles.section}>

@@ -13,6 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "@/components/datepicker-custom.css";
 import styles from "./page.module.css";
 import Link from "next/link";
+import LoadingView from "@/components/LoadingView/LoadingView";
 
 registerLocale("ru", ru);
 
@@ -79,10 +80,11 @@ export default function LoginPage() {
                     body: JSON.stringify({ id: user.uid, email, name, avatarUrl, provider, passwordHash, birthday })
                 })
                 const data = await resp.json();
-
+                const photo = user.photoURL ?? "avatar1";
+                
                 updateProfile(user, {
                     displayName: registrationForm.name ?? user.displayName,
-                    photoURL: user.photoURL
+                    photoURL: photo
                 }).then(() => {
                     completeLogin(true);
                 }).catch((e) => {
@@ -218,19 +220,7 @@ export default function LoginPage() {
 
     if (isLoading) {
         return (
-            <div className={styles.loader}>
-                <div className={styles.loaderContainer}>
-                    <div className={styles.spinner}></div>
-                    <div>
-                        <div className={styles.text}>Загрузка</div>
-                        <div className={styles.dots}>
-                            <div className={styles.dot}></div>
-                            <div className={styles.dot}></div>
-                            <div className={styles.dot}></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <LoadingView />
         )
     }
 
