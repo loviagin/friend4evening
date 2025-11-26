@@ -132,8 +132,8 @@
 }
 
 .button {
-  padding: 0.875rem 1.75rem;
-  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
   color: var(--background);
@@ -154,8 +154,8 @@
 }
 
 .buttonSecondary {
-  padding: 0.875rem 1.75rem;
-  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   background: transparent;
   color: var(--blue);
@@ -215,8 +215,8 @@
 
   .button,
   .buttonSecondary {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.95rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
   }
 
   .nicknameBlock {

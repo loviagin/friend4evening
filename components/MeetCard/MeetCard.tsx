@@ -35,7 +35,7 @@ export default function MeetCard({ application }: { application: Meet }) {
             </div>
 
             {/* MENU */}
-            <div>
+            {/* <div>
                 <Menu
                     label={
                         <>
@@ -46,7 +46,7 @@ export default function MeetCard({ application }: { application: Meet }) {
                     <MenuItem >Редактировать</MenuItem>
                     <MenuItem >Удалить</MenuItem>
                 </Menu>
-            </div>
+            </div> */}
 
             <div className={styles.cardBody}>
                 {application.description && (

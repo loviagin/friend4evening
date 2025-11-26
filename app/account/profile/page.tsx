@@ -12,9 +12,24 @@ import HeroProfile from './components/HeroProfile/HeroProfile';
 import BlockedProfile from './components/BlockedProfile/BlockedProfile';
 import AdminProfile from './components/AdminProfile/AdminProfile';
 import Friends from './components/Friends/Friends';
+import { AiOutlineCloseCircle, AiOutlineNotification } from 'react-icons/ai';
+import { subscribeUser, WebPushSubscription } from '@/app/actions';
 
 enum ProfileTab {
     general, edit, settings, admin, friends
+}
+
+function urlBase64ToUint8Array(base64String: string) {
+    const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')
+
+    const rawData = window.atob(base64)
+    const outputArray = new Uint8Array(rawData.length)
+
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i)
+    }
+    return outputArray
 }
 
 export default function AccountProfile() {
@@ -23,6 +38,8 @@ export default function AccountProfile() {
     const cTab = searchParams.get('tab');
     const [user, setUser] = useState<User | null>(null);
     const [tab, setTab] = useState<ProfileTab>(ProfileTab.general);
+    const [subscription, setSubscription] = useState<PushSubscription | null>(null);
+    const [showSubscription, setShowSubscription] = useState(false);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -31,9 +48,19 @@ export default function AccountProfile() {
             const data = await response.json();
             setUser(data as User);
             console.log("data", data);
+            const registration = await navigator.serviceWorker.ready
+            const subscription = await registration.pushManager.getSubscription()
+            setSubscription(subscription);
         }
 
         fetchUser()
+
+        if (localStorage.getItem('hideSubscriptionOffer') === 'true') {
+            setShowSubscription(false)
+        } else {
+            setShowSubscription(true)
+        }
+
         if (cTab) {
             if (cTab === 'settings') {
                 setTab(ProfileTab.settings);
@@ -50,6 +77,33 @@ export default function AccountProfile() {
             router.push('#profile-content');
         }
     }, []);
+
+    async function subscribeToPush() {
+        if (!auth.currentUser) return
+
+        const registration = await navigator.serviceWorker.ready
+        const sub = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(
+                process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
+            ),
+        })
+        setSubscription(sub);
+        const serializedSub: WebPushSubscription = {
+            endpoint: sub.endpoint,
+            expirationTime: sub.expirationTime,
+            keys: {
+                p256dh: (sub as any).toJSON().keys.p256dh,
+                auth: (sub as any).toJSON().keys.auth,
+            },
+        }
+        await subscribeUser(serializedSub, auth.currentUser.uid)
+    }
+
+    const handleCloseSubscriptionOffer = () => {
+        setShowSubscription(false)
+        localStorage.setItem('hideSubscriptionOffer', 'true')
+    }
 
     let content;
     switch (tab) {
@@ -82,6 +136,21 @@ export default function AccountProfile() {
 
     return (
         <main className={styles.container}>
+            {subscription === null && showSubscription === true && (
+                <div className={styles.subscriptionOffer}>
+                    <button className={styles.closeButton} onClick={handleCloseSubscriptionOffer}>
+                        <AiOutlineCloseCircle />
+                    </button>
+                    <div className={styles.subscriptionIcon}>
+                        <AiOutlineNotification />
+                    </div>
+                    <div className={styles.subscriptionContent}>
+                        <h4 className={styles.subscriptionTitle}>Включите уведомления чтобы всегда оставаться в курсе событий</h4>
+                        <p className={styles.subscriptionText}>Будем присылать уведомления о новых заявках в друзья, на встречи, о новых сообщениях и важную информацию</p>
+                    </div>
+                    <button className={styles.subscriptionButton} onClick={subscribeToPush}>Включить</button>
+                </div>
+            )}
             <HeroProfile user={user} />
 
             <hr className={styles.divider} />
@@ -112,7 +181,7 @@ export default function AccountProfile() {
                     className={`${styles.navButton} ${tab === ProfileTab.edit ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(ProfileTab.edit)}
                 >
-                    Редактировать Профиль
+                    Редактировать профиль
                 </button>
                 <button
                     className={`${styles.navButton} ${tab === ProfileTab.settings ? styles.navButtonActive : ''}`}

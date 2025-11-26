@@ -19,6 +19,7 @@ enum FriendType {
 export default function HeroProfile({ user }: HeroProps) {
     const auth = useAuth();
     const [isFriends, setIsFriends] = useState<FriendType>(FriendType.none);
+    const [status, setStatus] = useState<string>('none');
 
     useEffect(() => {
         const fetchFriends = async (uid: string, userId: string) => {
@@ -38,10 +39,16 @@ export default function HeroProfile({ user }: HeroProps) {
 
         if (user && auth.user && user.friends && user.friends.includes(auth.user.uid)) {
             setIsFriends(FriendType.friends)
+
+            setStatus(user?.tag ?? 'none')
+            console.log("TAG", user?.tag)
         } else if (user && auth.user) {
             fetchFriends(auth.user.uid, user.id)
+
+            setStatus(user?.tag ?? 'none')
+            console.log("TAG", user?.tag)
         }
-    }, [auth])
+    }, [auth, user])
 
     const pluralizeYears = (age: number) => {
         const mod10 = age % 10;
@@ -94,6 +101,25 @@ export default function HeroProfile({ user }: HeroProps) {
         }
     }
 
+    const handleFriendDelete = async () => {
+        if (!user || !auth.user) return
+
+        if (window.confirm('Вы хотите перестать быть друзьями?')) {
+            setIsFriends(FriendType.none)
+
+            const response = await fetch(`/api/users/${auth.user.uid}/unfriend`, {
+                method: "POST",
+                body: JSON.stringify({ userId: user.id })
+            })
+
+            const data = await response.json();
+            if (response.status !== 200) {
+                setIsFriends(FriendType.friends)
+                alert("Ошибка удаления из друзей")
+            }
+        }
+    }
+
     async function sendNotificationTo(userId: string, message: string) {
         if (!auth.user) {
             console.log("AUTH USER IS NULL")
@@ -104,14 +130,17 @@ export default function HeroProfile({ user }: HeroProps) {
     }
 
     const handleTagChange = async (tag: string) => {
+        setStatus(tag);
         const resp = await fetch(`/api/users/${user?.id}/tags`, {
             method: "POST",
             body: JSON.stringify({ tag })
         })
-        const data = await resp.json()
 
-        if (resp.status === 200) {
-            window.location.reload();
+        if (resp.status !== 200) {
+            const data = await resp.json()
+
+            setStatus('none')
+            alert("Ошибка установка статуса")
         }
     }
 
@@ -135,7 +164,7 @@ export default function HeroProfile({ user }: HeroProps) {
                         {user && auth.user && user.id === auth.user.uid ? (
                             <Dropdown
                                 source={tags}
-                                current={user.tag ?? "Установить статус"}
+                                current={status}
                                 onChange={handleTagChange}
                             />
                         ) : (
@@ -147,11 +176,6 @@ export default function HeroProfile({ user }: HeroProps) {
                     </div>
                     <div className={styles.nicknameBlock}>
                         <h5 className={styles.nickname}>@{user?.nickname ? user?.nickname : "Никнейм не задан"}{userAge()}</h5>
-                        {/* {!user?.nickname && auth.user?.uid === user?.id && (
-                            <a href={'/account/profile?tab=edit#nickname'} className={styles.setNicknameLink}>
-                                Задать никнейм
-                            </a>
-                        )} */}
                     </div>
                     {/* Actions block */}
                     <div className={styles.actionsBlock}>
@@ -160,7 +184,7 @@ export default function HeroProfile({ user }: HeroProps) {
                                 <button className={styles.button}>Предложить встречу</button>
                                 <button className={styles.button}>Написать сообщение</button>
                                 {isFriends === FriendType.friends ? (
-                                    <button className={styles.buttonSecondary}>Вы друзья</button>
+                                    <button className={styles.buttonSecondary} onClick={handleFriendDelete}>Вы друзья</button>
                                 ) : (isFriends === FriendType.waiting ? (
                                     <button className={styles.buttonSecondary}>Заявка отправлена</button>
                                 ) : (

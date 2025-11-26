@@ -23,13 +23,12 @@ webpush.setVapidDetails(
 let subscription: WebPushSubscription | null = null
 
 /**
- * 
- * {
-  endpoint: 'https://web.push.apple.com/QPqTSDur5x9tC-nw1VZ3HHNC5S-r-G0VQSdhM6o7tqxRCwy_odzozwjhV7CbesbeeYIbycVDUBlMwFrHhGengs63ZxJ65m4Kc6idVzWcedLrmjVVYgkcz7-guJQmaW-ZpFns3xtBCX3a4p7Ptbqg7JijRXf903lYlNZTkXRaSgs',
+  {
+  endpoint: 'urlString',
   expirationTime: null,
   keys: {
-    p256dh: 'BMB-XrexQO0eRMzVfH4dW5VCc2dytkr3b_MOprmWJSJX0ombeUX285ohWQH5i3NvVT8GYQOL4hqO-Sd9VVt0Fms',
-    auth: 'IKSyMOSM6-JsT-EZE6B3tg'
+    p256dh: 'str',
+    auth: 'str'
   }
   }
  */
