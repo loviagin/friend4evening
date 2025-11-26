@@ -14,6 +14,7 @@ import "@/components/datepicker-custom.css";
 import styles from "./page.module.css";
 import Link from "next/link";
 import LoadingView from "@/components/LoadingView/LoadingView";
+import { subscribeUser, WebPushSubscription } from "../actions";
 
 registerLocale("ru", ru);
 
@@ -26,6 +27,19 @@ export type RegisterForm = {
     name: string,
     birthday: Date | null,
 } & LoginForm
+
+function urlBase64ToUint8Array(base64String: string) {
+    const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')
+
+    const rawData = window.atob(base64)
+    const outputArray = new Uint8Array(rawData.length)
+
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i)
+    }
+    return outputArray
+}
 
 export default function LoginPage() {
     const router = useRouter();
@@ -53,9 +67,10 @@ export default function LoginPage() {
         fetchDeviceType()
     }, [])
 
-    const completeLogin = (isRegistering: boolean) => {
+    const completeLogin = (isRegistering: boolean, uid: string) => {
         clearLoginForm();
         clearRegistrationForm();
+        subscribeToPush(uid); //REGISTER FOR NOTIFICATIONS
         setIsLoading(false);
         router.push(`/account/${isRegistering ? 'profile?tab=edit' : 'meets'}`);
     }
@@ -70,7 +85,7 @@ export default function LoginPage() {
         const data = await resp.json();
 
         if (resp.status === 202) { // user exists
-            completeLogin(false);
+            completeLogin(false, user.uid);
         } else if (resp.status === 404) { // new user
             if (!name || !birthday) { // show complete registration
                 setIsLoading(false);
@@ -81,12 +96,12 @@ export default function LoginPage() {
                 })
                 const data = await resp.json();
                 const photo = user.photoURL ?? "avatar1";
-                
+
                 updateProfile(user, {
                     displayName: registrationForm.name ?? user.displayName,
                     photoURL: photo
                 }).then(() => {
-                    completeLogin(true);
+                    completeLogin(true, user.uid);
                 }).catch((e) => {
                     setError(e.message);
                     setIsLoading(false);
@@ -216,6 +231,25 @@ export default function LoginPage() {
     const switchAuthMode = () => {
         setError(null)
         setIsLogin(!isLogin)
+    }
+
+    async function subscribeToPush(uid: string) {
+        const registration = await navigator.serviceWorker.ready
+        const sub = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(
+                process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
+            ),
+        })
+        const serializedSub: WebPushSubscription = {
+            endpoint: sub.endpoint,
+            expirationTime: sub.expirationTime,
+            keys: {
+                p256dh: (sub as any).toJSON().keys.p256dh,
+                auth: (sub as any).toJSON().keys.auth,
+            },
+        }
+        await subscribeUser(serializedSub, uid)
     }
 
     if (isLoading) {

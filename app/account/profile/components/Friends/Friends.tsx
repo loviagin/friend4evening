@@ -39,7 +39,7 @@ export default function Friends({ user }: { user: User }) {
             <h1 className={styles.title}>Друзья</h1>
             {friends.length === 0 ? (
                 <div className={styles.emptyState}>
-                    У вас пока нет друзей
+                    Друзей пока нет
                 </div>
             ) : (
                 <div className={styles.friendsGrid}>

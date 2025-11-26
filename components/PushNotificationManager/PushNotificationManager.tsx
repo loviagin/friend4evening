@@ -1,8 +1,9 @@
 'use client'
 
-import { sendNotification, subscribeUser, unsubscribeUser, WebPushSubscription } from '@/app/actions'
+import { subscribeUser, unsubscribeUser, WebPushSubscription } from '@/app/actions'
 import { useState, useEffect } from 'react'
 import styles from './PushNotificationManager.module.css'
+import { useAuth } from '@/app/_providers/AuthProvider'
 
 function urlBase64ToUint8Array(base64String: string) {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -17,12 +18,15 @@ function urlBase64ToUint8Array(base64String: string) {
     return outputArray
 }
 
-export default function PushNotificationManager() {
+export default function PushNotificationManager({
+    sub, setSub
+}: {
+    sub: PushSubscription | null,
+    setSub: (newSab: PushSubscription | null) => void
+}) {
+    const auth = useAuth();
     const [isSupported, setIsSupported] = useState(false)
-    const [subscription, setSubscription] = useState<PushSubscription | null>(
-        null
-    )
-    const [message, setMessage] = useState('')
+    const [subscription, setSubscription] = useState<PushSubscription | null>(null)
 
     useEffect(() => {
         if ('serviceWorker' in navigator && 'PushManager' in window) {
@@ -38,9 +42,12 @@ export default function PushNotificationManager() {
         })
         const sub = await registration.pushManager.getSubscription()
         setSubscription(sub)
+        setSub(sub);
     }
 
     async function subscribeToPush() {
+        if (!auth.user) return
+
         const registration = await navigator.serviceWorker.ready
         const sub = await registration.pushManager.subscribe({
             userVisibleOnly: true,
@@ -48,7 +55,8 @@ export default function PushNotificationManager() {
                 process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
             ),
         })
-        setSubscription(sub)
+        setSubscription(sub);
+        setSub(sub);
         const serializedSub: WebPushSubscription = {
             endpoint: sub.endpoint,
             expirationTime: sub.expirationTime,
@@ -57,20 +65,16 @@ export default function PushNotificationManager() {
                 auth: (sub as any).toJSON().keys.auth,
             },
         }
-        await subscribeUser(serializedSub)
+        await subscribeUser(serializedSub, auth.user.uid)
     }
 
     async function unsubscribeFromPush() {
-        await subscription?.unsubscribe()
-        setSubscription(null)
-        await unsubscribeUser()
-    }
+        if (!auth.user || !subscription) return
 
-    async function sendTestNotification() {
-        if (subscription) {
-            await sendNotification(message)
-            setMessage('')
-        }
+        await subscription?.unsubscribe()
+        setSubscription(null);
+        setSub(null);
+        await unsubscribeUser(auth.user.uid)
     }
 
     if (!isSupported) {
@@ -91,22 +95,6 @@ export default function PushNotificationManager() {
                             Отписаться
                         </button>
                     </div>
-                    {/* <div className={styles.testBlock}>
-                        <div className={styles.inputWrapper}>
-                            <input
-                                type="text"
-                                className={styles.input}
-                                placeholder="Введите сообщение для тестового уведомления"
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                            />
-                        </div>
-                        <div className={styles.testButtonWrapper}>
-                            <button className={styles.button} onClick={sendTestNotification}>
-                                Отправить тест
-                            </button>
-                        </div>
-                    </div> */}
                 </>
             ) : (
                 <div className={styles.settingBlock}>

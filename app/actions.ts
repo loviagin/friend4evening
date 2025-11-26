@@ -1,5 +1,8 @@
 'use server'
 
+import { db } from '@/lib/firebase'
+import { PushSubscription } from '@/models/PushSubscription'
+import { addDoc, collection, deleteDoc, getDocs, query, where } from 'firebase/firestore'
 import webpush from 'web-push'
 
 export type WebPushSubscription = {
@@ -19,37 +22,72 @@ webpush.setVapidDetails(
 
 let subscription: WebPushSubscription | null = null
 
-export async function subscribeUser(sub: WebPushSubscription) {
+/**
+ * 
+ * {
+  endpoint: 'https://web.push.apple.com/QPqTSDur5x9tC-nw1VZ3HHNC5S-r-G0VQSdhM6o7tqxRCwy_odzozwjhV7CbesbeeYIbycVDUBlMwFrHhGengs63ZxJ65m4Kc6idVzWcedLrmjVVYgkcz7-guJQmaW-ZpFns3xtBCX3a4p7Ptbqg7JijRXf903lYlNZTkXRaSgs',
+  expirationTime: null,
+  keys: {
+    p256dh: 'BMB-XrexQO0eRMzVfH4dW5VCc2dytkr3b_MOprmWJSJX0ombeUX285ohWQH5i3NvVT8GYQOL4hqO-Sd9VVt0Fms',
+    auth: 'IKSyMOSM6-JsT-EZE6B3tg'
+  }
+  }
+ */
+export async function subscribeUser(sub: WebPushSubscription, userId: string) {
   subscription = sub
-  // In a production environment, you would want to store the subscription in a database
-  // For example: await db.subscriptions.create({ data: sub })
+
+  const pushSubscription: PushSubscription = {
+    createdAt: new Date(),
+    ...sub
+  }
+
+  await addDoc(collection(db, "users", userId, "devices"), pushSubscription);
+
   return { success: true }
 }
 
-export async function unsubscribeUser() {
+export async function unsubscribeUser(userId: string) {
+  if (!subscription) return;
+
+  const q = query(collection(db, "users", userId, "devices"), where('endpoint', '==', subscription.endpoint))
+  const snap = await getDocs(q);
+  await Promise.all(snap.docs.map(d => deleteDoc(d.ref)))
+
   subscription = null
-  // In a production environment, you would want to remove the subscription from the database
-  // For example: await db.subscriptions.delete({ where: { ... } })
+
   return { success: true }
 }
 
-export async function sendNotification(message: string) {
-  if (!subscription) {
-    throw new Error('No subscription available')
+export async function sendNotificationToUser(userId: string, message: string) {
+  const snap = await getDocs(collection(db, 'users', userId, 'devices'))
+
+  console.log("sending notification for", userId, message)
+  if (snap.empty) {
+    return { success: false, error: 'No subscriptions for this user' }
   }
 
-  try {
-    await webpush.sendNotification(
-      subscription as unknown as webpush.PushSubscription,
-      JSON.stringify({
-        title: 'Friends4Evening',
-        body: message,
-        icon: '/icon.png',
-      })
-    )
-    return { success: true }
-  } catch (error) {
-    console.error('Error sending push notification:', error)
-    return { success: false, error: 'Failed to send notification' }
-  }
+  const payload = JSON.stringify({
+    title: 'Friend4Evening',
+    body: message,
+    icon: '/icon.png',
+  })
+
+  const results = await Promise.all(
+    snap.docs.map(async (docSnap) => {
+      const subData = docSnap.data() as WebPushSubscription
+      try {
+        await webpush.sendNotification(subData, payload)
+        console.log("NOTE SENT")
+        return { ok: true }
+      } catch (err: any) {
+        if (err?.statusCode === 410 || err?.statusCode === 404) {
+          await deleteDoc(docSnap.ref)
+        }
+        return { ok: false, error: err?.message }
+      }
+    })
+  )
+
+  const anyOk = results.some(r => r.ok)
+  return { success: anyOk, results }
 }

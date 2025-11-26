@@ -5,13 +5,43 @@ import { tags, User } from '@/models/User';
 import { useAuth } from '@/app/_providers/AuthProvider';
 import ShareProfile from './components/ShareProfile/ShareProfile';
 import Dropdown from '@/components/Dropdown/Dropdown';
+import { sendNotificationToUser } from '@/app/actions';
+import { useEffect, useState } from 'react';
 
 type HeroProps = {
     user: User | null,
 }
 
+enum FriendType {
+    none, waiting, friends
+}
+
 export default function HeroProfile({ user }: HeroProps) {
     const auth = useAuth();
+    const [isFriends, setIsFriends] = useState<FriendType>(FriendType.none);
+
+    useEffect(() => {
+        const fetchFriends = async (uid: string, userId: string) => {
+            const r = await fetch(`/api/users/${uid}/friend/check`, {
+                method: 'POST',
+                body: JSON.stringify({ userId: userId })
+            })
+
+            if (r.status === 404) {
+                setIsFriends(FriendType.none)
+            } else if (r.status === 200) {
+                setIsFriends(FriendType.friends)
+            } else if (r.status === 409) {
+                setIsFriends(FriendType.waiting)
+            }
+        }
+
+        if (user && auth.user && user.friends && user.friends.includes(auth.user.uid)) {
+            setIsFriends(FriendType.friends)
+        } else if (user && auth.user) {
+            fetchFriends(auth.user.uid, user.id)
+        }
+    }, [auth])
 
     const pluralizeYears = (age: number) => {
         const mod10 = age % 10;
@@ -42,18 +72,35 @@ export default function HeroProfile({ user }: HeroProps) {
 
     const handleFriendAppend = async () => {
         if (!user || !auth.user) return
+        setIsFriends(FriendType.waiting)
         const response = await fetch(`/api/users/${auth.user.uid}/friend`, {
             method: "POST",
             body: JSON.stringify({ userId: user.id })
         })
         const data = await response.json();
         if (response.status === 409) {
+            setIsFriends(FriendType.waiting)
             alert("Заявка уже отправлена. Дождитесь ответа")
+        } else if (response.status === 202) {
+            alert("Вы стали друзьями!")
+            setIsFriends(FriendType.friends)
+            sendNotificationTo(user.id, "Подтверждена заявка на дружбу")
         } else if (response.status === 200) {
             alert("Заявка успешно отправлена")
+            sendNotificationTo(user.id, "У вас новая заявка в друзья")
         } else {
+            setIsFriends(FriendType.none)
             alert("Ошибка отправки заявки в друзья")
         }
+    }
+
+    async function sendNotificationTo(userId: string, message: string) {
+        if (!auth.user) {
+            console.log("AUTH USER IS NULL")
+            return
+        }
+        console.log("SENDING>>>")
+        await sendNotificationToUser(userId, message)
     }
 
     const handleTagChange = async (tag: string) => {
@@ -112,11 +159,13 @@ export default function HeroProfile({ user }: HeroProps) {
                             <>
                                 <button className={styles.button}>Предложить встречу</button>
                                 <button className={styles.button}>Написать сообщение</button>
-                                {user.friends && user.friends.includes(auth.user?.uid) ? (
+                                {isFriends === FriendType.friends ? (
                                     <button className={styles.buttonSecondary}>Вы друзья</button>
+                                ) : (isFriends === FriendType.waiting ? (
+                                    <button className={styles.buttonSecondary}>Заявка отправлена</button>
                                 ) : (
                                     <button className={styles.buttonSecondary} onClick={handleFriendAppend}>Заявка в друзья</button>
-                                )}
+                                ))}
                             </>
                         }
 
@@ -126,6 +175,6 @@ export default function HeroProfile({ user }: HeroProps) {
                     </div>
                 </div>
             </section>
-        </section>
+        </section >
     )
 }
