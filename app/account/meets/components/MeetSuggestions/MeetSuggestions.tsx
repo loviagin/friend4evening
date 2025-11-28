@@ -5,17 +5,15 @@ import { useAuth } from '@/app/_providers/AuthProvider';
 import { Meet } from '@/models/Meet';
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
-import { AiOutlineClose, AiOutlineStar, AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
-import { FaWineBottle } from 'react-icons/fa';
-import { MeetType, MeetTypeLabels } from '@/models/User';
-import { ages } from '@/app/account/meets/components/Meets/Meets';
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import MeetFullCard from '@/components/MeetFullCard/MeetFullCard';
 
 export default function MeetSuggestions() {
     const auth = useAuth();
     const [similarMeets, setSimilarMeets] = useState<Meet[]>([]);
     const userInteractedRef = useRef(false);
     const clearTimeoutRef = useRef<(() => void) | null>(null);
-    
+
     const [sliderRef, instanceRef] = useKeenSlider({
         loop: true,
         slides: {
@@ -148,45 +146,8 @@ export default function MeetSuggestions() {
                             <AiOutlineLeft />
                         </button>
                         <div ref={sliderRef} className={`keen-slider ${styles.slider}`}>
-                            {similarMeets.map((meet, i) => (
-                                <div key={meet.id} className={`keen-slider__slide ${styles.slide}`}>
-                                    <div className={styles.slideCard}>
-                                        <div className={styles.slideHeader}>
-                                            <div className={styles.starIcon}>
-                                                <AiOutlineStar />
-                                            </div>
-                                            <div className={styles.slideTitleRow}>
-                                                <h3 className={styles.slideTitle}>{meet.title}</h3>
-                                                <span className={styles.slideDate}>{new Date(meet.date).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
-                                            </div>
-                                        </div>
-                                        {meet.description !== null && meet.description && (
-                                            <p className={styles.slideDescription}>{meet.description}</p>
-                                        )}
-                                        <div className={styles.slideInfo}>
-                                            {meet.location && (
-                                                <div className={styles.slideInfoItem}>
-                                                    <span>🌆</span>
-                                                    <span>{meet.location}</span>
-                                                    {meet.noAlcohol === true && (
-                                                        <span className={styles.noAlcoholIcon} title="Не употребляю алкоголь">
-                                                            <FaWineBottle />
-                                                            <AiOutlineClose className={styles.noAlcoholCross} />
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            )}
-                                            <div className={styles.slideInfoItem}>
-                                                {ages.findLast((a) => a.key === meet.ageRange)?.label && (
-                                                    <span>{ages.findLast((a) => a.key === meet.ageRange)?.label} лет</span>
-                                                )}
-                                                {meet.duration !== null && <span> • {meet.duration}</span>}
-                                                {meet.membersCount !== null && <span> • До {meet.membersCount} человек</span>}
-                                                {meet.meetType !== null && <span> • {MeetTypeLabels[meet.meetType as MeetType]}</span>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            {similarMeets.map((meet) => (
+                                <MeetFullCard key={meet.id} meet={meet} />
                             ))}
                         </div>
                         <button

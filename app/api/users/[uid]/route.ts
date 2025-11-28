@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
     }
 
     let u = await getDoc(doc(db, "users", uid));
-    const data = u!.data();
+    const data = u.data();
     if (!data) {
         return NextResponse.json({ message: "User not found" }, { status: 400 });
     }
