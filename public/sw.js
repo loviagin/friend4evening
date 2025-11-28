@@ -18,5 +18,23 @@ self.addEventListener('push', function (event) {
 self.addEventListener('notificationclick', function (event) {
   console.log('Notification click received.')
   event.notification.close()
-  event.waitUntil(clients.openWindow('https://f4e.io/account/notifications'))
+
+  const targetUrl = 'https://f4e.io/account/notifications'
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
+      for (const client of clientList) {
+        const url = new URL(client.url)
+
+        if (url.origin === self.location.origin) {
+          if (url.pathname !== '/account/notifications') {
+            client.navigate(targetUrl)
+          }
+          return client.focus()
+        }
+      }
+
+      return clients.openWindow(targetUrl)
+    })
+  )
 })

@@ -1,18 +1,13 @@
 "use client";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import Link from "next/link";
 import Avatar from "../Avatar/Avatar";
 
 export default function Header() {
-    const router = useRouter();
     const pathname = usePathname();
     const { user } = useAuth();
-
-    const handleAccountClick = () => {
-        router.push('/account/profile')
-    }
 
     return (
         <header className={styles.header}>
@@ -35,7 +30,7 @@ export default function Header() {
                         </ul>
                     </>
                 }
-                <button onClick={handleAccountClick} className={styles.accountButton}>
+                <Link href={'/account/profile'} className={styles.accountButton}>
                     {user?.photoURL ? (
                         <div className={styles.avatar}>
                             <Avatar avatarUrl={user.photoURL} />
@@ -47,7 +42,7 @@ export default function Header() {
                         </svg>
                     )}
                     <span>{user?.displayName ?? "Аккаунт"}</span>
-                </button>
+                </Link>
             </nav>
         </header>
     );

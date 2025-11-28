@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'F4E - друзья на вечер',
     short_name: 'F4E',
     description: 'Поиск друзей на вечера по фильтрам',
-    start_url: '/account',
+    start_url: '/account/meets',
     display: 'standalone',
     background_color: '#ffffff',
     theme_color: '#000000',
