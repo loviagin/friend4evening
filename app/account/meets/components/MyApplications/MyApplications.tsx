@@ -40,8 +40,14 @@ export default function MyApplications() {
         }
     }, [auth]);
 
+    const handleDeleteMeet = (id: string) => {
+        setApplications((prev) => ([
+            ...prev.filter((m) => m.id !== id)
+        ]))
+    }
+
     if (loading) {
-        return(
+        return (
             <LoadingView />
         )
     }
@@ -55,7 +61,7 @@ export default function MyApplications() {
             ) : (
                 <div className={styles.applicationsGrid}>
                     {applications.map((ap) => (
-                        <MeetCard key={ap.id} application={ap} />
+                        <MeetCard key={ap.id} application={ap} onDelete={handleDeleteMeet} />
                     ))}
                 </div>
             )}

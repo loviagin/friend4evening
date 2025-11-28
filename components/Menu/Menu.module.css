@@ -1,0 +1,88 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: var(--background);
+  border: 1px solid var(--blue);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--blue);
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background: var(--blue);
+  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.3);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.arrow {
+  font-size: 0.875rem;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.menu {
+  position: fixed;
+  background: var(--background);
+  border: 1px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  padding: 0.5rem 0;
+  box-shadow: 0 10px 30px rgba(70, 108, 149, 0.15);
+  z-index: 99999;
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: 150px;
+}
+
+.menuItem {
+  display: block;
+  width: 100%;
+  padding: 0.625rem 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.menuItem:hover {
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.1) 0%, rgba(93, 174, 139, 0.1) 100%);
+  color: var(--blue);
+}
+
+.menuItem:active {
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.15) 0%, rgba(93, 174, 139, 0.15) 100%);
+}
+
+@media (max-width: 768px) {
+  .button {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8125rem;
+  }
+
+  .menuItem {
+    padding: 0.5625rem 0.875rem;
+    font-size: 0.8125rem;
+  }
+}
+

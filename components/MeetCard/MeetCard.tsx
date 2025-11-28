@@ -3,8 +3,10 @@ import styles from './MeetCard.module.css'
 import { AiOutlineMenu, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { Menu, MenuItem } from "../Menu/Menu";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function MeetCard({ application }: { application: Meet }) {
+export default function MeetCard({ application, onDelete }: { application: Meet, onDelete: (id: string) => void }) {
+    const router = useRouter();
 
     const formatDate = (date: Date) => {
         const d = new Date(date);
@@ -15,6 +17,19 @@ export default function MeetCard({ application }: { application: Meet }) {
         const minutes = String(d.getMinutes()).padStart(2, '0');
         return `${day}.${month}.${year} ${hours}:${minutes}`;
     };
+
+    const handleDelete = async () => {
+        if (window.confirm("Вы уверены, что хотите удалить эту встречу?")) {
+            onDelete(application.id);
+            const r = await fetch(`/api/meets/one/${application.id}`, {
+                method: 'DELETE'
+            })
+
+            if (r.status === 200) {
+                console.log("OK Deletion of meet")
+            }
+        }
+    }
 
     return (
         <div className={styles.applicationCard}>
@@ -27,26 +42,24 @@ export default function MeetCard({ application }: { application: Meet }) {
                         {application.type === 'open' ? 'Публичная' : 'Закрытая'}
                     </span>
                 </div>
-                <Link href={`meets/${application.id}`} >
-                    {application.title && (
-                        <h3 className={styles.cardTitle}>{application.title}</h3>
-                    )}
-                </Link>
+                <div className={styles.titleRow}>
+                    <Link href={`meets/${application.id}`} target="_blank" className={styles.titleLink}>
+                        {application.title && (
+                            <h3 className={styles.cardTitle}>{application.title}</h3>
+                        )}
+                    </Link>
+                    <Menu
+                        label={
+                            <>
+                                <AiOutlineMenu />
+                            </>
+                        }
+                    >
+                        <MenuItem onSelect={() => router.push(`/account/meets/${application.id}`)}>Редактировать</MenuItem>
+                        <MenuItem onSelect={handleDelete}>Удалить</MenuItem>
+                    </Menu>
+                </div>
             </div>
-
-            {/* MENU */}
-            {/* <div>
-                <Menu
-                    label={
-                        <>
-                            <AiOutlineMenu />
-                        </>
-                    }
-                >
-                    <MenuItem >Редактировать</MenuItem>
-                    <MenuItem >Удалить</MenuItem>
-                </Menu>
-            </div> */}
 
             <div className={styles.cardBody}>
                 {application.description && (

@@ -1,0 +1,14 @@
+{
+  "Common": {
+    "appName": "Friend4Evening",
+    "menu": {
+      "searchMeets": "Find a meet",
+      "myApplications": "Meets & applications"
+    }
+  },
+  "Account": {
+    "title": "Account",
+    "login": "Log in",
+    "logout": "Log out"
+  }
+}
