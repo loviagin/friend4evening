@@ -6,7 +6,7 @@ export type Meet = {
     membersCount: number | null,
     noAlcohol: boolean,
     ageRange: string | null,
-    blocked: string | null,
+    blocked: boolean,
     title: string,
     description: string | null,
     type: string,

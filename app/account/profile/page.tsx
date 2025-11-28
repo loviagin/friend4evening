@@ -21,19 +21,6 @@ enum ProfileTab {
     general, edit, settings, admin, friends
 }
 
-function urlBase64ToUint8Array(base64String: string) {
-    const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
-    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')
-
-    const rawData = window.atob(base64)
-    const outputArray = new Uint8Array(rawData.length)
-
-    for (let i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i)
-    }
-    return outputArray
-}
-
 export default function AccountProfile() {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -129,7 +116,7 @@ export default function AccountProfile() {
             break;
     }
 
-    if (user?.blocked && user.blocked !== undefined) {
+    if (user && user.blocked === true) {
         return (
             <>
                 <BlockedProfile />
@@ -147,7 +134,7 @@ export default function AccountProfile() {
             </div>
             <hr className={styles.divider} />
 
-            {subscription === null && showSubscription === true && (
+            {showSubscription === true && subscription === null && (
                 <div className={styles.subscriptionOffer}>
                     <button className={styles.closeButton} onClick={handleCloseSubscriptionOffer}>
                         <AiOutlineCloseCircle />
@@ -208,4 +195,17 @@ export default function AccountProfile() {
             </section>
         </main>
     );
+}
+
+function urlBase64ToUint8Array(base64String: string) {
+    const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')
+
+    const rawData = window.atob(base64)
+    const outputArray = new Uint8Array(rawData.length)
+
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i)
+    }
+    return outputArray
 }

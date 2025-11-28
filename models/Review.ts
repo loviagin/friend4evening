@@ -5,5 +5,5 @@ export type Review = {
     rating: number,
     text: string,
     date: Date,
-    blocked: string | null
+    blocked: boolean
 }

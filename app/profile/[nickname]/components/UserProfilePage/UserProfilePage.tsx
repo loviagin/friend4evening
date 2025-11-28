@@ -46,7 +46,7 @@ export default function UserProfilePage({ nickname }: Props) {
             break;
     }
 
-    if (user?.blocked && user.blocked !== undefined) {
+    if (user && user.blocked === true) {
         return (
             <BlockedProfile />
         )

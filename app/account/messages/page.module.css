@@ -1,3 +1,80 @@
 .container {
-    padding: 80px;
+  min-height: calc(100vh - 80px);
+  padding: calc(80px + 2rem) 2rem 5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.chatsLayout {
+  display: flex;
+  gap: 0;
+  height: calc(100vh - 80px - 4rem);
+  background: var(--background);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(70, 108, 149, 0.1);
+  overflow: hidden;
+}
+
+.chatListContainer {
+  width: 400px;
+  border-right: 2px solid rgba(70, 108, 149, 0.2);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.chatWindowContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.emptyChatState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: rgba(70, 108, 149, 0.6);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: calc(80px + 1rem) 0 0;
+    height: calc(100vh - 80px);
+  }
+
+  .chatsLayout {
+    height: calc(100vh - 80px);
+    border-radius: 0;
+    flex-direction: row;
+  }
+
+  .chatListContainer {
+    width: 100%;
+    min-width: 100%;
+    transform: translateX(0);
+  }
+
+  .chatListHidden {
+    transform: translateX(-100%);
+  }
+
+  .chatWindowContainer {
+    width: 100%;
+    min-width: 100%;
+    transform: translateX(0);
+  }
+
+  .chatWindowVisible {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: calc(80px + 0.5rem) 0 0;
+  }
 }

@@ -26,7 +26,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
     const age = getAge(user.birthday);
 
     // query 
-    const q = query(collection(db, "meets"), where("status", "==", "plan"), where("type", "==", "open"));
+    const q = query(collection(db, "meets"), where("status", "==", "plan"), where("type", "==", "open"), where("blocked", "==", false));
     const allMeets = await getDocs(q);
     const readyMeets: Meet[] = []
 
@@ -36,9 +36,6 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
         d1.createdAt = (d1['createdAt'] as Timestamp).toDate();
 
         const meet = d1 as Meet;
-
-        // blocked
-        if (meet.blocked) continue;
 
         // members limit
         if (meet.membersCount && meet.members.filter(f => f.status === "approved").length >= meet.membersCount) continue;

@@ -4,12 +4,6 @@ import { randomUUID } from "crypto";
 import { collection, doc, getDocs, setDoc, Timestamp } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
-export type MeetsDTO = {
-    members: string[],
-    date: Date,
-    status: MeetStatus,
-}
-
 //CREATE NEW MEET 
 export async function POST(req: NextRequest) {
     const data = await req.json();
@@ -38,7 +32,8 @@ export async function POST(req: NextRequest) {
         type: application.type,
         date: Timestamp.fromDate(new Date(application.date)),
         duration: application.duration === "" ? null : application.duration,
-        createdAt: Timestamp.fromDate(new Date())
+        createdAt: Timestamp.fromDate(new Date()),
+        blocked: false,
     }
 
     await setDoc(newDoc, newApplication);

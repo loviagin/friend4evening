@@ -80,6 +80,7 @@ export async function POST(req: NextRequest) {
             birthday: birthday ? Timestamp.fromDate(new Date(birthday)) : Timestamp.fromDate(new Date()),
             dateRegistered: Timestamp.fromDate(new Date()),
             tags: ["user"],
+            blocked: false,
         };
 
         await setDoc(doc(db, "users", newUser.id), newUser);

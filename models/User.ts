@@ -20,7 +20,7 @@ export type User = {
     friends: string[],
     tag: string | null,
     blockedUsers: string[] | null,
-    blocked: string | null,
+    blocked: boolean,
     tags: string[],
 }
 

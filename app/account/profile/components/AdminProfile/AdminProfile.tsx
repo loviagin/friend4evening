@@ -41,7 +41,7 @@ export default function AdminProfile() {
 
         if (resp.status === 200) {
             const us1 = users.filter((u) => u.id === userId);
-            us1[0].blocked = "Admin blocked"
+            us1[0].blocked = true
             setUsers((prev) => ([...prev.map((us) => us.id === userId ? us1[0] : us)]))
         }
     }
@@ -55,7 +55,7 @@ export default function AdminProfile() {
 
         if (resp.status === 200) {
             const us1 = users.filter((u) => u.id === userId);
-            us1[0].blocked = null
+            us1[0].blocked = false
             setUsers((prev) => ([...prev.map((us) => us.id === userId ? us1[0] : us)]))
         }
     }
@@ -95,7 +95,7 @@ export default function AdminProfile() {
                         )}
 
                         <div className={styles.userActions}>
-                            {user.blocked && user.blocked !== undefined ? (
+                            {user.blocked === true ? (
                                 <button
                                     className={styles.buttonUnblock}
                                     onClick={() => handleUnblock(user.id)}

@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
         rating: review.rating,
         text: review.text,
         date: new Date(),
-        blocked: null
+        blocked: false
     }
     console.log(newReview)
 

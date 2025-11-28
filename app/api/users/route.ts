@@ -28,19 +28,15 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-    const documents = await getDocs(collection(db, "users"));
+    const q = query(collection(db, "users"), where("blocked", "==", false))
+    const documents = await getDocs(q);
 
     if (!documents) {
         return NextResponse.json({ message: "Documents not found" }, { status: 400 });
     }
 
-    const users = documents.docs.map((u) => {
+    const users = documents.docs.flatMap((u) => {
         const user = u.data()
-
-        if (user.blocked != null) {      // <- обратное условие, != ловит и null, и undefined
-            console.log("SKIP blocked", user.id);
-            return null;
-        }
 
         const b = user["birthday"] as Timestamp
         user["birthday"] = b.toDate();
@@ -50,7 +46,6 @@ export async function GET() {
 
         return user;
     })
-        .filter((u): u is typeof u & {} => u !== null)
         .sort((a, b) => {
             // 1. Сортировка по наличию city
             const hasCityA = Boolean(a.location?.city);

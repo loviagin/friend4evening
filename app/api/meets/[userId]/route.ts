@@ -10,17 +10,12 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
         return NextResponse.json({ message: "User Id is required" }, { status: 403 });
     }
 
-    const q = query(collection(db, "meets"), where("ownerId", "==", userId));
+    const q = query(collection(db, "meets"), where("ownerId", "==", userId), where("blocked", "==", false));
     const documents = await getDocs(q);
 
     if (documents.docs.length > 0) {
-        const meets = documents.docs.map((ap) => {
+        const meets = documents.docs.flatMap((ap) => {
             const application = ap.data()
-
-            if (application.blocked != null) {
-                console.log("SKIP blocked", application.id);
-                return null;
-            }
 
             const time = application['date'] as Timestamp
             const created = application['createdAt'] as Timestamp
@@ -29,7 +24,6 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
 
             return application;
         })
-            .filter((u): u is typeof u & {} => u !== null)
             .sort((a, b) => {
                 const dateA = new Date(a.date as any).getTime();
                 const dateB = new Date(b.date as any).getTime();

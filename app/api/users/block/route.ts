@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     if (d.docs.length === 1) {
         await updateDoc(doc(db, "users", userId), {
-            "blocked": "Admin blocked"
+            "blocked": true
         })
         return NextResponse.json({ userId: userId }, { status: 200 })
     } else {
