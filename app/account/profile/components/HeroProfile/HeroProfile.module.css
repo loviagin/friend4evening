@@ -1,21 +1,3 @@
-.title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  color: var(--blue);
-  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.divider {
-  height: 1px;
-  background: rgba(70, 108, 149, 0.2);
-  border: none;
-  margin: 2rem 0;
-}
-
 /* Hero Section */
 .hero {
   display: flex;
@@ -178,11 +160,6 @@
 }
 
 @media (max-width: 768px) {
-  .title {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-  }
-
   .hero {
     flex-direction: column;
     align-items: center;

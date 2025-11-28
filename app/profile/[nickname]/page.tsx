@@ -26,6 +26,9 @@ export default async function UserProfile({ params }: { params: Promise<{ nickna
 
     return (
         <main className={styles.container}>
+            <h1 className={styles.title}>Профиль</h1>
+            <hr className={styles.divider} />
+            
             <UserProfilePage nickname={nickname} />
         </main>
     )

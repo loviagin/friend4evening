@@ -15,10 +15,18 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uid
     const d = await getDocs(q);
     if (d.docs.length > 0) {
         const data = d.docs[0].data();
-        if (data['status'] && data['status'] === 'WAITING') {
-            return NextResponse.json({ message: "Waiting" }, { status: 409 })
-        } else {
-            return NextResponse.json({ message: "Friends" }, { status: 200 })
+        console.log(data)
+        if (data['status']) {
+            if (data['status'] === 'WAITING') {
+                console.log("WAITING")
+                return NextResponse.json({ message: "Waiting" }, { status: 409 })
+            } else if (data['status'] === 'APPROVED') {
+                console.log("APPROVED")
+                return NextResponse.json({ message: "Friends" }, { status: 200 })
+            } else if (data['status'] === 'DECLINED') {
+                console.log("DECLINED")
+                return NextResponse.json({ message: "Not friend" }, { status: 404 })
+            }
         }
     }
 

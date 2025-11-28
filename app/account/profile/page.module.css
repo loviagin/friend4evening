@@ -5,6 +5,53 @@
   margin: 0 auto;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--blue);
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.notificationsLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  font-size: 1.75rem;
+  color: var(--blue);
+  background: var(--background);
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.notificationsLink:hover {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(70, 108, 149, 0.3);
+}
+
+.notificationsLink:active {
+  transform: translateY(0);
+}
+
 .divider {
   height: 1px;
   background: rgba(70, 108, 149, 0.2);
@@ -189,6 +236,21 @@
     padding: calc(80px + 1rem) 1rem 3rem;
   }
 
+  .header {
+    margin-bottom: 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  .notificationsLink {
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+  }
+
   .navigation {
     justify-content: flex-start;
     overflow-x: auto;
@@ -363,6 +425,20 @@
 @media (max-width: 480px) {
   .container {
     padding: calc(80px + 0.75rem) 0.75rem 2rem;
+  }
+
+  .header {
+    margin-bottom: 1.25rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .notificationsLink {
+    width: 40px;
+    height: 40px;
+    font-size: 1.375rem;
   }
 
   .content {

@@ -14,6 +14,8 @@ import AdminProfile from './components/AdminProfile/AdminProfile';
 import Friends from './components/Friends/Friends';
 import { AiOutlineCloseCircle, AiOutlineNotification } from 'react-icons/ai';
 import { subscribeUser, WebPushSubscription } from '@/app/actions';
+import Link from 'next/link';
+import { IoIosNotifications } from 'react-icons/io';
 
 enum ProfileTab {
     general, edit, settings, admin, friends
@@ -74,6 +76,7 @@ export default function AccountProfile() {
                 setTab(ProfileTab.general);
             }
 
+            console.log("TAB", cTab)
             router.push('#profile-content');
         }
     }, []);
@@ -136,6 +139,14 @@ export default function AccountProfile() {
 
     return (
         <main className={styles.container}>
+            <div className={styles.header}>
+                <h1 className={styles.title}>Профиль</h1>
+                <Link href={'/account/notifications'} className={styles.notificationsLink}>
+                    <IoIosNotifications />
+                </Link>
+            </div>
+            <hr className={styles.divider} />
+
             {subscription === null && showSubscription === true && (
                 <div className={styles.subscriptionOffer}>
                     <button className={styles.closeButton} onClick={handleCloseSubscriptionOffer}>

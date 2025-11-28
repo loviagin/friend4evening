@@ -7,6 +7,7 @@ import ShareProfile from './components/ShareProfile/ShareProfile';
 import Dropdown from '@/components/Dropdown/Dropdown';
 import { sendNotificationToUser } from '@/app/actions';
 import { useEffect, useState } from 'react';
+import { NotificationDTO } from '@/app/api/notifications/[userId]/route';
 
 type HeroProps = {
     user: User | null,
@@ -30,10 +31,13 @@ export default function HeroProfile({ user }: HeroProps) {
 
             if (r.status === 404) {
                 setIsFriends(FriendType.none)
+                console.log("NONE")
             } else if (r.status === 200) {
                 setIsFriends(FriendType.friends)
+                console.log("FRIENDS")
             } else if (r.status === 409) {
                 setIsFriends(FriendType.waiting)
+                console.log("WAITING")
             }
         }
 
@@ -92,13 +96,30 @@ export default function HeroProfile({ user }: HeroProps) {
             alert("Вы стали друзьями!")
             setIsFriends(FriendType.friends)
             sendNotificationTo(user.id, "Подтверждена заявка на дружбу")
+            sendNotification("Новый друг", "У вас появился новый друг", "friends")
         } else if (response.status === 200) {
             alert("Заявка успешно отправлена")
             sendNotificationTo(user.id, "У вас новая заявка в друзья")
+            sendNotification("Проверьте заявку в друзья", "Пользователь хочет стать Вашим другом", "friend-request")
         } else {
             setIsFriends(FriendType.none)
             alert("Ошибка отправки заявки в друзья")
         }
+    }
+
+    const sendNotification = async (title: string, description: string, type: string) => {
+        if (!auth.user) return
+        const data: NotificationDTO = {
+            type,
+            title,
+            description,
+            senderId: auth.user?.uid
+        }
+
+        const r = await fetch(`/api/notifications/${user?.id}`, {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
     }
 
     const handleFriendDelete = async () => {
@@ -146,8 +167,6 @@ export default function HeroProfile({ user }: HeroProps) {
 
     return (
         <section>
-            <h1 className={styles.title}>Профиль</h1>
-            <hr className={styles.divider} />
             {/* hero */}
             <section className={styles.hero}>
                 {/* left block */}
