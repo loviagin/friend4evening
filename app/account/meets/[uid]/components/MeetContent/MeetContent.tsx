@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import styles from "./MeetContent.module.css";
 import Participants from "./components/Participants/Participants";
 import Settings from "./components/Settings/Settings";
+import General from "./components/General/General";
 
 enum MeetTab {
     general,
@@ -44,10 +45,14 @@ export default function MeetContent({ uid }: { uid: string }) {
         )
     }
 
+    // const handleStatusChange = (newStatus: MeetStatus) => {
+    //     setMeet({ ...meet, status: newStatus });
+    // };
+
     let content;
     switch (tab) {
         case MeetTab.general:
-            content = <MeetFullCard meet={meet} />;
+            content = <General meet={meet} />;
             break;
         case MeetTab.participants:
             content = <Participants meet={meet} />;

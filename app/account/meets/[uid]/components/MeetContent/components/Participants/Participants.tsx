@@ -59,8 +59,6 @@ export default function Participants({ meet }: { meet: Meet }) {
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}>Участники</h2>
-
             {participants.length > 0 && (
                 <div className={styles.section}>
                     <h3 className={styles.sectionTitle}>

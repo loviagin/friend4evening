@@ -1,46 +1,191 @@
 .container {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label span {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  opacity: 0.9;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  background: var(--background);
+  color: var(--foreground);
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(70, 108, 149, 0.1);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.saveButton {
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.saveButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(70, 108, 149, 0.3);
+}
+
+.saveButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.deleteSection {
+  padding: 2rem;
+  background: rgba(220, 53, 69, 0.05);
+  border: 2px solid rgba(220, 53, 69, 0.2);
+  border-radius: 15px;
+  margin-top: 2rem;
+}
+
+.deleteDescription {
+  font-size: 0.9375rem;
+  color: var(--foreground);
+  opacity: 0.7;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.6;
+}
+
+.deleteButton {
+  padding: 0.875rem 2rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  background: rgba(220, 53, 69, 0.1);
+  color: rgba(220, 53, 69, 0.9);
+  border: 2px solid rgba(220, 53, 69, 0.3);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: rgba(220, 53, 69, 0.2);
+  border-color: rgba(220, 53, 69, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(220, 53, 69, 0.3);
+}
+
+.deleteButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.deleteButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .form {
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .input,
+  .textarea {
+    padding: 0.875rem 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .saveButton {
+    padding: 0.875rem 2rem;
+    font-size: 0.9375rem;
     width: 100%;
   }
-  
-  .title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin: 0 0 2rem 0;
-    color: var(--blue);
-    background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+
+  .deleteSection {
+    padding: 1.5rem;
+    margin-top: 1.5rem;
   }
-  
-  .content {
-    padding: 1rem 0;
+
+  .deleteDescription {
+    font-size: 0.875rem;
   }
-  
-  .placeholder {
-    padding: 2rem;
-    text-align: center;
-    color: var(--foreground);
-    opacity: 0.6;
-    font-size: 1.125rem;
+
+  .deleteButton {
+    width: 100%;
+    padding: 0.875rem 1.75rem;
   }
-  
-  @media (max-width: 768px) {
-    .title {
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
+}
+
+@media (max-width: 480px) {
+  .form {
+    gap: 1.25rem;
   }
-  
-  @media (max-width: 480px) {
-    .title {
-      font-size: 1.375rem;
-      margin-bottom: 1.25rem;
-    }
-  
-    .placeholder {
-      padding: 1.5rem;
-      font-size: 1rem;
-    }
+
+  .label span {
+    font-size: 0.9375rem;
   }
-  
+
+  .input,
+  .textarea {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.875rem;
+    border-radius: 12px;
+  }
+
+  .deleteSection {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .deleteDescription {
+    font-size: 0.8125rem;
+  }
+}

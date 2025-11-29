@@ -1,9 +1,10 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './page.module.css'
 import Meets from './components/Meets/Meets';
 import CreateMeetPortal from './components/CreateMeetPortal/CreateMeetPortal';
 import MyApplications from './components/MyApplications/MyApplications';
+import { useSearchParams } from 'next/navigation';
 
 enum MeetsPageType {
     meets = "Поиск встречи",
@@ -11,7 +12,18 @@ enum MeetsPageType {
 }
 
 export default function AccountMeets() {
+    const searchParams = useSearchParams();
     const [currentTab, setCurrentTab] = useState<MeetsPageType>(MeetsPageType.meets);
+
+    useEffect(() => {
+        if (searchParams.get('tab')) {
+            if(searchParams.get('tab') === 'meets') {
+                setCurrentTab(MeetsPageType.myApplications);
+            } else if(searchParams.get('tab') === 'search') {
+                setCurrentTab(MeetsPageType.meets);
+            }
+        }
+    }, [searchParams]);
 
     let content;
     switch (currentTab) {

@@ -42,7 +42,7 @@ export default function MeetCard({ application, onDelete }: { application: Meet,
                         {MeetStatusLabels[application.status]}
                     </span>
                     <span className={`${styles.typeBadge} ${application.type === 'open' ? styles.typeOpen : styles.typeClosed}`}>
-                        {application.type === 'open' ? 'Публичная' : 'Закрытая'}
+                        {application.type === 'open' ? 'Публичная' : 'Личная'}
                     </span>
                 </div>
                 <div className={styles.titleRow}>
