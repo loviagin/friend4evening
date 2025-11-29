@@ -44,7 +44,7 @@ export async function GET() {
 }
 
 async function sendEmailAndSiteNotification(id: string, userId: string, description: string, meet: Meet) {
-  const ref = doc(db, "users", userId, "notifications");
+  const ref = doc(collection(db, "users", userId, "notifications"));
 
   const notification: Notification = {
     id: ref.id,
