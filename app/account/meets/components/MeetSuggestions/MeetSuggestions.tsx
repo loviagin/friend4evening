@@ -131,39 +131,45 @@ export default function MeetSuggestions() {
             {similarMeets && similarMeets.length > 0 && (
                 <section className={styles.similarMeetsSection}>
                     <div className={styles.sliderWrapper}>
-                        <button
-                            className={`${styles.sliderArrow} ${styles.sliderArrowLeft}`}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                userInteractedRef.current = true;
-                                if (clearTimeoutRef.current) {
-                                    clearTimeoutRef.current();
-                                }
-                                instanceRef.current?.prev();
-                            }}
-                            aria-label="Previous slide"
-                        >
-                            <AiOutlineLeft />
-                        </button>
+                        {similarMeets.length > 1 && (
+                            <button
+                                className={`${styles.sliderArrow} ${styles.sliderArrowLeft}`}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    userInteractedRef.current = true;
+                                    if (clearTimeoutRef.current) {
+                                        clearTimeoutRef.current();
+                                    }
+                                    instanceRef.current?.prev();
+                                }}
+                                aria-label="Previous slide"
+                            >
+                                <AiOutlineLeft />
+                            </button>
+                        )}
+
                         <div ref={sliderRef} className={`keen-slider ${styles.slider}`}>
                             {similarMeets.map((meet) => (
                                 <MeetFullCard key={meet.id} meet={meet} />
                             ))}
                         </div>
-                        <button
-                            className={`${styles.sliderArrow} ${styles.sliderArrowRight}`}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                userInteractedRef.current = true;
-                                if (clearTimeoutRef.current) {
-                                    clearTimeoutRef.current();
-                                }
-                                instanceRef.current?.next();
-                            }}
-                            aria-label="Next slide"
-                        >
-                            <AiOutlineRight />
-                        </button>
+
+                        {similarMeets.length > 1 && (
+                            <button
+                                className={`${styles.sliderArrow} ${styles.sliderArrowRight}`}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    userInteractedRef.current = true;
+                                    if (clearTimeoutRef.current) {
+                                        clearTimeoutRef.current();
+                                    }
+                                    instanceRef.current?.next();
+                                }}
+                                aria-label="Next slide"
+                            >
+                                <AiOutlineRight />
+                            </button>
+                        )}
                     </div>
                 </section>
             )}

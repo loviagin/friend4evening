@@ -63,10 +63,14 @@ export default function GeneralProfile({ user }: Props) {
         const fetchCurrentUser = async () => {
             if (!auth.user?.uid) return
             const response = await fetch(`/api/users/${auth.user.uid}`);
-            const data = await response.json();
 
-            if (response.status !== 400) {
-                setBlockedUsers(data as string[] ?? []);
+            if (response.status === 200) {
+                const data = await response.json();
+
+                const d = data['blockedUsers']
+                console.log("DEBUG", d)
+                setBlockedUsers(d ?? []);
+                console.log(blockedUsers)
             } else {
                 console.log("error fetch blocked users");
             }
@@ -205,7 +209,7 @@ export default function GeneralProfile({ user }: Props) {
                         <div className={styles.statisticNumber}>{statisticDTO.meetsCount}</div>
                         <p className={styles.statisticLabel}>Всего встреч</p>
                     </div>
-            
+
                     <div className={styles.statisticItem}>
                         <div className={styles.statisticNumber}>{statisticDTO.friendsCount}</div>
                         <p className={styles.statisticLabel}>Друзей в сервисе</p>

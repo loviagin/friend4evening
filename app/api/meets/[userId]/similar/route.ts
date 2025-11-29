@@ -36,6 +36,10 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
         d1.createdAt = (d1['createdAt'] as Timestamp).toDate();
 
         const meet = d1 as Meet;
+        // console.log(user)
+
+        //onwer of meet is in block list
+        if (user.blockedUsers && user.blockedUsers !== null && user.blockedUsers.length > 0 && user.blockedUsers.includes(meet.ownerId)) continue;
 
         // members limit
         if (meet.membersCount && meet.members.filter(f => f.status === "approved").length >= meet.membersCount) continue;
