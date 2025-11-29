@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase";
-import { arrayUnion, collection, deleteDoc, doc, getDocs, or, query, updateDoc, where } from "firebase/firestore";
+import { arrayRemove, collection, deleteDoc, doc, getDocs, or, query, updateDoc, where } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ uid: string }> }) {
@@ -20,10 +20,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uid
         await deleteDoc(d.docs[0].ref)
 
         await updateDoc(doc(db, "users", uid), {
-            'friends': arrayUnion(userId)
+            'friends': arrayRemove(userId)
         })
         await updateDoc(doc(db, "users", userId), {
-            'friends': arrayUnion(uid)
+            'friends': arrayRemove(uid)
         })
 
         return NextResponse.json({ message: "Success" }, { status: 200 })

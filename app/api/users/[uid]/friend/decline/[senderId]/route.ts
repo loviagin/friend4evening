@@ -21,11 +21,12 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
             "status": "DECLINED"
         });
 
-        if (d2.docs.length === 1) {
-            await updateDoc(d2.docs[0].ref, {
+        d2.docs.forEach(async (r) => {
+            console.log("UPDATED NOTIFICATION")
+            await updateDoc(r.ref, {
                 "type": "friend-request-processed"
             });
-        }
+        })
 
         return NextResponse.redirect("https://f4e.io/account/profile", 307);
     } else {
@@ -52,11 +53,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uid
             "status": "DECLINED"
         });
 
-        if (d2.docs.length === 1) {
-            await updateDoc(d2.docs[0].ref, {
-                "type": "notification"
+        d2.docs.forEach(async (r) => {
+            console.log("UPDATED NOTIFICATION")
+            await updateDoc(r.ref, {
+                "type": "friend-request-processed"
             });
-        }
+        })
 
         return NextResponse.json({ message: "Ok" }, { status: 200 })
     } else {

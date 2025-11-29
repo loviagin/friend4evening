@@ -30,12 +30,13 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
             "status": "APPROVED"
         });
 
-        if (d2.docs.length === 1) {
-            await updateDoc(d2.docs[0].ref, {
-                "type": "notification"
+        d2.docs.forEach(async (r) => {
+            console.log("UPDATED NOTIFICATION")
+            await updateDoc(r.ref, {
+                "type": "friend-request-processed"
             });
-        }
-
+        })
+        
         return NextResponse.redirect("https://f4e.io/account/profile?tab=friends", 307);
     } else {
         return NextResponse.json({ message: "Not found" }, { status: 404 })
@@ -60,7 +61,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uid
 
     const q = query(collection(db, "friends"), where("senderId", "==", senderId), where("status", "==", "WAITING"))
     const q2 = query(collection(db, "users", uid, "notifications"), where("type", "==", "friend-request"), where("senderId", "==", senderId))
-    
+
     const d = await getDocs(q);
     const d2 = await getDocs(q2);
 
@@ -70,11 +71,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uid
             "status": "APPROVED"
         });
 
-        if (d2.docs.length === 1) {
-            await updateDoc(d2.docs[0].ref, {
+        d2.docs.forEach(async (r) => {
+            console.log("UPDATED NOTIFICATION")
+            await updateDoc(r.ref, {
                 "type": "friend-request-processed"
             });
-        }
+        })
 
         return NextResponse.json({ message: "Ok" }, { status: 200 })
     } else {
