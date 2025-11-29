@@ -3,9 +3,17 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 const INTERNAL_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
+const PUBLIC_API_ROUTES = [
+    /^\/api\/users\/[^/]+\/friend\/accept\/[^/]+$/,
+    /^\/api\/users\/[^/]+\/friend\/decline\/[^/]+$/,
+]
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl
+
+    if (PUBLIC_API_ROUTES.some((re) => re.test(pathname))) {
+        return NextResponse.next()
+    }
 
     if (pathname.startsWith('/api/')) {
         const authHeader = request.headers.get('authorization') ?? ''
