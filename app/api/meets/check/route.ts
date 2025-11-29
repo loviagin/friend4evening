@@ -43,7 +43,7 @@ export async function GET() {
   return NextResponse.json({ ok: true });
 }
 
-async function sendEmailAndSiteNotification(id: string, userId: string, description: string, meet: Meet) {
+async function sendEmailAndSiteNotification(id: string, userId: string, description: string, meet: any) {
   const ref = doc(collection(db, "users", userId, "notifications"));
 
   const notification: Notification = {
@@ -69,7 +69,7 @@ async function sendEmailAndSiteNotification(id: string, userId: string, descript
       userName: u.name,
       meetId: meet.id,
       meetTitle: meet.title,
-      meetDate: meet.date,
+      meetDate: (meet.date as Timestamp).toDate(),
       meetLocation: meet.location,
       meetDescription: meet.description
     })
