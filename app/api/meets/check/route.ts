@@ -16,7 +16,8 @@ export async function GET() {
   const q = query(
     collection(db, "meets"),
     where("status", "==", "plan"),
-    where("blocked", "==", false)
+    where("blocked", "==", false),
+    where("notificationDayBeforeSent", "==", false)
   );
 
   const docs = await getDocs(q);
@@ -29,12 +30,13 @@ export async function GET() {
       for (const m of meet.members) {
         await sendNotificationToUser(m.userId, `Встреча "${meet.title}" уже завтра`);
 
-        if (m !== meet.ownerId) {
-          await sendEmailAndSiteNotification(meet.id, m, "Откройте встречу, чтобы уточнить время, место и другую информацию", meet as Meet);
+        if (m.userId !== meet.ownerId) {
+          await sendEmailAndSiteNotification(meet.id, m.userId, "Откройте встречу, чтобы уточнить время, место и другую информацию", meet as Meet);
         }
       }
 
       await sendEmailAndSiteNotification(meet.id, meet.ownerId, "Выберете участников, если еще не выбрали", meet as Meet);
+      await updateDoc(docSnap.ref, { notificationDayBeforeSent: true });
     }
   }
 

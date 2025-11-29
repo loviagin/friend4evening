@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
         duration: application.duration === "" ? null : application.duration,
         createdAt: Timestamp.fromDate(new Date()),
         blocked: false,
+        notificationDayBeforeSent: false
     }
 
     await setDoc(newDoc, newApplication);

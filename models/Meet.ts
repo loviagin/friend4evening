@@ -14,7 +14,8 @@ export type Meet = {
     date: Date,
     duration: string | null,
     status: MeetStatus,
-    createdAt: Date
+    createdAt: Date,
+    notificationDayBeforeSent: boolean
 }
 
 export type ApplicationMember = {
