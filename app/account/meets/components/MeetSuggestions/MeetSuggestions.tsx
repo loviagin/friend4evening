@@ -108,7 +108,11 @@ export default function MeetSuggestions() {
 
     useEffect(() => {
         const fetchSimilarMeets = async (userId: string) => {
-            const r = await fetch(`/api/meets/${userId}/similar`);
+            const r = await fetch(`/api/meets/${userId}/similar`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            });
 
             if (r.status === 200) {
                 const data = await r.json();

@@ -14,7 +14,11 @@ export default function Friends({ user }: { user: User }) {
 
             setFriends([]);
             ids.forEach(async (i) => {
-                const r = await fetch(`/api/users/${i}`)
+                const r = await fetch(`/api/users/${i}`, {
+                    headers: {
+                        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                    },
+                })
 
                 if (r.status === 200) {
                     const d = await r.json();
@@ -43,9 +47,9 @@ export default function Friends({ user }: { user: User }) {
                 </div>
             ) : (
                 <div className={styles.friendsGrid}>
-            {friends.map((friend) => (
-                <UserCard key={friend.id} user={friend} />
-            ))}
+                    {friends.map((friend) => (
+                        <UserCard key={friend.id} user={friend} />
+                    ))}
                 </div>
             )}
         </main>

@@ -35,7 +35,11 @@ export default function GeneralProfile({ user }: Props) {
     useEffect(() => {
         console.log("Loading reviews");
         const fetchReviews = async (id: string) => {
-            const response = await fetch(`/api/reviews/${id}`)
+            const response = await fetch(`/api/reviews/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            })
             const data = await response.json();
 
             if (response.status === 200) {
@@ -47,7 +51,11 @@ export default function GeneralProfile({ user }: Props) {
         }
 
         const fetchMeetsCount = async (id: string) => {
-            const response = await fetch(`/api/meets/${id}/count`);
+            const response = await fetch(`/api/meets/${id}/count`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            });
             const data = await response.json();
 
             if (response.status === 200) {
@@ -62,7 +70,11 @@ export default function GeneralProfile({ user }: Props) {
 
         const fetchCurrentUser = async () => {
             if (!auth.user?.uid) return
-            const response = await fetch(`/api/users/${auth.user.uid}`);
+            const response = await fetch(`/api/users/${auth.user.uid}`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            });
 
             if (response.status === 200) {
                 const data = await response.json();
@@ -102,6 +114,9 @@ export default function GeneralProfile({ user }: Props) {
 
         const response = await fetch(`/api/users/${auth.user.uid}/block`, {
             method: "POST",
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify({ userId: user.id })
         });
 
@@ -120,6 +135,9 @@ export default function GeneralProfile({ user }: Props) {
 
         const response = await fetch(`/api/users/${auth.user.uid}/unblock`, {
             method: "POST",
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify({ userId: user.id })
         });
 

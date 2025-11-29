@@ -15,7 +15,11 @@ export default function UserReview({ review }: Props) {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const response = await fetch(`/api/users/${review.reviewerId}`);
+            const response = await fetch(`/api/users/${review.reviewerId}`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            });
             const data = await response.json();
 
             if (response.status !== 400) {

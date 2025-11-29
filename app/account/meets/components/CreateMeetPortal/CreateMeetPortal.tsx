@@ -84,6 +84,9 @@ export function CreateMeetContent({ close }: Props) {
 
         const response = await fetch(`/api/meets`, {
             method: "POST",
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify({
                 ...form,
                 type: 'open',

@@ -22,7 +22,10 @@ export default function MeetCard({ application, onDelete }: { application: Meet,
         if (window.confirm("Вы уверены, что хотите удалить эту встречу?")) {
             onDelete(application.id);
             const r = await fetch(`/api/meets/one/${application.id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
             })
 
             if (r.status === 200) {

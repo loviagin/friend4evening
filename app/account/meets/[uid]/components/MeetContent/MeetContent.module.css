@@ -1,0 +1,110 @@
+.container {
+  width: 100%;
+  padding: 0;
+}
+
+.cardWrapper {
+  margin-bottom: 2rem;
+}
+
+/* Navigation Section */
+.navigation {
+  display: flex;
+  gap: 0;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  border-bottom: 2px solid rgba(70, 108, 149, 0.2);
+  position: relative;
+}
+
+.navButton {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: transparent;
+  color: rgba(70, 108, 149, 0.6);
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  position: relative;
+  margin-bottom: -2px;
+}
+
+.navButton:hover {
+  color: var(--blue);
+  background: rgba(70, 108, 149, 0.05);
+}
+
+.navButton:active {
+  transform: none;
+}
+
+.navButtonActive {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+  background: transparent;
+}
+
+.navButtonActive:hover {
+  color: var(--blue);
+  background: rgba(70, 108, 149, 0.05);
+}
+
+/* Content Section */
+.content {
+  padding: 2.5rem;
+  background: var(--background);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(70, 108, 149, 0.1);
+}
+
+.tabContent {
+  padding: 1rem 0;
+  color: var(--foreground);
+}
+
+@media (max-width: 768px) {
+  .cardWrapper {
+    margin-bottom: 1.5rem;
+  }
+
+  .navigation {
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .content {
+    padding: 2rem 1rem;
+  }
+
+  .navButton {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardWrapper {
+    margin-bottom: 1.25rem;
+  }
+
+  .content {
+    padding: 1.5rem 0.75rem;
+    border-radius: 15px;
+  }
+
+  .navigation {
+    margin-bottom: 1.5rem;
+    gap: 0;
+  }
+
+  .navButton {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+}

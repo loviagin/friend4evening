@@ -25,7 +25,11 @@ export default function ChatList({ chats, selectedChatId, onChatSelect }: ChatLi
 
             const userPromises = Array.from(userIds).map(async (userId) => {
                 try {
-                    const r = await fetch(`/api/users/${userId}`);
+                    const r = await fetch(`/api/users/${userId}`, {
+                        headers: {
+                            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                        },
+                    });
                     if (r.status === 200) {
                         const user = await r.json() as User;
                         return [userId, user] as [string, User];

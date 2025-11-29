@@ -18,13 +18,17 @@ type Props = {
 }
 
 export default function UserProfilePage({ nickname }: Props) {
-    const [user, setUser] = useState<User|null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [tab, setTab] = useState<ProfileTab>(ProfileTab.general);
 
     useEffect(() => {
         if (nickname) {
             const fetchUserByNickname = async () => {
-                const response = await fetch(`/api/profile/${nickname}`)
+                const response = await fetch(`/api/profile/${nickname}`, {
+                    headers: {
+                        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                    },
+                })
                 const data = await response.json();
                 console.log(data["user"] as User);
                 setUser(data["user"] as User);

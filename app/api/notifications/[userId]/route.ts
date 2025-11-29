@@ -91,7 +91,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ use
     }
 
     if (notification.type === "friends" || notification.type === "friend-request") {
-        const r = await fetch(`${base}/api/users/${notification.senderId}`)
+        const r = await fetch(`${base}/api/users/${notification.senderId}`, {
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
+        })
         const d = await r.json();
         newNotification.url = d['nickname']
     }

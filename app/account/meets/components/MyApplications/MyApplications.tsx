@@ -14,7 +14,11 @@ export default function MyApplications() {
 
     useEffect(() => {
         const fetchApplications = async (userId: string) => {
-            const resp = await fetch(`/api/meets/${userId}`);
+            const resp = await fetch(`/api/meets/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            });
             const data = await resp.json();
 
             if (resp.status === 200) {
@@ -24,7 +28,11 @@ export default function MyApplications() {
         }
 
         const checkIfMeetInPast = async (userId: string) => {
-            const resp = await fetch(`/api/meets/${userId}/check`);
+            const resp = await fetch(`/api/meets/${userId}/check`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            });
 
             if (resp.status === 200) {
                 const data = await resp.json();

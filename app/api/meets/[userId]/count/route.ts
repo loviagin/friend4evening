@@ -9,7 +9,11 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
     }
 
     const base = req.nextUrl.origin;
-    const response = await fetch(`${base}/api/meets/${userId}`);
+    const response = await fetch(`${base}/api/meets/${userId}`, {
+        headers: {
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+        },
+    });
     const data = await response.json();
 
     if (response.status === 200) {

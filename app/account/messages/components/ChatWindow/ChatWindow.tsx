@@ -24,17 +24,25 @@ export default function ChatWindow({ chatId, onBack }: ChatWindowProps) {
         const fetchChatData = async () => {
             try {
                 // TODO: Заменить на реальный API endpoint
-                const r = await fetch(`/api/messages/chat/${chatId}`);
-                
+                const r = await fetch(`/api/messages/chat/${chatId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                    },
+                });
+
                 if (r.status === 200) {
                     const data = await r.json();
                     setMessages(data.messages || []);
-                    
+
                     // Получаем информацию о другом участнике
                     if (data.participants && auth.user) {
                         const otherId = data.participants.find((id: string) => id !== auth.user?.uid);
                         if (otherId) {
-                            const userR = await fetch(`/api/users/${otherId}`);
+                            const userR = await fetch(`/api/users/${otherId}`, {
+                                headers: {
+                                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                                },
+                            });
                             if (userR.status === 200) {
                                 const user = await userR.json() as User;
                                 setOtherUser(user);
@@ -66,8 +74,8 @@ export default function ChatWindow({ chatId, onBack }: ChatWindowProps) {
         //     const r = await fetch(`/api/messages/chat/${chatId}/send`, {
         //         method: 'POST',
         //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
+        // 'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+        //                 },
         //         body: JSON.stringify({
         //             text: newMessage.trim(),
         //             senderId: auth.user.uid,
@@ -76,8 +84,8 @@ export default function ChatWindow({ chatId, onBack }: ChatWindowProps) {
 
         //     if (r.status === 200) {
         //         const message = await r.json();
-                // setMessages(prev => [...prev, Message()]);
-                // setNewMessage('');
+        // setMessages(prev => [...prev, Message()]);
+        // setNewMessage('');
         //     }
         // } catch (error) {
         //     console.error("Failed to send message", error);

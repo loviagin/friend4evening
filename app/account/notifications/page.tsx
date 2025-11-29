@@ -15,7 +15,11 @@ export default function Notifications() {
 
     useEffect(() => {
         const fetchNotification = async (userId: string) => {
-            const r = await fetch(`/api/notifications/${userId}`)
+            const r = await fetch(`/api/notifications/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            })
 
             if (r.status === 200) {
                 const data = await r.json()
@@ -36,7 +40,10 @@ export default function Notifications() {
         if (!auth.user) return
         setLoading(true)
         const r = await fetch(`/api/users/${auth.user.uid}/friend/accept/${notification.senderId}`, {
-            method: "POST"
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
         })
 
         setNotifications((prev) => ([
@@ -60,7 +67,10 @@ export default function Notifications() {
         if (!auth.user) return
         setLoading(true)
         const r = await fetch(`/api/users/${auth.user.uid}/friend/decline/${notification.senderId}`, {
-            method: "POST"
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
         })
 
         setNotifications((prev) => ([

@@ -1,3 +1,18 @@
 .container {
-    margin: 10rem;
+  min-height: calc(100vh - 80px);
+  padding: calc(80px + 2rem) 2rem 5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: calc(80px + 1rem) 1rem 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: calc(80px + 0.75rem) 0.75rem 2rem;
+  }
 }

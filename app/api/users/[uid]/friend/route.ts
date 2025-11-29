@@ -41,8 +41,16 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uid
     }
     await setDoc(ref, newFriend);
 
-    const response = await fetch(`${base}/api/users/${uid}`);
-    const response2 = await fetch(`${base}/api/users/${userId}`);
+    const response = await fetch(`${base}/api/users/${uid}`, {
+        headers: {
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+        },
+    });
+    const response2 = await fetch(`${base}/api/users/${userId}`, {
+        headers: {
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+        },
+    });
     const u = await response.json() as User
     const u2 = await response2.json() as User
 
@@ -60,6 +68,9 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uid
 
         const resp = await fetch(`${base}/api/email`, {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify({
                 to: [u2.email],
                 subject: "Новая заявка в друзья",

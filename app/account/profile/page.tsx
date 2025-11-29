@@ -33,7 +33,11 @@ export default function AccountProfile() {
     useEffect(() => {
         const fetchUser = async () => {
             console.log("uid", auth.currentUser?.uid);
-            const response = await fetch(`/api/users/${auth.currentUser?.uid}`)
+            const response = await fetch(`/api/users/${auth.currentUser?.uid}`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            })
             const data = await response.json();
             setUser(data as User);
             console.log("data", data);

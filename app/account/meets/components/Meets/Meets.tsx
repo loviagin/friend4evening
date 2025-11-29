@@ -55,7 +55,11 @@ export default function Meets() {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const resp = await fetch('/api/users');
+            const resp = await fetch('/api/users', {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            });
             const data = await resp.json()
 
             if (resp.status === 200) {
@@ -68,7 +72,11 @@ export default function Meets() {
         }
 
         const fetchCities = async () => {
-            const resp = await fetch('/api/cities');
+            const resp = await fetch('/api/cities', {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            });
             const data = await resp.json()
 
             if (resp.status === 200) {

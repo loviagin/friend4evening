@@ -26,6 +26,9 @@ export default function HeroProfile({ user }: HeroProps) {
         const fetchFriends = async (uid: string, userId: string) => {
             const r = await fetch(`/api/users/${uid}/friend/check`, {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
                 body: JSON.stringify({ userId: userId })
             })
 
@@ -86,6 +89,9 @@ export default function HeroProfile({ user }: HeroProps) {
         setIsFriends(FriendType.waiting)
         const response = await fetch(`/api/users/${auth.user.uid}/friend`, {
             method: "POST",
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify({ userId: user.id })
         })
         const data = await response.json();
@@ -118,6 +124,9 @@ export default function HeroProfile({ user }: HeroProps) {
 
         const r = await fetch(`/api/notifications/${user?.id}`, {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify(data)
         })
     }
@@ -130,6 +139,9 @@ export default function HeroProfile({ user }: HeroProps) {
 
             const response = await fetch(`/api/users/${auth.user.uid}/unfriend`, {
                 method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
                 body: JSON.stringify({ userId: user.id })
             })
 
@@ -154,6 +166,9 @@ export default function HeroProfile({ user }: HeroProps) {
         setStatus(tag);
         const resp = await fetch(`/api/users/${user?.id}/tags`, {
             method: "POST",
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify({ tag })
         })
 
@@ -176,7 +191,7 @@ export default function HeroProfile({ user }: HeroProps) {
                 {/* right block */}
                 <div className={styles.infoBlock}>
                     <div className={styles.nameBlock}>
-                        <h3>{user?.name.length !== 0 ? user?.name : "Имя не задано"}</h3>
+                        <h3>{user?.name && user.name.length !== 0 ? user?.name : "Имя не задано"}</h3>
                         {user?.tags && user.tags.includes("verified") && (
                             <img src={'/verified.webp'} className={styles.verifiedBadge} alt="Verified" />
                         )}

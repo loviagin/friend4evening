@@ -98,7 +98,11 @@ export default function EditProfile({ user }: Props) {
     const checkNickname = async (value: string, completion: () => void) => {
         if (value !== user.nickname) {
             if (nicknames.length === 0) {
-                const response = await fetch('/api/users/nicknames')
+                const response = await fetch('/api/users/nicknames', {
+                    headers: {
+                        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                    },
+                })
                 const data = await response.json();
                 setNicknames(data["nicknames"]);
             }
@@ -118,6 +122,9 @@ export default function EditProfile({ user }: Props) {
     const sendForm = async () => {
         const response = await fetch(`/api/profile/edit/${user.id}`, {
             method: "POST",
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify(form)
         })
 

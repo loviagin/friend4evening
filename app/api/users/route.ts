@@ -35,39 +35,38 @@ export async function GET() {
         return NextResponse.json({ message: "Documents not found" }, { status: 400 });
     }
 
-    const users = documents.docs.flatMap((u) => {
+    const users: User[] = []
+    for (const u of documents.docs) {
         const user = u.data()
 
-        const b = user["birthday"] as Timestamp
-        user["birthday"] = b.toDate();
-        console.log(user["birthday"]);
-        const r = user["dateRegistered"] as Timestamp
-        user["dateRegistered"] = r.toDate();
+        user["birthday"] = (user["birthday"] as Timestamp).toDate()
+        user["dateRegistered"] = (user["dateRegistered"] as Timestamp).toDate()
 
-        return user;
-    })
-        .sort((a, b) => {
-            // 1. Сортировка по наличию city
-            const hasCityA = Boolean(a.location?.city);
-            const hasCityB = Boolean(b.location?.city);
+        users.push(user as User);
+    }
 
-            if (hasCityA && !hasCityB) return -1;
-            if (!hasCityA && hasCityB) return 1;
+    users.sort((a, b) => {
+        // 1. Сортировка по наличию city
+        const hasCityA = Boolean(a.location?.city);
+        const hasCityB = Boolean(b.location?.city);
 
-            // 2. Сортировка по bio: сначала непустые
-            const hasBioA = Boolean(a.bio && a.bio.trim().length > 0);
-            const hasBioB = Boolean(b.bio && b.bio.trim().length > 0);
+        if (hasCityA && !hasCityB) return -1;
+        if (!hasCityA && hasCityB) return 1;
 
-            if (hasBioA && !hasBioB) return -1;
-            if (!hasBioA && hasBioB) return 1;
+        // 2. Сортировка по bio: сначала непустые
+        const hasBioA = Boolean(a.bio && a.bio.trim().length > 0);
+        const hasBioB = Boolean(b.bio && b.bio.trim().length > 0);
 
-            // 3. Альфавитная сортировка по bio (если обе есть)
-            if (hasBioA && hasBioB) {
-                return a.bio!.localeCompare(b.bio!);
-            }
+        if (hasBioA && !hasBioB) return -1;
+        if (!hasBioA && hasBioB) return 1;
 
-            return 0;
-        });
+        // 3. Альфавитная сортировка по bio (если обе есть)
+        if (hasBioA && hasBioB) {
+            return a.bio!.localeCompare(b.bio!);
+        }
+
+        return 0;
+    });
 
     return NextResponse.json({ users: users }, { status: 200 });
 }

@@ -27,6 +27,7 @@ export type ApplicationMember = {
 export enum ApplicationMemberStatus {
     approved = "approved",
     waiting = "waiting",
+    invited = "invited",
     declined = "declined"
 }
 

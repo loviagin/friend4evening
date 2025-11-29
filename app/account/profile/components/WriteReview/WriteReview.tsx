@@ -25,7 +25,11 @@ export default function WriteReview({ reviewerId, userId }: Props) {
 
     useEffect(() => {
         const fetchReviewAllowance = async () => {
-            const response = await fetch(`/api/meets/${reviewerId}/completed/${userId}`);
+            const response = await fetch(`/api/meets/${reviewerId}/completed/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            });
             const data = await response.json();
 
             if (response.status === 200) {
@@ -44,6 +48,9 @@ export default function WriteReview({ reviewerId, userId }: Props) {
 
         const response = await fetch('/api/reviews', {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify({ ...form, reviewerId, userId })
         })
         const data = await response.json();

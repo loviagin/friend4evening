@@ -54,7 +54,11 @@ export default function LoginPage() {
 
     useEffect(() => {
         const fetchDeviceType = async () => {
-            const response = await fetch('/api/device/os');
+            const response = await fetch('/api/device/os', {
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
+            });
             const data = await response.json();
             console.log(response, data);
             if (data.message === 'mobile' || data.message === 'tablet') {
@@ -79,6 +83,9 @@ export default function LoginPage() {
         setIsLoading(true);
         const resp = await fetch('/api/auth/check', {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify({ id: user.uid, email })
         })
 
@@ -92,6 +99,9 @@ export default function LoginPage() {
             } else {
                 const resp = await fetch('/api/users/register', {
                     method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                    },
                     body: JSON.stringify({ id: user.uid, email, name, avatarUrl, provider, passwordHash, birthday })
                 })
                 const data = await resp.json();

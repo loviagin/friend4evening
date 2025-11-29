@@ -31,8 +31,12 @@ export default function AccountMessages() {
         const fetchChats = async (userId: string) => {
             try {
                 // TODO: Заменить на реальный API endpoint
-                const r = await fetch(`/api/messages/${userId}/chats`);
-                
+                const r = await fetch(`/api/messages/${userId}/chats`, {
+                    headers: {
+                        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                    },
+                });
+
                 if (r.status === 200) {
                     const data = await r.json();
                     const chatsData = (data.chats || data) as Chat[];
@@ -68,15 +72,15 @@ export default function AccountMessages() {
         <main className={styles.container}>
             <div className={styles.chatsLayout}>
                 <div className={`${styles.chatListContainer} ${selectedChatId ? styles.chatListHidden : ''}`}>
-                    <ChatList 
-                        chats={chats} 
+                    <ChatList
+                        chats={chats}
                         selectedChatId={selectedChatId}
                         onChatSelect={handleChatSelect}
                     />
                 </div>
                 <div className={`${styles.chatWindowContainer} ${selectedChatId ? styles.chatWindowVisible : ''}`}>
                     {selectedChatId ? (
-                        <ChatWindow 
+                        <ChatWindow
                             chatId={selectedChatId}
                             onBack={handleBackToList}
                         />

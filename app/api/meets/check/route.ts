@@ -61,7 +61,11 @@ async function sendEmailAndSiteNotification(id: string, userId: string, descript
     ...notification
   })
 
-  const response2 = await fetch(`${base}/api/users/${userId}`);
+  const response2 = await fetch(`${base}/api/users/${userId}`, {
+    headers: {
+      'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+    },
+  });
   const u = await response2.json() as User
 
   if (u.email) {
@@ -80,6 +84,9 @@ async function sendEmailAndSiteNotification(id: string, userId: string, descript
 
     const resp = await fetch(`${base}/api/email`, {
       method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+      },
       body: JSON.stringify({
         to: [u.email],
         subject: "Скоро запланированная встреча",

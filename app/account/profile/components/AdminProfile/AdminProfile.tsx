@@ -14,6 +14,9 @@ export default function AdminProfile() {
         const fetchUsers = async (id: string) => {
             const resp = await fetch(`/api/users`, {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+                },
                 body: JSON.stringify({ adminId: id })
             })
             const data = await resp.json();
@@ -35,6 +38,9 @@ export default function AdminProfile() {
     const handleBlock = async (userId: string) => {
         const resp = await fetch("/api/users/block", {
             method: "POST",
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify({ adminId: auth.user?.uid, userId })
         })
         const data = await resp.json()
@@ -49,6 +55,9 @@ export default function AdminProfile() {
     const handleUnblock = async (userId: string) => {
         const resp = await fetch("/api/users/unblock", {
             method: "POST",
+            headers: {
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
+            },
             body: JSON.stringify({ adminId: auth.user?.uid, userId })
         })
         const data = await resp.json()
@@ -84,7 +93,7 @@ export default function AdminProfile() {
                             {user?.tags && user.tags.includes("verified") && (
                                 <img src={'/verified.webp'} className={styles.verifiedBadge} alt="Verified" />
                             )}
-                            
+
                             {user.tags && user.tags.includes("admin") && (
                                 <span className={styles.adminBadge}>👑 Admin</span>
                             )}
