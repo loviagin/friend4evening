@@ -156,6 +156,8 @@ export default function Notifications() {
 function createLink(type: string, id: string): string {
     if (type === 'friends' || type === 'friend-request' || type === 'friend-request-processed') {
         return `/profile/${id}`
+    } else if (type === 'meet-soon') {
+        return `/account/meets/${id}`
     }
     return '/'
 }

@@ -68,7 +68,6 @@ export default function AccountMessages() {
         <main className={styles.container}>
             <div className={styles.chatsLayout}>
                 <div className={`${styles.chatListContainer} ${selectedChatId ? styles.chatListHidden : ''}`}>
-                    <p>Здесь будут ваши встречи</p>
                     <ChatList 
                         chats={chats} 
                         selectedChatId={selectedChatId}
