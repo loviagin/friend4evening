@@ -37,7 +37,7 @@ export default function RootLayout({
               (window,document,'script','dataLayer','GTM-PGRKHD3P');
           `}
         </Script>
-        <Script id="yandex-metrika" strategy="afterInteractive">
+        {/* <Script id="yandex-metrika" strategy="afterInteractive">
           {`
             (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
             m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],
@@ -46,9 +46,21 @@ export default function RootLayout({
 
             ym(105573360, "init", {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
           `}
-        </Script>
+        </Script> */}
       </head>
       <body className={`${nunitoFont.variable}`}>
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `
+              <iframe 
+                src="https://www.googletagmanager.com/ns.html?id=GTM-PGRKHD3P"
+                height="0" 
+                width="0" 
+                style="display:none;visibility:hidden">
+              </iframe>
+            `,
+          }}
+        />
         <AuthProvider>
           <Header />
           <AgeGate />
