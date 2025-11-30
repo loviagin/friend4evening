@@ -6,6 +6,7 @@ import { Review } from "@/models/Review"
 import UserReview from "../UserReview/UserReview"
 import WriteReview from "../WriteReview/WriteReview"
 import { useAuth } from "@/app/_providers/AuthProvider"
+import ReportForm from "../ReportForm/ReportForm"
 
 type Props = {
     user: User | null,
@@ -31,6 +32,7 @@ export default function GeneralProfile({ user }: Props) {
     const [reviewDTO, setReviewDTO] = useState<ReviewDTO>({ reviews: [], average: 0 });
     const [blockedUsers, setBlockedUsers] = useState<string[]>([]);
     const [statisticDTO, setStatisticDTO] = useState<StatisticDTO>({ meetsCount: 0, friendsCount: 0, daysFromRegistration: "" });
+    const [showReportForm, setShowReportForm] = useState(false);
 
     useEffect(() => {
         console.log("Loading reviews");
@@ -286,7 +288,15 @@ export default function GeneralProfile({ user }: Props) {
                             )}
                         </>
                     )}
+                    {auth.user && (
+                        <button className={styles.buttonReport} onClick={() => setShowReportForm(true)}>
+                            ⚠️ Пожаловаться
+                        </button>
+                    )}
                 </div>
+            )}
+            {showReportForm && user && (
+                <ReportForm userId={user.id} close={() => setShowReportForm(false)} />
             )}
         </section>
     )

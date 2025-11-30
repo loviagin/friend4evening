@@ -282,6 +282,33 @@
   transform: translateY(0);
 }
 
+.buttonReport {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: transparent;
+  color: var(--orange, #ff8c42);
+  border: 2px solid var(--orange, #ff8c42);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.buttonReport:hover {
+  background: var(--orange, #ff8c42);
+  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 140, 66, 0.3);
+}
+
+.buttonReport:active {
+  transform: translateY(0);
+}
+
 /* Reviews Block */
 .reviewsBlock {
   padding: 1.5rem;
@@ -440,7 +467,8 @@
   }
 
   .buttonBlock,
-  .buttonUnblock {
+  .buttonUnblock,
+  .buttonReport {
     padding: 0.75rem 1.5rem;
     font-size: 0.95rem;
     width: 100%;

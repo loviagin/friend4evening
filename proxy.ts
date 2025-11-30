@@ -8,7 +8,7 @@ const PUBLIC_API_ROUTES = [
     /^\/api\/users\/[^/]+\/friend\/decline\/[^/]+$/,
 ]
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl
 
     if (PUBLIC_API_ROUTES.some((re) => re.test(pathname))) {

@@ -18,7 +18,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
 
     if (response.status === 200) {
         const allMeets = (data["meets"] ?? []) as Meet[];
-        const meets = allMeets.filter((mm) => mm.members.some(member => member.userId === uid))
+        const meets = allMeets.filter((mm) => mm.members.some(member => member.userId === uid && member.status === 'approved'))
         const completed = meets.filter((mm) => mm.status === 'completed')
         return NextResponse.json({ completed: completed.length > 0 }, { status: 200 })
     } else {

@@ -44,7 +44,7 @@ type MeetApplicationProps = {
     title: string,
     description: string,
     location: string,
-    membersCount: number | null,
+    membersCount: string,
     noAlcohol: boolean,
     ageRange: string,
     meetType: string,
@@ -60,7 +60,7 @@ export function CreateMeetContent({ close }: Props) {
         title: "",
         description: "",
         location: "",
-        membersCount: 0,
+        membersCount: "",
         noAlcohol: false,
         ageRange: "none",
         meetType: "none",
@@ -79,7 +79,13 @@ export function CreateMeetContent({ close }: Props) {
         console.log(form);
 
         if (!auth.user) return;
-        if (form.membersCount && form.membersCount < 0) return;
+        
+        // Конвертируем membersCount из строки в number или null
+        const membersCountValue = form.membersCount.trim() === "" 
+            ? null 
+            : parseInt(form.membersCount, 10);
+        
+        if (membersCountValue !== null && membersCountValue < 0) return;
         setLoading(true);
 
         const response = await fetch(`/api/meets`, {
@@ -89,6 +95,7 @@ export function CreateMeetContent({ close }: Props) {
             },
             body: JSON.stringify({
                 ...form,
+                membersCount: membersCountValue,
                 type: 'open',
                 ownerId: auth.user.uid,
                 date: form.date instanceof Date ? form.date.toISOString() : form.date
@@ -169,10 +176,16 @@ export function CreateMeetContent({ close }: Props) {
                                     <label className={styles.label}>
                                         <span>Количество участников</span>
                                         <input
-                                            type="number"
+                                            type="text"
                                             className={styles.input}
-                                            value={form.membersCount ?? 0}
-                                            onChange={(e) => setForm({ ...form, membersCount: parseInt(e.target.value) })}
+                                            value={form.membersCount}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value === "" || /^\d+$/.test(value)) {
+                                                    setForm({ ...form, membersCount: value });
+                                                }
+                                            }}
+                                            placeholder="Не ограничено, если пусто"
                                         />
                                     </label>
                                 </div>
