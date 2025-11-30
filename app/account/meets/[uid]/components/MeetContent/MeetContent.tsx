@@ -2,12 +2,13 @@
 
 import LoadingView from "@/components/LoadingView/LoadingView";
 import MeetFullCard from "@/components/MeetFullCard/MeetFullCard";
-import { Meet } from "@/models/Meet";
+import { ApplicationMember, Meet } from "@/models/Meet";
 import { useEffect, useState } from "react";
 import styles from "./MeetContent.module.css";
 import Participants from "./components/Participants/Participants";
 import Settings from "./components/Settings/Settings";
 import General from "./components/General/General";
+import { useAuth } from "@/app/_providers/AuthProvider";
 
 enum MeetTab {
     general,
@@ -16,12 +17,14 @@ enum MeetTab {
 }
 
 export default function MeetContent({ uid }: { uid: string }) {
+    const auth = useAuth();
     const [meet, setMeet] = useState<Meet | null>(null);
     const [loading, setLoading] = useState(true);
+    const [blocked, setBlocked] = useState<string | null>(null);
     const [tab, setTab] = useState<MeetTab>(MeetTab.general);
 
     useEffect(() => {
-        const fetchMeet = async () => {
+        const fetchMeet = async (userId: string) => {
             const r = await fetch(`/api/meets/one/${uid}`, {
                 headers: {
                     'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
@@ -32,12 +35,25 @@ export default function MeetContent({ uid }: { uid: string }) {
                 const d = await r.json();
                 const meet = d as Meet
                 setMeet(meet);
+
+                if (meet.type === 'closed') {
+                    if (meet.members.filter((m) => m.userId === userId).length === 0) {
+                        setBlocked("not-include")
+                    } else {
+                        const mm = meet.members.filter((m) => m.userId === userId)
+                        if (mm.length > 0 && mm[0].status === 'declined') {
+                            setBlocked("declined")
+                        }
+                    }
+                }
             }
             setLoading(false);
         }
 
-        fetchMeet();
-    }, []);
+        if (auth.user) {
+            fetchMeet(auth.user.uid);
+        }
+    }, [auth]);
 
     if (loading || !meet) {
         return (
@@ -45,9 +61,18 @@ export default function MeetContent({ uid }: { uid: string }) {
         )
     }
 
-    // const handleStatusChange = (newStatus: MeetStatus) => {
-    //     setMeet({ ...meet, status: newStatus });
-    // };
+    if (blocked !== null) {
+        return (
+            <section className={styles.blockedSection}>
+                <div className={styles.blockedContainer}>
+                    <span className={styles.blockedIcon}>🚫</span>
+                    <p className={styles.blockedMessage}>
+                        Извините, Вам не разрешен просмотр этой встречи
+                    </p>
+                </div>
+            </section>
+        )
+    }
 
     let content;
     switch (tab) {
