@@ -34,18 +34,5 @@ export default async function sitemap() {
         });
     });
 
-    // 3. Динамические встречи (автоматически)
-    const q = query(collection(db, "meets"), where("type", "==", "open"))
-    const snap2 = await getDocs(q);
-    const ids = snap2.docs
-        .map(d => d.data().id)
-        .filter((n): n is string => typeof n === "string" && n.length > 0);
-    ids.forEach((id) => {
-        urls.push({
-            url: `https://f4e.io/account/meets/${id}`,
-            lastModified: new Date().toISOString(),
-        });
-    });
-
     return urls;
 }
