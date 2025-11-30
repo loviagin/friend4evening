@@ -17,7 +17,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
     const data = await response.json();
 
     if (response.status === 200) {
-        const allMeets = (data["meets"] ?? []) as Meet[];
+        let allMeets = (data["meets"] ?? []) as Meet[];
+        allMeets = allMeets.filter((m) => m.status === 'completed')
         return NextResponse.json({ count: allMeets.length }, { status: 200 })
     } else {
         return NextResponse.json({ message: "Not found" }, { status: 404 })
