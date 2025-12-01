@@ -14,7 +14,8 @@ export default async function sitemap() {
         "/login",
         "/privacy",
         "/rules",
-        "/contacts"
+        "/contacts",
+        "/apps"
     ];
     staticRoutes.forEach((route) => {
         urls.push({

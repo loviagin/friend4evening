@@ -1,0 +1,382 @@
+.main {
+  padding: calc(80px + 2rem) 2rem 5rem;
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(70, 108, 149, 0.1);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--blue);
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--foreground);
+  opacity: 0.7;
+  line-height: 1.6;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--blue);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(70, 108, 149, 0.2);
+}
+
+.sectionDescription {
+  font-size: 1rem;
+  color: var(--foreground);
+  opacity: 0.8;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.instructionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.instructionCard {
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.05) 0%, rgba(93, 174, 139, 0.05) 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(70, 108, 149, 0.1);
+  transition: all 0.3s ease;
+}
+
+.instructionCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(70, 108, 149, 0.15);
+  border-color: var(--blue);
+}
+
+.instructionHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(70, 108, 149, 0.1);
+}
+
+.platformIcon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  border-radius: 12px;
+  color: var(--background);
+}
+
+.platformIcon .icon {
+  font-size: 1.75rem;
+}
+
+.platformTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--blue);
+  margin: 0;
+}
+
+.stepsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: step-counter;
+}
+
+.step {
+  counter-increment: step-counter;
+  padding-left: 2.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--foreground);
+  opacity: 0.9;
+}
+
+.step::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.step:last-child {
+  margin-bottom: 0;
+}
+
+.buttonHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(70, 108, 149, 0.1);
+  border-radius: 6px;
+  font-weight: 600;
+  color: var(--blue);
+  font-size: 0.9em;
+}
+
+.inlineIcon {
+  font-size: 1em;
+}
+
+.appsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.appCard {
+  padding: 0;
+  background: transparent;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.appCard:hover {
+  transform: translateY(-5px);
+}
+
+.appCardContent {
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.05) 0%, rgba(93, 174, 139, 0.05) 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(70, 108, 149, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.appCard:hover .appCardContent {
+  border-color: var(--blue);
+  box-shadow: 0 10px 30px rgba(70, 108, 149, 0.15);
+}
+
+.appIconWrapper {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  border-radius: 25px;
+  color: var(--background);
+  transition: all 0.3s ease;
+}
+
+.appCard:hover .appIconWrapper {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.appIcon {
+  font-size: 3.5rem;
+}
+
+.appTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--blue);
+}
+
+.appDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--foreground);
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: rgba(255, 118, 118, 0.1);
+  border: 2px solid var(--red);
+  border-radius: 50px;
+  margin-top: 1rem;
+}
+
+.statusText {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--red);
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: calc(80px + 1rem) 1.5rem 3rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .instructionsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .instructionCard {
+    padding: 1.5rem;
+  }
+
+  .platformIcon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .platformIcon .icon {
+    font-size: 1.5rem;
+  }
+
+  .platformTitle {
+    font-size: 1.25rem;
+  }
+
+  .step {
+    font-size: 0.95rem;
+    padding-left: 2.25rem;
+  }
+
+  .appsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .appCardContent {
+    padding: 2rem 1.5rem;
+  }
+
+  .appIconWrapper {
+    width: 80px;
+    height: 80px;
+  }
+
+  .appIcon {
+    font-size: 2.5rem;
+  }
+
+  .appTitle {
+    font-size: 1.25rem;
+  }
+
+  .appDescription {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: calc(80px + 0.75rem) 1rem 2rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .instructionCard {
+    padding: 1.25rem;
+  }
+
+  .platformIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .platformIcon .icon {
+    font-size: 1.25rem;
+  }
+
+  .platformTitle {
+    font-size: 1.125rem;
+  }
+
+  .step {
+    font-size: 0.875rem;
+    padding-left: 2rem;
+  }
+
+  .step::before {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.75rem;
+  }
+
+  .appCardContent {
+    padding: 1.5rem 1rem;
+  }
+
+  .appIconWrapper {
+    width: 70px;
+    height: 70px;
+  }
+
+  .appIcon {
+    font-size: 2rem;
+  }
+
+  .appTitle {
+    font-size: 1.125rem;
+  }
+
+  .appDescription {
+    font-size: 0.875rem;
+  }
+}

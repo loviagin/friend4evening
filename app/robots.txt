@@ -1,6 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /account/meets/
-Disallow: /api/
-
-Sitemap: https://f4e.io/sitemap.xml
