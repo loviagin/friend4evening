@@ -14,6 +14,7 @@ export default function Participants({ meet }: { meet: Meet }) {
     const auth = useAuth();
     const [participants, setParticipants] = useState<UserWithMemberId[]>([]);
     const [waiting, setWaiting] = useState<UserWithMemberId[]>([]);
+    const [invited, setInvited] = useState<UserWithMemberId[]>([]);
     const [loading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState<string | null>(null);
     const isOwner = auth.user?.uid === meet.ownerId;
@@ -22,6 +23,7 @@ export default function Participants({ meet }: { meet: Meet }) {
         const fetchParticipants = async () => {
             const approvedMembers = meet.members.filter(m => m.status === ApplicationMemberStatus.approved);
             const waitingMembers = meet.members.filter(m => m.status === ApplicationMemberStatus.waiting);
+            const invitedMembers = meet.members.filter(m => m.status === ApplicationMemberStatus.invited);
 
             const fetchUsers = async (members: typeof meet.members) => {
                 const userPromises = members.map(async (member) => {
@@ -47,9 +49,11 @@ export default function Participants({ meet }: { meet: Meet }) {
 
             const approvedUsers = await fetchUsers(approvedMembers);
             const waitingUsers = await fetchUsers(waitingMembers);
+            const invitedUsers = await fetchUsers(invitedMembers);
 
             setParticipants(approvedUsers);
             setWaiting(waitingUsers);
+            setInvited(invitedUsers);
             setLoading(false);
         };
 
@@ -98,8 +102,8 @@ export default function Participants({ meet }: { meet: Meet }) {
                     </h3>
                     <div className={styles.grid}>
                         {participants.map((user) => (
-                            <div 
-                                key={user.id} 
+                            <div
+                                key={user.id}
                                 className={`${user.id === meet.ownerId ? styles.ownerWrapper : ''}`}
                             >
                                 {user.id === meet.ownerId && (
@@ -147,6 +151,32 @@ export default function Participants({ meet }: { meet: Meet }) {
                                             disabled={actionLoading === user.memberId}
                                         >
                                             {actionLoading === user.memberId ? 'Отклонение...' : 'Отклонить'}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {invited.length > 0 && (
+                <div className={styles.section}>
+                    <h3 className={styles.sectionTitle}>
+                        Отправлены приглашения ({invited.length})
+                    </h3>
+                    <div className={styles.grid}>
+                        {invited.map((user) => (
+                            <div key={user.id}>
+                                <UserCard user={user} />
+                                {isOwner && user.id !== meet.ownerId && (
+                                    <div className={styles.actions}>
+                                        <button
+                                            className={styles.removeButton}
+                                            onClick={() => handleMemberAction(user.memberId, 'remove')}
+                                            disabled={actionLoading === user.memberId}
+                                        >
+                                            {actionLoading === user.memberId ? 'Удаление...' : 'Удалить'}
                                         </button>
                                     </div>
                                 )}

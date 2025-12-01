@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
         id: newDoc.id,
         ownerId: application.ownerId,
         members: [{ id: randomUUID(), userId: application.ownerId, status: ApplicationMemberStatus.approved }],
+        memberIds: [application.ownerId],
         status: MeetStatus.plan,
         location: application.location,
         membersCount: application.membersCount === 0 ? null : application.membersCount,

@@ -4,8 +4,10 @@ import { AiOutlineMenu, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { Menu, MenuItem } from "../Menu/Menu";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/_providers/AuthProvider";
 
 export default function MeetCard({ application, onDelete }: { application: Meet, onDelete: (id: string) => void }) {
+    const auth = useAuth()
     const router = useRouter();
 
     const formatDate = (date: Date) => {
@@ -51,16 +53,18 @@ export default function MeetCard({ application, onDelete }: { application: Meet,
                             <h3 className={styles.cardTitle}>{application.title}</h3>
                         )}
                     </Link>
-                    <Menu
-                        label={
-                            <>
-                                <AiOutlineMenu />
-                            </>
-                        }
-                    >
-                        <MenuItem onSelect={() => router.push(`/account/meets/${application.id}`)}>Редактировать</MenuItem>
-                        <MenuItem onSelect={handleDelete}>Удалить</MenuItem>
-                    </Menu>
+                    {auth.user && application.ownerId === auth.user.uid && (
+                        <Menu
+                            label={
+                                <>
+                                    <AiOutlineMenu />
+                                </>
+                            }
+                        >
+                            <MenuItem onSelect={() => router.push(`/account/meets/${application.id}`)}>Редактировать</MenuItem>
+                            <MenuItem onSelect={handleDelete}>Удалить</MenuItem>
+                        </Menu>
+                    )}
                 </div>
             </div>
 
@@ -75,7 +79,7 @@ export default function MeetCard({ application, onDelete }: { application: Meet,
                     <div className={styles.infoItem}>
                         <AiOutlineUsergroupAdd className={styles.infoIcon} />
                         <span>{application.members.filter((m) => m.status === "approved").length} / {application.membersCount || '∞'} участников</span>
-                        {application.members.filter((m) => m.status === "waiting").length > 0 && (
+                        {auth.user && application.ownerId === auth.user.uid && application.members.filter((m) => m.status === "waiting").length > 0 && (
                             <span className={styles.waitingBadge}>{application.members.filter((m) => m.status === "waiting").length} ожидает</span>
                         )}
                     </div>

@@ -2,6 +2,7 @@ export type Meet = {
     id: string,
     ownerId: string,
     members: ApplicationMember[],
+    memberIds: string[],
     location: string | null,
     membersCount: number | null,
     noAlcohol: boolean,

@@ -14,7 +14,7 @@ export default function MyApplications() {
 
     useEffect(() => {
         const fetchApplications = async (userId: string) => {
-            const resp = await fetch(`/api/meets/${userId}`, {
+            const resp = await fetch(`/api/meets/${userId}/by/members`, {
                 headers: {
                     'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
                 },

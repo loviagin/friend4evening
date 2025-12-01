@@ -108,12 +108,14 @@ export default function MeetContent({ uid }: { uid: string }) {
                 >
                     Участники
                 </button>
-                <button
-                    className={`${styles.navButton} ${tab === MeetTab.settings ? styles.navButtonActive : ''}`}
-                    onClick={() => setTab(MeetTab.settings)}
-                >
-                    Настройки
-                </button>
+                {auth.user && meet.ownerId === auth.user.uid && (
+                    <button
+                        className={`${styles.navButton} ${tab === MeetTab.settings ? styles.navButtonActive : ''}`}
+                        onClick={() => setTab(MeetTab.settings)}
+                    >
+                        Настройки
+                    </button>
+                )}
             </section>
 
             {/* navigation content */}

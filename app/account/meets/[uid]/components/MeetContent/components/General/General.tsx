@@ -3,8 +3,10 @@
 import { Meet, MeetStatus } from "@/models/Meet";
 import { useState } from "react";
 import styles from "./General.module.css";
+import { useAuth } from "@/app/_providers/AuthProvider";
 
 export default function General({ meet }: { meet: Meet }) {
+    const auth = useAuth();
     const [loading, setLoading] = useState<string | null>(null);
 
     const handleStatusChange = async (newStatus: MeetStatus) => {
@@ -77,29 +79,31 @@ export default function General({ meet }: { meet: Meet }) {
                 </div>
             )}
 
-            <div className={styles.actions}>
-                <button
-                    className={`${styles.actionButton} ${styles.startButton}`}
-                    onClick={() => handleStatusChange(MeetStatus.current)}
-                    disabled={loading !== null}
-                >
-                    {loading === MeetStatus.current ? 'Запуск...' : 'Начать встречу'}
-                </button>
-                <button
-                    className={`${styles.actionButton} ${styles.completeButton}`}
-                    onClick={() => handleStatusChange(MeetStatus.completed)}
-                    disabled={loading !== null}
-                >
-                    {loading === MeetStatus.completed ? 'Завершение...' : 'Завершить встречу'}
-                </button>
-                <button
-                    className={`${styles.actionButton} ${styles.cancelButton}`}
-                    onClick={() => handleStatusChange(MeetStatus.canceled)}
-                    disabled={loading !== null}
-                >
-                    {loading === MeetStatus.canceled ? 'Отмена...' : 'Отменить встречу'}
-                </button>
-            </div>
+            {auth.user && meet.ownerId === auth.user.uid && (
+                <div className={styles.actions}>
+                    <button
+                        className={`${styles.actionButton} ${styles.startButton}`}
+                        onClick={() => handleStatusChange(MeetStatus.current)}
+                        disabled={loading !== null}
+                    >
+                        {loading === MeetStatus.current ? 'Запуск...' : 'Начать встречу'}
+                    </button>
+                    <button
+                        className={`${styles.actionButton} ${styles.completeButton}`}
+                        onClick={() => handleStatusChange(MeetStatus.completed)}
+                        disabled={loading !== null}
+                    >
+                        {loading === MeetStatus.completed ? 'Завершение...' : 'Завершить встречу'}
+                    </button>
+                    <button
+                        className={`${styles.actionButton} ${styles.cancelButton}`}
+                        onClick={() => handleStatusChange(MeetStatus.canceled)}
+                        disabled={loading !== null}
+                    >
+                        {loading === MeetStatus.canceled ? 'Отмена...' : 'Отменить встречу'}
+                    </button>
+                </div>
+            )}
 
             <div className={styles.comingSoon}>
                 <p className={styles.comingSoonText}>
