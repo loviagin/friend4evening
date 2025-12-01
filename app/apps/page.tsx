@@ -2,6 +2,13 @@ import { FaApple, FaAndroid } from 'react-icons/fa';
 import { IoShareOutline } from 'react-icons/io5';
 import styles from './page.module.css';
 import { LuSquarePlus } from 'react-icons/lu';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "Приложения Friends4Evening | Сервис встреч и общения",
+    description: "Как установить приложение F4e на iOS и Android. Инструкция, ссылки и анонс публикации в AppStore и Play Market.",
+    keywords: ["приложение", "ios", "android", "f4e", "friends4evening", "сервис знакомств", "сервис встреч", "поиск встреч"]
+}
 
 export default function AppsPage() {
     return (

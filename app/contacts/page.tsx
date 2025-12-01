@@ -1,53 +1,16 @@
-"use client";
 import Link from 'next/link';
-import { useState } from 'react';
-import { FaTelegramPlane, FaVk, FaInstagram } from 'react-icons/fa';
+import { FaTelegramPlane, FaVk, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import styles from './page.module.css';
+import { Metadata } from 'next';
+import ContactForm from './components/ContactForm/ContactForm';
+
+export const metadata: Metadata = {
+    title: "Контакты Friends4Evening | Сервис встреч и общения",
+    description: "Способы связи с сервисом Friends4Evening, информация о компании, форма обратной связи, наши соцсети и часто задаваемые вопросы",
+    keywords: ["контакты", "соцсети", "информация о компании", "f4e", "friends4evening", "сервис знакомств", "сервис встреч", "поиск встреч"]
+}
 
 export default function Contacts() {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: ''
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setSubmitStatus('idle');
-
-        try {
-            const response = await fetch('/api/contacts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN!}`,
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                setSubmitStatus('success');
-                setFormData({ name: '', email: '', message: '' });
-                
-                // Сбрасываем статус через 5 секунд
-                setTimeout(() => setSubmitStatus('idle'), 5000);
-            } else {
-                setSubmitStatus('error');
-                console.error('Form submission error:', data.message);
-            }
-        } catch (error) {
-            setSubmitStatus('error');
-            console.error('Form submission error:', error);
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-
     return (
         <main className={styles.main}>
             <div className={styles.container}>
@@ -99,14 +62,11 @@ export default function Contacts() {
                         <div className={styles.socialSection}>
                             <h3 className={styles.socialTitle}>Мы в социальных сетях</h3>
                             <div className={styles.socialLinks}>
-                                <a href="#" className={styles.socialLink} target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                                <a href="https://t.me/loviginsup" className={styles.socialLink} target="_blank" rel="noopener noreferrer" aria-label="Telegram">
                                     <FaTelegramPlane className={styles.socialIcon} />
                                 </a>
-                                <a href="#" className={styles.socialLink} target="_blank" rel="noopener noreferrer" aria-label="VK">
-                                    <FaVk className={styles.socialIcon} />
-                                </a>
-                                <a href="#" className={styles.socialLink} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                                    <FaInstagram className={styles.socialIcon} />
+                                <a href="https://wa.me/447867246591" className={styles.socialLink} target="_blank" rel="noopener noreferrer" aria-label="VK">
+                                    <FaWhatsapp className={styles.socialIcon} />
                                 </a>
                             </div>
                         </div>
@@ -114,72 +74,7 @@ export default function Contacts() {
 
                     <div className={styles.contactForm}>
                         <h2 className={styles.formTitle}>Форма обратной связи</h2>
-                        <form onSubmit={handleSubmit} className={styles.form}>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="name" className={styles.label}>
-                                    Ваше имя
-                                </label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    className={styles.input}
-                                    placeholder="Введите ваше имя"
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label htmlFor="email" className={styles.label}>
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    className={styles.input}
-                                    placeholder="your@email.com"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label htmlFor="message" className={styles.label}>
-                                    Сообщение
-                                </label>
-                                <textarea
-                                    id="message"
-                                    className={styles.textarea}
-                                    placeholder="Напишите ваше сообщение..."
-                                    rows={6}
-                                    value={formData.message}
-                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                    required
-                                />
-                            </div>
-
-                            {submitStatus === 'success' && (
-                                <div className={styles.successMessage}>
-                                    ✓ Сообщение отправлено! Мы свяжемся с вами в ближайшее время.
-                                </div>
-                            )}
-
-                            {submitStatus === 'error' && (
-                                <div className={styles.errorMessage}>
-                                    ✗ Произошла ошибка. Попробуйте еще раз или напишите нам напрямую на почту.
-                                </div>
-                            )}
-
-                            <button
-                                type="submit"
-                                className={styles.submitButton}
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? 'Отправка...' : 'Отправить сообщение'}
-                            </button>
-                        </form>
+                        <ContactForm />
                     </div>
                 </section>
 
@@ -189,7 +84,7 @@ export default function Contacts() {
                         <div className={styles.faqItem}>
                             <h3 className={styles.faqQuestion}>Как связаться с поддержкой?</h3>
                             <p className={styles.faqAnswer}>
-                                Вы можете написать нам на почту <Link href="mailto:Friends4Evening@lovigin.com" className={styles.link}>Friends4Evening@lovigin.com</Link>. Мы стараемся отвечать в течение 24 часов.
+                                Вы можете написать нам на почту <Link href="mailto:Friends4Evening@lovigin.com" className={styles.link}>Friends4Evening@lovigin.com</Link> или обратиться через форму обратной связи. Мы стараемся отвечать в течение 24 часов.
                             </p>
                         </div>
 
@@ -203,7 +98,7 @@ export default function Contacts() {
                         <div className={styles.faqItem}>
                             <h3 className={styles.faqQuestion}>Как предложить улучшение сервиса?</h3>
                             <p className={styles.faqAnswer}>
-                                Мы всегда рады вашим предложениям! Напишите нам на почту с описанием вашей идеи, и мы обязательно рассмотрим её.
+                                Мы всегда рады вашим предложениям! Напишите нам на почту или заполните форму обратной связи с описанием вашей идеи, и мы обязательно рассмотрим её.
                             </p>
                         </div>
                     </div>
