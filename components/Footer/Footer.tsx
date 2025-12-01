@@ -20,7 +20,7 @@ export default function Footer() {
                             <li><Link href="/#hero">Главная</Link></li>
                             <li><Link href="/#how-it-works">Как это работает</Link></li>
                             <li><Link href="/#features">Преимущества</Link></li>
-                            <li><Link href="/#screenshots">Скриншоты</Link></li>
+                            <li><Link href="/contacts">Контакты</Link></li>
                         </ul>
                     </div>
                     

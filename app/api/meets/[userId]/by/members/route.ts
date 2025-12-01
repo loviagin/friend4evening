@@ -1,4 +1,5 @@
 import { db } from "@/lib/firebase";
+import { Meet } from "@/models/Meet";
 import { collection, getDocs, query, Timestamp, where } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -14,21 +15,37 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
     const documents = await getDocs(q);
 
     if (documents.docs.length > 0) {
-        const meets = documents.docs.flatMap((ap) => {
-            const application = ap.data()
+        let meets: Meet[] = []
+        for (const ap of documents.docs) {
+            const data = ap.data()
 
-            const time = application['date'] as Timestamp
-            const created = application['createdAt'] as Timestamp
-            application.date = time.toDate()
-            application.createdAt = created.toDate();
+            data['date'] = (data['date'] as Timestamp).toDate()
+            data['createdAt'] = (data['createdAt'] as Timestamp).toDate();
+            const meet = data as Meet;
 
-            return application;
-        })
-            .sort((a, b) => {
-                const dateA = new Date(a.date as any).getTime();
-                const dateB = new Date(b.date as any).getTime();
-                return dateB - dateA;
-            });
+            if (meet.ownerId !== userId) {
+                if (meet.status === 'canceled') {
+                    continue;
+                }
+                
+                const mm = meet.members.filter((m) => m.userId === userId);
+                if (mm.length === 0) {
+                    continue;
+                }
+
+                if (mm[0].status === 'waiting' || mm[0].status === 'declined') {
+                    continue;
+                }
+            }
+
+            meets.push(meet);
+        }
+
+        meets = meets.sort((a, b) => {
+            const dateA = new Date(a.date as any).getTime();
+            const dateB = new Date(b.date as any).getTime();
+            return dateB - dateA;
+        });
 
         return NextResponse.json({ meets }, { status: 200 })
     } else {

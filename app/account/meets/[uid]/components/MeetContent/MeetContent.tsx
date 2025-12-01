@@ -41,8 +41,10 @@ export default function MeetContent({ uid }: { uid: string }) {
                         setBlocked("not-include")
                     } else {
                         const mm = meet.members.filter((m) => m.userId === userId)
-                        if (mm.length > 0 && mm[0].status === 'declined') {
-                            setBlocked("declined")
+                        if (mm.length > 0) {
+                            if (mm[0].status === 'declined' || mm[0].status === 'waiting') {
+                                setBlocked("declined")
+                            }
                         }
                     }
                 }

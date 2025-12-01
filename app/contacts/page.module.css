@@ -1,0 +1,592 @@
+.main {
+  padding: calc(80px + 2rem) 2rem 5rem;
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(70, 108, 149, 0.1);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--blue);
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--foreground);
+  opacity: 0.7;
+  line-height: 1.6;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.contactSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contactInfoTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--blue);
+}
+
+.companyInfo {
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.05) 0%, rgba(93, 174, 139, 0.05) 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(70, 108, 149, 0.1);
+}
+
+.companyTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--blue);
+}
+
+.companyDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.companyDetailItem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.companyDetailLabel {
+  font-weight: 600;
+  color: var(--blue);
+  min-width: 140px;
+}
+
+.companyDetailValue {
+  color: var(--foreground);
+  font-weight: 500;
+  flex: 1;
+}
+
+.contactItem {
+  display: flex;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.05) 0%, rgba(93, 174, 139, 0.05) 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(70, 108, 149, 0.1);
+  transition: all 0.3s ease;
+}
+
+.contactItem:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(70, 108, 149, 0.15);
+  border-color: var(--blue);
+}
+
+.contactIconWrapper {
+  flex-shrink: 0;
+}
+
+.contactIcon {
+  font-size: 2.5rem;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.contactDetails {
+  flex: 1;
+}
+
+.contactItemTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--blue);
+}
+
+.contactEmail {
+  font-size: 1rem;
+  color: var(--foreground);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.contactEmail:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+.socialSection {
+  padding: 2rem;
+  background: var(--background);
+  border: 2px solid rgba(70, 108, 149, 0.1);
+  border-radius: 20px;
+}
+
+.socialTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--blue);
+}
+
+.socialLinks {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.05) 0%, rgba(93, 174, 139, 0.05) 100%);
+  border: 2px solid rgba(70, 108, 149, 0.1);
+  border-radius: 50%;
+  text-decoration: none;
+  color: var(--blue);
+  transition: all 0.3s ease;
+}
+
+.socialLink:hover {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.3);
+}
+
+.socialIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.socialText {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.contactForm {
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.05) 0%, rgba(93, 174, 139, 0.05) 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(70, 108, 149, 0.1);
+}
+
+.formTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--blue);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 50px;
+  background: var(--background);
+  color: var(--foreground);
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.textarea {
+  border-radius: 20px;
+  resize: vertical;
+  min-height: 150px;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(70, 108, 149, 0.1);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(70, 108, 149, 0.5);
+}
+
+.submitButton {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  margin-top: 0.5rem;
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(70, 108, 149, 0.3);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.successMessage {
+  padding: 1rem 1.25rem;
+  background: rgba(93, 174, 139, 0.1);
+  border: 2px solid var(--green);
+  border-radius: 15px;
+  color: var(--green);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.errorMessage {
+  padding: 1rem 1.25rem;
+  background: rgba(255, 118, 118, 0.1);
+  border: 2px solid var(--red);
+  border-radius: 15px;
+  color: var(--red);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--blue);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(70, 108, 149, 0.2);
+}
+
+.content {
+  padding-left: 1rem;
+}
+
+.faqItem {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--background);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.faqItem:hover {
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.03) 0%, rgba(93, 174, 139, 0.03) 100%);
+  transform: translateX(5px);
+}
+
+.faqQuestion {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--blue);
+}
+
+.faqAnswer {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--foreground);
+  opacity: 0.9;
+  margin: 0;
+}
+
+.link {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding-left: 1rem;
+}
+
+.infoLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--background);
+  border: 2px solid rgba(70, 108, 149, 0.2);
+  border-radius: 15px;
+  text-decoration: none;
+  color: var(--foreground);
+  transition: all 0.3s ease;
+}
+
+.infoLink:hover {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, rgba(70, 108, 149, 0.05) 0%, rgba(93, 174, 139, 0.05) 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(70, 108, 149, 0.15);
+}
+
+.linkIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.linkText {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--blue);
+  transition: color 0.3s ease;
+}
+
+.infoLink:hover .linkText {
+  color: var(--green);
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: calc(80px + 1rem) 1.5rem 3rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .contactSection {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .contactInfoTitle {
+    font-size: 1.5rem;
+  }
+
+  .companyInfo {
+    padding: 1.5rem;
+  }
+
+  .companyTitle {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .companyDetailItem {
+    font-size: 0.875rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .companyDetailLabel {
+    min-width: auto;
+  }
+
+  .contactItem {
+    padding: 1.5rem;
+  }
+
+  .contactIcon {
+    font-size: 2rem;
+  }
+
+  .contactItemTitle {
+    font-size: 1rem;
+  }
+
+  .contactEmail {
+    font-size: 0.95rem;
+  }
+
+  .socialSection {
+    padding: 1.5rem;
+  }
+
+  .contactForm {
+    padding: 2rem 1.5rem;
+  }
+
+  .formTitle {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .content {
+    padding-left: 0.5rem;
+  }
+
+  .faqItem {
+    padding: 1.25rem;
+  }
+
+  .faqQuestion {
+    font-size: 1rem;
+  }
+
+  .faqAnswer {
+    font-size: 0.95rem;
+  }
+
+  .linksGrid {
+    grid-template-columns: 1fr;
+    padding-left: 0.5rem;
+    gap: 1rem;
+  }
+
+  .infoLink {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: calc(80px + 0.75rem) 1rem 2rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .contactSection {
+    gap: 1.5rem;
+  }
+
+  .contactItem {
+    padding: 1.25rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .contactIcon {
+    font-size: 2rem;
+  }
+
+  .contactInfoTitle,
+  .formTitle {
+    font-size: 1.25rem;
+  }
+
+  .companyInfo {
+    padding: 1.25rem;
+  }
+
+  .companyTitle {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+  }
+
+  .companyDetails {
+    gap: 0.875rem;
+  }
+
+  .companyDetailItem {
+    font-size: 0.8125rem;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .companyDetailLabel {
+    min-width: auto;
+  }
+
+  .contactForm {
+    padding: 1.5rem 1rem;
+  }
+
+  .socialSection {
+    padding: 1.25rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .linksGrid {
+    padding-left: 0;
+  }
+}
