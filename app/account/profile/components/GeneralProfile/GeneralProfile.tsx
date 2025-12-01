@@ -243,7 +243,7 @@ export default function GeneralProfile({ user }: Props) {
             </div>
 
             {/* Reviews block */}
-            <div className={styles.reviewsBlock}>
+            <div className={styles.reviewsBlock} id="reviews">
                 <h2 className={styles.infoBlockTitle}>⭐ Отзывы</h2>
                 {((auth.user?.uid && user?.id) && auth.user.uid !== user.id) && (
                     <WriteReview reviewerId={auth.user.uid} userId={user.id} />

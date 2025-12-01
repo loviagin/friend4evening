@@ -33,13 +33,18 @@ export default function WriteReview({ reviewerId, userId }: Props) {
             const data = await response.json();
 
             if (response.status === 200) {
+                console.log("COMPLETED", data['completed'])
                 setAllow(data['completed'] as boolean);
             } else {
                 console.log("ERROR LOADING ALLOWANCE");
             }
         }
 
-        fetchReviewAllowance()
+        if (reviewerId && userId) {
+            console.log(userId, reviewerId)
+
+            fetchReviewAllowance()
+        }
     }, [reviewerId, userId])
 
     const handleReviewSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

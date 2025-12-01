@@ -1,16 +1,15 @@
 /* Write Review Styles */
 .container {
-  padding: 1.5rem;
-  background: var(--background);
-  border: 2px solid rgba(70, 108, 149, 0.2);
-  border-radius: 15px;
-  margin-bottom: 1.5rem;
+  padding: 0.75rem 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0 0 0.75rem 0;
   transition: all 0.3s ease;
 }
 
 .container:hover {
-  border-color: rgba(70, 108, 149, 0.3);
-  box-shadow: 0 5px 15px rgba(70, 108, 149, 0.1);
+  box-shadow: none;
 }
 
 .message {
@@ -152,7 +151,7 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 1.25rem;
+    padding: 0.625rem 0;
   }
 
   .form {
@@ -195,7 +194,7 @@
 
 @media (max-width: 480px) {
   .container {
-    padding: 1rem;
+    padding: 0.5rem 0;
   }
 
   .form {

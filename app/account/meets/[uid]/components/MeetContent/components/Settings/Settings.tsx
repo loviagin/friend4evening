@@ -4,8 +4,10 @@ import { Meet } from "@/models/Meet";
 import { useState } from "react";
 import styles from "./Settings.module.css";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/_providers/AuthProvider";
 
 export default function Settings({ meet }: { meet: Meet }) {
+    const auth = useAuth();
     const router = useRouter();
     const [form, setForm] = useState({
         title: meet.title || "",
@@ -62,58 +64,62 @@ export default function Settings({ meet }: { meet: Meet }) {
 
     return (
         <div className={styles.container}>
-            <form onSubmit={handleSubmit} className={styles.form}>
-                <div className={styles.formGroup}>
-                    <label className={styles.label}>
-                        <span>Название встречи</span>
-                        <input
-                            type="text"
-                            className={styles.input}
-                            value={form.title}
-                            onChange={(e) => setForm({ ...form, title: e.target.value })}
-                            required
-                            placeholder="Введите название встречи"
-                        />
-                    </label>
-                </div>
+            {auth.user && auth.user.uid === meet.ownerId && (
+                <>
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                        <div className={styles.formGroup}>
+                            <label className={styles.label}>
+                                <span>Название встречи</span>
+                                <input
+                                    type="text"
+                                    className={styles.input}
+                                    value={form.title}
+                                    onChange={(e) => setForm({ ...form, title: e.target.value })}
+                                    required
+                                    placeholder="Введите название встречи"
+                                />
+                            </label>
+                        </div>
 
-                <div className={styles.formGroup}>
-                    <label className={styles.label}>
-                        <span>Описание</span>
-                        <textarea
-                            className={styles.textarea}
-                            value={form.description}
-                            onChange={(e) => setForm({ ...form, description: e.target.value })}
-                            placeholder="Введите описание встречи"
-                            rows={6}
-                        />
-                    </label>
-                </div>
+                        <div className={styles.formGroup}>
+                            <label className={styles.label}>
+                                <span>Описание</span>
+                                <textarea
+                                    className={styles.textarea}
+                                    value={form.description}
+                                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                                    placeholder="Введите описание встречи"
+                                    rows={6}
+                                />
+                            </label>
+                        </div>
 
-                <div className={styles.actions}>
-                    <button
-                        type="submit"
-                        className={styles.saveButton}
-                        disabled={loading}
-                    >
-                        {loading ? 'Сохранение...' : 'Сохранить'}
-                    </button>
-                </div>
-            </form>
+                        <div className={styles.actions}>
+                            <button
+                                type="submit"
+                                className={styles.saveButton}
+                                disabled={loading}
+                            >
+                                {loading ? 'Сохранение...' : 'Сохранить'}
+                            </button>
+                        </div>
+                    </form>
 
-            <div className={styles.deleteSection}>
-                <p className={styles.deleteDescription}>
-                    Удаление встречи нельзя отменить. Все данные будут безвозвратно удалены.
-                </p>
-                <button
-                    type="button"
-                    className={styles.deleteButton}
-                    onClick={handleDelete}
-                    disabled={deleteLoading}
-                >
-                    {deleteLoading ? 'Удаление...' : 'Удалить встречу'}
-                </button>
-            </div>
+                    <div className={styles.deleteSection}>
+                        <p className={styles.deleteDescription}>
+                            Удаление встречи нельзя отменить. Все данные будут безвозвратно удалены.
+                        </p>
+                        <button
+                            type="button"
+                            className={styles.deleteButton}
+                            onClick={handleDelete}
+                            disabled={deleteLoading}
+                        >
+                            {deleteLoading ? 'Удаление...' : 'Удалить встречу'}
+                        </button>
+                    </div>
+                </>
+            )}
         </div>
     );
 }
