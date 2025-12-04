@@ -61,7 +61,7 @@ export type NotificationDTO = {
     title: string,
     description: string,
     senderId: string,
-    url: string | null,
+    url?: string | null,
 }
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ userId: string }> }) {
