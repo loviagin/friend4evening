@@ -138,6 +138,25 @@
   font-size: 1.125rem;
 }
 
+.inviteButton {
+  width: 100%;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+  color: var(--background);
+}
+
+.inviteButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(70, 108, 149, 0.4);
+}
+
 @media (max-width: 768px) {
   .title {
     font-size: 1.5rem;

@@ -34,6 +34,39 @@
   color: var(--blue);
 }
 
+.copyLinkButton {
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--blue);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.copyLinkButton:hover:not(:disabled) {
+  opacity: 0.7;
+}
+
+.copyLinkButton:active:not(:disabled) {
+  opacity: 0.5;
+}
+
+.copyLinkButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.copyIcon {
+  font-size: 1.125rem;
+}
+
 .statusBanner {
   padding: 1rem 1.5rem;
   background: rgba(70, 108, 149, 0.15);

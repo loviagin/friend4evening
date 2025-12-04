@@ -7,6 +7,8 @@ import UserCard from "@/components/UserCard/UserCard";
 import styles from "./Participants.module.css";
 import LoadingView from "@/components/LoadingView/LoadingView";
 import { useAuth } from "@/app/_providers/AuthProvider";
+import { sendEmailAndNotification } from "@/app/actions";
+import InviteUser from "./components/InviteUser/InviteUser";
 
 type UserWithMemberId = User & { memberId: string };
 
@@ -17,6 +19,7 @@ export default function Participants({ meet }: { meet: Meet }) {
     const [invited, setInvited] = useState<UserWithMemberId[]>([]);
     const [loading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState<string | null>(null);
+    const [showInviteModal, setShowInviteModal] = useState(false);
     const isOwner = auth.user?.uid === meet.ownerId;
 
     useEffect(() => {
@@ -65,6 +68,16 @@ export default function Participants({ meet }: { meet: Meet }) {
 
         setActionLoading(memberId);
         try {
+            // Находим участника и его предыдущий статус
+            const member = meet.members.find(m => m.id === memberId);
+            if (!member) {
+                alert('Участник не найден');
+                setActionLoading(null);
+                return;
+            }
+
+            const memberUser = [...waiting, ...invited, ...participants].find(u => u.memberId === memberId);
+
             const response = await fetch(`/api/meets/one/${meet.id}/member/${memberId}`, {
                 method: 'POST',
                 headers: {
@@ -75,6 +88,18 @@ export default function Participants({ meet }: { meet: Meet }) {
             });
 
             if (response.status === 200) {
+                // Отправляем email и уведомления
+                if (action !== 'remove' && memberUser) {
+                    console.log('[handleMemberAction] Sending email/notification:', { action, memberUserId: memberUser.id, memberUserEmail: memberUser.email });
+                    try {
+                        await sendEmailAndNotification(action, memberUser, meet);
+                        console.log('[handleMemberAction] Email/notification sent successfully');
+                    } catch (error) {
+                        console.error('[handleMemberAction] Error sending email/notification:', error);
+                    }
+                } else {
+                    console.log('[handleMemberAction] Skipping email/notification:', { action, hasMemberUser: !!memberUser });
+                }
                 window.location.reload();
             } else {
                 alert('Ошибка при выполнении действия');
@@ -117,7 +142,7 @@ export default function Participants({ meet }: { meet: Meet }) {
                                             onClick={() => handleMemberAction(user.memberId, 'remove')}
                                             disabled={actionLoading === user.memberId}
                                         >
-                                            {actionLoading === user.memberId ? 'Удаление...' : 'Удалить'}
+                                            {actionLoading === user.memberId ? 'Удаление...' : 'Удалить участника'}
                                         </button>
                                     </div>
                                 )}
@@ -186,10 +211,25 @@ export default function Participants({ meet }: { meet: Meet }) {
                 </div>
             )}
 
-            {participants.length === 0 && waiting.length === 0 && (
+            {participants.length === 0 && waiting.length === 0 && invited.length === 0 && (
                 <div className={styles.emptyState}>
                     Участников пока нет
                 </div>
+            )}
+
+            {isOwner && (
+                <div className={styles.section}>
+                    <button
+                        className={styles.inviteButton}
+                        onClick={() => setShowInviteModal(true)}
+                    >
+                        + Пригласить
+                    </button>
+                </div>
+            )}
+
+            {showInviteModal && (
+                <InviteUser meet={meet} onClose={() => setShowInviteModal(false)} />
             )}
         </div>
     );

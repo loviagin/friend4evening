@@ -8,6 +8,7 @@ import { MeetType, MeetTypeLabels } from '@/models/User'
 import { useAuth } from '@/app/_providers/AuthProvider'
 import Link from 'next/link'
 import { useState } from 'react'
+import { sendInvitationResponseNotification } from '@/app/actions'
 
 export default function MeetFullCard({ meet }: { meet: Meet }) {
     const auth = useAuth();
@@ -39,6 +40,12 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                 });
 
                 if (response.status === 200) {
+                    // Отправляем уведомление организатору
+                    try {
+                        await sendInvitationResponseNotification('accepted', auth.user.uid, meet);
+                    } catch (error) {
+                        console.error('Error sending invitation accepted notification:', error);
+                    }
                     window.location.reload();
                 } else {
                     const errorData = await response.json().catch(() => ({}));
@@ -103,6 +110,12 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
             });
 
             if (response.status === 200) {
+                // Отправляем уведомление организатору
+                try {
+                    await sendInvitationResponseNotification('declined', auth.user.uid, meet);
+                } catch (error) {
+                    console.error('Error sending invitation declined notification:', error);
+                }
                 window.location.reload();
             } else {
                 alert('Ошибка при отклонении приглашения');

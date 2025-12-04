@@ -61,6 +61,7 @@ export type NotificationDTO = {
     title: string,
     description: string,
     senderId: string,
+    url: string | null,
 }
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ userId: string }> }) {
@@ -87,7 +88,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ use
         description: notification.description,
         type: notification.type,
         senderId: notification.senderId,
-        url: `${base}`
+        url: notification.url ?? `${base}`
     }
 
     if (notification.type === "friends" || notification.type === "friend-request") {

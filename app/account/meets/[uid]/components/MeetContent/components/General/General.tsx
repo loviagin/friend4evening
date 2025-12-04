@@ -4,10 +4,12 @@ import { Meet, MeetStatus } from "@/models/Meet";
 import { useState } from "react";
 import styles from "./General.module.css";
 import { useAuth } from "@/app/_providers/AuthProvider";
+import { IoCopyOutline } from "react-icons/io5";
 
 export default function General({ meet }: { meet: Meet }) {
     const auth = useAuth();
     const [loading, setLoading] = useState<string | null>(null);
+    const [copied, setCopied] = useState(false);
 
     const handleStatusChange = async (newStatus: MeetStatus) => {
         if (meet.status === MeetStatus.completed && newStatus === MeetStatus.current) return;
@@ -38,6 +40,20 @@ export default function General({ meet }: { meet: Meet }) {
         }
     };
 
+    const handleCopyLink = async () => {
+        const meetUrl = typeof window !== 'undefined'
+            ? `${window.location.origin}/account/meets/${meet.id}`
+            : '';
+        
+        try {
+            await navigator.clipboard.writeText(meetUrl);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy:', err);
+        }
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.typeSection}>
@@ -45,6 +61,17 @@ export default function General({ meet }: { meet: Meet }) {
                 <span className={`${styles.typeBadge} ${meet.type === 'open' ? styles.typeOpen : styles.typeClosed}`}>
                     {meet.type === 'open' ? 'Публичная' : 'Личная'}
                 </span>
+                {meet.type === 'open' && (
+                    <button
+                        className={styles.copyLinkButton}
+                        onClick={handleCopyLink}
+                        disabled={copied}
+                        title="Скопировать ссылку на встречу"
+                    >
+                        <IoCopyOutline className={styles.copyIcon} />
+                        <span>{copied ? 'Скопировано' : 'Скопировать ссылку'}</span>
+                    </button>
+                )}
             </div>
 
             {meet.status === MeetStatus.current && (
@@ -107,7 +134,7 @@ export default function General({ meet }: { meet: Meet }) {
 
             <div className={styles.comingSoon}>
                 <p className={styles.comingSoonText}>
-                    Скоро можно будет загружать фото, видео и другое со встречи
+                    Скоро можно будет добавлять геолокацию, загружать фото и видео со встречи
                 </p>
             </div>
         </div>

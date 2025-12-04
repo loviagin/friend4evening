@@ -7,6 +7,7 @@ import { User } from "@/models/User";
 import { MeetStarted } from "@/emails/MeetStarted/MeetStarted";
 import { MeetCompleted, Participant } from "@/emails/MeetCompleted/MeetCompleted";
 import { MeetCancel } from "@/emails/MeetCancel/MeetCancel";
+import { sendNotificationToUser } from "@/app/actions";
 
 function formatDuration(minutes: number): string {
     if (minutes < 60) {
@@ -207,6 +208,25 @@ async function sendEmailsToParticipants(meetId: string, status: MeetStatus, meet
                 console.error(`[Email] Failed to send email to ${userData.email}:`, await response.text());
             } else {
                 console.log(`[Email] Successfully sent email to ${userData.email} for meet ${meetId}`);
+            }
+
+            // Отправляем webpush уведомление
+            let pushMessage = '';
+            if (status === MeetStatus.current) {
+                pushMessage = `Встреча "${meetData.title}" началась`;
+            } else if (status === MeetStatus.completed) {
+                pushMessage = `Встреча "${meetData.title}" завершена`;
+            } else if (status === MeetStatus.canceled) {
+                pushMessage = `Встреча "${meetData.title}" отменена`;
+            }
+
+            if (pushMessage) {
+                try {
+                    await sendNotificationToUser(member.userId, pushMessage);
+                    console.log(`[Push] Successfully sent push notification to ${member.userId} for meet ${meetId}`);
+                } catch (error) {
+                    console.error(`[Push] Error sending push notification to ${member.userId}:`, error);
+                }
             }
         } catch (error) {
             console.error(`Error sending email to member ${member.userId}:`, error);

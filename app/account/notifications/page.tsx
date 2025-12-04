@@ -168,6 +168,8 @@ function createLink(type: string, id: string): string {
         return `/profile/${id}`
     } else if (type === 'meet-soon') {
         return `/account/meets/${id}`
+    } else if (type === 'meet-application-approved' || type === 'meet-application-declined' || type === 'invitation-accepted' || type === 'invitation-declined' || type === 'meet-invitation') {
+        return id;
     }
     return '/'
 }
