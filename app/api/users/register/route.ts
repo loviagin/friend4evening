@@ -79,6 +79,7 @@ export async function POST(req: NextRequest) {
             avatarUrl: avatarUrl ?? "avatar1",
             birthday: birthday ? Timestamp.fromDate(new Date(birthday)) : Timestamp.fromDate(new Date()),
             dateRegistered: Timestamp.fromDate(new Date()),
+            privacy: ["publicProfile"],
             tags: ["user"],
             blocked: false,
         };

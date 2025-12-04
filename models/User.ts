@@ -18,6 +18,7 @@ export type User = {
     noAlcohol: boolean | null,
     noSmoking: boolean | null,
     friends: string[],
+    privacy: string[],
     tag: string | null,
     blockedUsers: string[] | null,
     blocked: boolean,

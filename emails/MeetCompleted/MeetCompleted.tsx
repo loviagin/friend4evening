@@ -174,57 +174,66 @@ export function MeetCompleted({ userName, meetId, meetTitle, meetDate, meetLocat
                     .${styles.participantsList} {
                         display: flex;
                         flex-direction: column;
-                        gap: 1.5rem;
+                        gap: 1.25rem;
                     }
                     .${styles.participantCard} {
                         background: linear-gradient(135deg, rgba(70, 108, 149, 0.05) 0%, rgba(93, 174, 139, 0.05) 100%);
                         border: 2px solid rgba(70, 108, 149, 0.2);
                         border-radius: 15px;
-                        padding: 1.5rem;
-                        display: flex;
-                        align-items: center;
-                        gap: 1.5rem;
+                        padding: 1.25rem 1.5rem;
+                        display: table;
+                        width: 100%;
+                        table-layout: fixed;
+                        margin-bottom: 1.25rem;
+                        box-sizing: border-box;
                     }
                     .${styles.participantAvatar} {
-                        width: 60px;
-                        height: 60px;
+                        width: 56px;
+                        height: 56px;
                         border-radius: 50%;
                         object-fit: cover;
-                        flex-shrink: 0;
                         border: 2px solid rgba(70, 108, 149, 0.2);
+                        display: block;
+                        margin: 0;
                     }
                     .${styles.participantInfo} {
-                        flex: 1;
-                        min-width: 0;
+                        padding: 0 1.25rem;
+                        vertical-align: middle;
+                    }
+                    .${styles.participantLink} {
+                        text-decoration: none;
+                        color: inherit;
+                        display: block;
                     }
                     .${styles.participantName} {
-                        font-size: 1.125rem;
+                        font-size: 1rem;
                         font-weight: 600;
                         color: #466C95;
-                        margin: 0 0 0.25rem 0;
+                        margin: 0 0 0.5rem 0;
                         word-wrap: break-word;
+                        line-height: 1.4;
                     }
                     .${styles.participantNickname} {
-                        font-size: 0.9375rem;
+                        font-size: 0.875rem;
                         color: #000000;
                         opacity: 0.7;
                         margin: 0;
                         word-wrap: break-word;
+                        line-height: 1.4;
                     }
                     .${styles.reviewButton} {
                         display: inline-block;
-                        padding: 0.75rem 1.5rem;
-                        font-size: 0.9375rem;
+                        padding: 0.625rem 1.25rem;
+                        font-size: 0.875rem;
                         font-weight: 600;
                         text-decoration: none;
                         border-radius: 50px;
                         text-align: center;
-                        transition: all 0.3s ease;
                         background: linear-gradient(135deg, #466C95 0%, #5DAE8B 100%);
                         color: #ffffff !important;
                         border: none;
                         white-space: nowrap;
-                        flex-shrink: 0;
+                        vertical-align: middle;
                     }
                     .${styles.reviewButton}:hover {
                         transform: translateY(-2px);
@@ -278,6 +287,39 @@ export function MeetCompleted({ userName, meetId, meetTitle, meetDate, meetLocat
                         text-align: center;
                         opacity: 0.7;
                         font-style: italic;
+                    }
+                    @media only screen and (max-width: 600px) {
+                        .${styles.participantCard} {
+                            display: block !important;
+                            padding: 1.25rem !important;
+                        }
+                        .${styles.participantCard} td {
+                            display: block !important;
+                            width: 100% !important;
+                            padding: 0 !important;
+                            text-align: center !important;
+                        }
+                        .${styles.participantCard} td:first-child {
+                            margin-bottom: 1rem !important;
+                        }
+                        .${styles.participantCard} td:last-child {
+                            margin-top: 1rem !important;
+                        }
+                        .${styles.participantInfo} {
+                            padding: 0 !important;
+                            margin-bottom: 0.75rem !important;
+                        }
+                        .${styles.reviewButton} {
+                            width: 100% !important;
+                            display: block !important;
+                        }
+                        .${styles.participantsSection} {
+                            margin: 1.5rem 1rem !important;
+                        }
+                        .${styles.participantsTitle} {
+                            font-size: 1.25rem !important;
+                            margin-bottom: 1rem !important;
+                        }
                     }
                 `}} />
             </head>
@@ -343,29 +385,52 @@ export function MeetCompleted({ userName, meetId, meetTitle, meetDate, meetLocat
                             <h2 className={styles.participantsTitle}>Участники встречи</h2>
                             <div className={styles.participantsList}>
                                 {otherParticipants.map((participant) => (
-                                    <div key={participant.userId} className={styles.participantCard}>
-                                        <img
-                                            src={getAvatarUrl(participant.avatarUrl, base)}
-                                            alt={participant.name}
-                                            className={styles.participantAvatar}
-                                        />
-                                        <a
-                                            href={`${base}/profile/${participant.nickname}`}
-                                            className={styles.reviewButton}
-                                        >
-                                            <div className={styles.participantInfo}>
-                                                <h3 className={styles.participantName}>{participant.name}</h3>
-                                                <p className={styles.participantNickname}>@{participant.nickname}</p>
-                                            </div>
-                                        </a>
-
-                                        <a
-                                            href={`${base}/profile/${participant.nickname}#reviews`}
-                                            className={styles.reviewButton}
-                                        >
-                                            Оставить отзыв
-                                        </a>
-                                    </div>
+                                    <table 
+                                        key={participant.userId} 
+                                        className={styles.participantCard}
+                                        cellPadding="0"
+                                        cellSpacing="0"
+                                        border={0}
+                                        width="100%"
+                                    >
+                                        <tr>
+                                            <td width="56" valign="middle" style={{ paddingRight: '1.25rem' }}>
+                                                <img
+                                                    src={getAvatarUrl(participant.avatarUrl, base)}
+                                                    alt={participant.name}
+                                                    className={styles.participantAvatar}
+                                                />
+                                            </td>
+                                            <td valign="middle" className={styles.participantInfo}>
+                                                <h3 className={styles.participantName}>
+                                                    <a
+                                                        href={`${base}/profile/${participant.nickname}`}
+                                                        className={styles.participantLink}
+                                                        style={{ color: '#466C95', textDecoration: 'none' }}
+                                                    >
+                                                        {participant.name}
+                                                    </a>
+                                                </h3>
+                                                <p className={styles.participantNickname}>
+                                                    <a
+                                                        href={`${base}/profile/${participant.nickname}`}
+                                                        className={styles.participantLink}
+                                                        style={{ color: 'inherit', textDecoration: 'none' }}
+                                                    >
+                                                        @{participant.nickname}
+                                                    </a>
+                                                </p>
+                                            </td>
+                                            <td width="auto" valign="middle" align="right" style={{ paddingLeft: '1.25rem' }}>
+                                                <a
+                                                    href={`${base}/profile/${participant.nickname}#reviews`}
+                                                    className={styles.reviewButton}
+                                                >
+                                                    Оставить отзыв
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 ))}
                             </div>
                         </div>

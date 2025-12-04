@@ -101,7 +101,6 @@ export default function ReportForm({ userId, close }: Props) {
                                     <option value="">Выберите причину</option>
                                     <option value="spam">Спам</option>
                                     <option value="inappropriate_content">Неуместный контент</option>
-                                    <option value="harassment">Харассмент</option>
                                     <option value="fake_profile">Поддельный профиль</option>
                                     <option value="scam">Мошенничество</option>
                                     <option value="other">Другое</option>

@@ -27,7 +27,6 @@
 .applicationCard:hover {
     border-color: rgba(70, 108, 149, 0.3);
     box-shadow: 0 12px 40px rgba(70, 108, 149, 0.2);
-    transform: translateY(-8px);
 }
 
 .applicationCard:hover::before {

@@ -23,12 +23,23 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uid
 
         const meetData = meetDoc.data();
         const members = meetData.members || [];
+        const memberIds = meetData.memberIds || [];
 
         let updatedMembers;
+        let updatedMemberIds = memberIds;
 
         if (action === 'remove') {
+            // Находим userId участника перед удалением
+            const memberToRemove = members.find((m: any) => m.id === memberId);
+            const userIdToRemove = memberToRemove?.userId;
+            
             // Удаляем участника из массива
             updatedMembers = members.filter((m: any) => m.id !== memberId);
+            
+            // Удаляем userId из memberIds, если он там есть
+            if (userIdToRemove) {
+                updatedMemberIds = memberIds.filter((id: string) => id !== userIdToRemove);
+            }
         } else {
             // Обновляем статус участника
             updatedMembers = members.map((m: any) => {
@@ -43,7 +54,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ uid
         }
 
         await updateDoc(doc(db, "meets", uid), {
-            members: updatedMembers
+            members: updatedMembers,
+            memberIds: updatedMemberIds
         });
 
         return NextResponse.json({ message: "Member status updated successfully" }, { status: 200 });
