@@ -33,10 +33,22 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+  align-items: stretch;
+}
+
+.grid > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid > div > :not(.ownerBadge):not(.actions) {
+  flex: 1;
 }
 
 .ownerWrapper {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .ownerBadge {
