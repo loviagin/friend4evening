@@ -1,0 +1,85 @@
+{
+  "title": "User Agreement",
+  "version": "Version dated 11/04/2025",
+  "metaTitle": "User Agreement | Friends4Evening",
+  "metaDescription": "This page contains the user agreement for users of the F4E website and application",
+  "intro": {
+    "p1": "This User Agreement (hereinafter referred to as the \"Agreement\") governs the relationship between the owner of the Friends4Evening.online website (hereinafter referred to as the \"Administration\") and the user of the website, mobile application or other services of the Friends4Evening project (hereinafter referred to as the \"User\").",
+    "p2": "By using the website or application, the User confirms that they have read this Agreement, understand its terms and unconditionally accept them."
+  },
+  "sections": {
+    "1": {
+      "title": "1. General Provisions",
+      "item1": "Friends4Evening is an online platform for dating and communication between adult users, designed to find evening company, joint recreation or communication by interests.",
+      "item2": "The Service is not an organizer of meetings, does not provide services for the sale, delivery or promotion of alcoholic products and is not responsible for the actions of users outside the platform.",
+      "item3": "Registration and use of the service is allowed only to persons who have reached 18 years of age.",
+      "item4": "By using the service, the User agrees to the processing of personal data in accordance with the Privacy Policy."
+    },
+    "2": {
+      "title": "2. Registration and Account Use",
+      "item1": "To access the service functions, the User registers by providing reliable information.",
+      "item2": "The User is fully responsible for the safety of their login data.",
+      "item3": "The Administration has the right to block or delete an account in case of violation of the terms of this Agreement."
+    },
+    "3": {
+      "title": "3. Rights and Obligations of Users",
+      "item1": "The User undertakes to:",
+      "list": {
+        "item1": "comply with the legislation of the country of their stay;",
+        "item2": "use the service exclusively for lawful purposes of communication and dating;",
+        "item3": "not post materials containing:",
+        "sublist": {
+          "item1": "insults, threats, slander;",
+          "item2": "calls for violence, alcohol or drug use;",
+          "item3": "pornography, scenes of alcohol consumption;",
+          "item4": "spam, fraudulent offers, advertising of goods and services."
+        }
+      },
+      "item2": "The User is personally responsible for the content of their messages and behavior when communicating with other users.",
+      "item3": "The User understands that the Administration does not verify the accuracy of information posted by other users."
+    },
+    "4": {
+      "title": "4. Rights and Obligations of the Administration",
+      "item1": "The Administration has the right to:",
+      "list": {
+        "item1": "delete materials and block users in case of violation of rules;",
+        "item2": "temporarily suspend the service for technical or other work;",
+        "item3": "make changes to the service functionality without prior notice."
+      },
+      "item2": "The Administration undertakes to ensure the confidentiality of Users' personal data and use them only within the limits provided for by the Privacy Policy."
+    },
+    "5": {
+      "title": "5. Liability of the Parties",
+      "item1": "The Administration is not responsible for:",
+      "list": {
+        "item1": "actions of users inside or outside the platform;",
+        "item2": "possible harm caused as a result of offline meetings or communication between users;",
+        "item3": "service failures caused by technical reasons."
+      },
+      "item2": "The User is fully responsible for the content posted and the consequences of its publication.",
+      "item3": "In case of violation of the Agreement terms, the User may be blocked without notice and without refund of paid services (if any)."
+    },
+    "6": {
+      "title": "6. Intellectual Property",
+      "item1": "All rights to materials posted on the website and application (design, logo, texts, program code, etc.) belong to the Administration.",
+      "item2": "Copying, distribution and use of materials without the consent of the Administration is prohibited."
+    },
+    "7": {
+      "title": "7. Changes to Terms",
+      "item1": "The Administration has the right to change this Agreement unilaterally.",
+      "item2": "The new version comes into force from the moment of publication on the Friends4Evening website.",
+      "item3": "Continued use of the service after changing the terms means the User's agreement with the new version."
+    },
+    "8": {
+      "title": "8. Other Provisions",
+      "item1": "This Agreement is governed by the legislation of the country of your stay.",
+      "item2": "All disputes and disagreements are subject to consideration at the location of the Administration.",
+      "item3": "The invalidity of a separate provision does not affect the validity of the remaining parts of the Agreement."
+    }
+  },
+  "contacts": {
+    "title": "Contact Information",
+    "email": "Email:",
+    "copyright": "© 2025 Friends4Evening — All rights reserved. 18+"
+  }
+}

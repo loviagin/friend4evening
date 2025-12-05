@@ -1,20 +1,28 @@
-import { User, tags } from "@/models/User";
+import { User } from "@/models/User";
 import Link from "next/link";
 import Avatar from "../Avatar/Avatar";
 import styles from './UserCard.module.css'
 import { AiFillCar, AiOutlineClose } from "react-icons/ai";
 import { FaSmokingBan, FaWineBottle } from "react-icons/fa";
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function UserCard({ user }: { user: User }) {
+    const t = useTranslations('UserCard');
+    const locale = useLocale();
 
     const pluralizeYears = (age: number) => {
-        const mod10 = age % 10;
-        const mod100 = age % 100;
+        if (locale === 'ru') {
+            const mod10 = age % 10;
+            const mod100 = age % 100;
 
-        if (mod100 >= 11 && mod100 <= 14) return "лет";
-        if (mod10 === 1) return "год";
-        if (mod10 >= 2 && mod10 <= 4) return "года";
-        return "лет";
+            if (mod100 >= 11 && mod100 <= 14) return t('years.many');
+            if (mod10 === 1) return t('years.one');
+            if (mod10 >= 2 && mod10 <= 4) return t('years.few');
+            return t('years.many');
+        } else {
+            // English: simple pluralization
+            return age === 1 ? t('years.one') : t('years.other');
+        }
     };
 
     const userAge = (user: User) => {
@@ -41,7 +49,7 @@ export default function UserCard({ user }: { user: User }) {
                     <div className={styles.userAvatarWrapper}>
                         <Avatar avatarUrl={user.avatarUrl} />
                         {user.tag && (
-                            <span className={styles.userTag}>{tags.find(s => s.key === user.tag)?.label}</span>
+                            <span className={styles.userTag}>{t(`tags.${user.tag}`)}</span>
                         )}
                     </div>
                     <div className={styles.userInfo}>
@@ -55,18 +63,18 @@ export default function UserCard({ user }: { user: User }) {
                                     <>🌆 {user.location.city}</>
                                 )}
                                 {user.readyToTrip === true && (
-                                    <span className={styles.carIcon} title="Готов к поездке">
+                                    <span className={styles.carIcon} title={t('readyToTrip')}>
                                         <AiFillCar />
                                     </span>
                                 )}
                                 {user.noAlcohol === true && (
-                                    <span className={styles.noAlcoholIcon} title="Не употребляю алкоголь">
+                                    <span className={styles.noAlcoholIcon} title={t('noAlcohol')}>
                                         <FaWineBottle />
                                         <AiOutlineClose className={styles.noAlcoholCross} />
                                     </span>
                                 )}
                                 {user.noSmoking === true && (
-                                    <span className={styles.noSmokingIcon} title="Не курю">
+                                    <span className={styles.noSmokingIcon} title={t('noSmoking')}>
                                         <FaSmokingBan />
                                     </span>
                                 )}

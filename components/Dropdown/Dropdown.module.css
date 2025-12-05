@@ -25,12 +25,7 @@
 .mainButton:hover {
   background: var(--blue);
   color: var(--background);
-  transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(70, 108, 149, 0.3);
-}
-
-.mainButton:active {
-  transform: translateY(0);
 }
 
 .arrow {

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { useTranslations } from 'next-intl';
 import styles from "./Dropdown.module.css";
 
 export default function Dropdown({ source, current, onChange }: {
@@ -9,6 +10,7 @@ export default function Dropdown({ source, current, onChange }: {
     current: string,
     onChange: (s: string) => void
 }) {
+    const t = useTranslations('Dropdown');
     const [open, setOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [usePortal, setUsePortal] = useState(false);
@@ -138,7 +140,7 @@ export default function Dropdown({ source, current, onChange }: {
                     className={styles.mainButton}
                     onClick={() => setOpen(!open)}
                 >
-                    {source.find(s => s.key === current)?.label || "Задать статус"}
+                    {source.find(s => s.key === current)?.label || t('defaultLabel')}
                     <span className={styles.arrow}>▾</span>
                 </button>
                 {!usePortal && menuContent}

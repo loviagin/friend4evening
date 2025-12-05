@@ -1,9 +1,11 @@
 "use client";
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import styles from '../../page.module.css';
 
 
 export default function ContactForm() {
+    const t = useTranslations('Contacts.ContactForm');
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -51,13 +53,13 @@ export default function ContactForm() {
         <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formGroup}>
                 <label htmlFor="name" className={styles.label}>
-                    Ваше имя
+                    {t('labels.name')}
                 </label>
                 <input
                     type="text"
                     id="name"
                     className={styles.input}
-                    placeholder="Введите ваше имя"
+                    placeholder={t('placeholders.name')}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
@@ -66,13 +68,13 @@ export default function ContactForm() {
 
             <div className={styles.formGroup}>
                 <label htmlFor="email" className={styles.label}>
-                    Email
+                    {t('labels.email')}
                 </label>
                 <input
                     type="email"
                     id="email"
                     className={styles.input}
-                    placeholder="your@email.com"
+                    placeholder={t('placeholders.email')}
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
@@ -81,12 +83,12 @@ export default function ContactForm() {
 
             <div className={styles.formGroup}>
                 <label htmlFor="message" className={styles.label}>
-                    Сообщение
+                    {t('labels.message')}
                 </label>
                 <textarea
                     id="message"
                     className={styles.textarea}
-                    placeholder="Напишите ваше сообщение..."
+                    placeholder={t('placeholders.message')}
                     rows={6}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -96,13 +98,13 @@ export default function ContactForm() {
 
             {submitStatus === 'success' && (
                 <div className={styles.successMessage}>
-                    ✓ Сообщение отправлено! Мы свяжемся с вами в ближайшее время.
+                    {t('messages.success')}
                 </div>
             )}
 
             {submitStatus === 'error' && (
                 <div className={styles.errorMessage}>
-                    ✗ Произошла ошибка. Попробуйте еще раз или напишите нам напрямую на почту.
+                    {t('messages.error')}
                 </div>
             )}
 
@@ -111,7 +113,7 @@ export default function ContactForm() {
                 className={styles.submitButton}
                 disabled={isSubmitting}
             >
-                {isSubmitting ? 'Отправка...' : 'Отправить сообщение'}
+                {isSubmitting ? t('buttons.submitting') : t('buttons.submit')}
             </button>
         </form>
     );

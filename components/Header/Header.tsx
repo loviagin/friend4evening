@@ -4,10 +4,12 @@ import styles from "./Header.module.css";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import Link from "next/link";
 import Avatar from "../Avatar/Avatar";
+import { useTranslations } from 'next-intl';
 
 export default function Header() {
     const pathname = usePathname();
     const { user } = useAuth();
+    const t = useTranslations('Header');
 
     return (
         <header className={styles.header}>
@@ -16,17 +18,17 @@ export default function Header() {
                 {(user) ?
                     <>
                         <ul className={styles.navLinks}>
-                            <li><Link href="/account/meets" className={`${styles.navLink} ${pathname === '/account/meets' ? styles.active : ''}`}>Встречи</Link></li>
-                            <li><Link href="/account/messages" className={`${styles.navLink} ${pathname === '/account/messages' ? styles.active : ''}`}>Сообщения</Link></li>
-                            <li><Link href="/account/profile" className={`${styles.navLink} ${pathname === '/account/profile' || pathname?.startsWith('/account/profile/') ? styles.active : ''}`}>Профиль</Link></li>
+                            <li><Link href="/account/meets" className={`${styles.navLink} ${pathname === '/account/meets' ? styles.active : ''}`}>{t('navLinks.authenticated.meets')}</Link></li>
+                            <li><Link href="/account/messages" className={`${styles.navLink} ${pathname === '/account/messages' ? styles.active : ''}`}>{t('navLinks.authenticated.messages')}</Link></li>
+                            <li><Link href="/account/profile" className={`${styles.navLink} ${pathname === '/account/profile' || pathname?.startsWith('/account/profile/') ? styles.active : ''}`}>{t('navLinks.authenticated.profile')}</Link></li>
                         </ul>
                     </>
                     :
                     <>
                         <ul className={styles.navLinks}>
-                            <li><Link href="/#how-it-works" className={styles.navLink}>Как это работает</Link></li>
-                            <li><Link href="/#features" className={styles.navLink}>Преимущества</Link></li>
-                            <li><Link href="/#testimonials" className={styles.navLink}>Отзывы</Link></li>
+                            <li><Link href="/#how-it-works" className={styles.navLink}>{t('navLinks.unauthenticated.howItWorks')}</Link></li>
+                            <li><Link href="/#features" className={styles.navLink}>{t('navLinks.unauthenticated.features')}</Link></li>
+                            <li><Link href="/#testimonials" className={styles.navLink}>{t('navLinks.unauthenticated.testimonials')}</Link></li>
                         </ul>
                     </>
                 }
@@ -41,7 +43,7 @@ export default function Header() {
                             <path d="M20.59 22C20.59 18.13 16.74 15 12 15C7.26 15 3.41 18.13 3.41 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                     )}
-                    <span>{user?.displayName ?? "Аккаунт"}</span>
+                    <span>{user?.displayName ?? t('accountButton')}</span>
                 </Link>
             </nav>
         </header>

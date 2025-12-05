@@ -1,23 +1,25 @@
 import Link from 'next/link';
 import styles from './Hero.module.css';
+import { useTranslations } from 'next-intl';
 
 export default function HomeHero() {
+    const t = useTranslations('HomeHero');
     return (
         <section className={styles.hero} id="hero">
             <div className={styles.content}>
                 <h1 className={styles.title}>Friends4Evening</h1>
-                <p className={styles.subtitle}>Найди компанию для вечера</p>
+                <p className={styles.subtitle}>{t('subtitle')}</p>
                 <p className={styles.description}>
-                    Сервис знакомств для тех, кто хочет провести вечер в хорошей компании.
+                    {t('description')}
                 <br />
-                    <b>Быстро, безопасно и по интересам.</b>
+                    <b>{t('descriptionBold')}</b>
                 </p>
                 <div className={styles.ctaButtons}>
                     <Link href="/account" className={`${styles.button} ${styles.buttonPrimary}`}>
-                        Начать поиск
+                        {t('startSearchButton')}
                     </Link>
                     <Link href="#how-it-works" className={`${styles.button} ${styles.buttonSecondary}`}>
-                        Узнать больше
+                        {t('learnMoreButton')}
                     </Link>
                 </div>
             </div>
