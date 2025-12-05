@@ -9,11 +9,13 @@ import LoadingView from "@/components/LoadingView/LoadingView";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import { sendEmailAndNotification } from "@/app/actions";
 import InviteUser from "./components/InviteUser/InviteUser";
+import { useTranslations } from 'next-intl';
 
 type UserWithMemberId = User & { memberId: string };
 
 export default function Participants({ meet }: { meet: Meet }) {
     const auth = useAuth();
+    const t = useTranslations('Participants');
     const [participants, setParticipants] = useState<UserWithMemberId[]>([]);
     const [waiting, setWaiting] = useState<UserWithMemberId[]>([]);
     const [invited, setInvited] = useState<UserWithMemberId[]>([]);
@@ -71,7 +73,7 @@ export default function Participants({ meet }: { meet: Meet }) {
             // Находим участника и его предыдущий статус
             const member = meet.members.find(m => m.id === memberId);
             if (!member) {
-                alert('Участник не найден');
+                alert(t('errors.memberNotFound'));
                 setActionLoading(null);
                 return;
             }
@@ -102,12 +104,12 @@ export default function Participants({ meet }: { meet: Meet }) {
                 }
                 window.location.reload();
             } else {
-                alert('Ошибка при выполнении действия');
+                alert(t('errors.actionError'));
                 setActionLoading(null);
             }
         } catch (error) {
             console.error('Error updating member:', error);
-            alert('Ошибка при выполнении действия');
+            alert(t('errors.actionError'));
             setActionLoading(null);
         }
     };
@@ -123,7 +125,7 @@ export default function Participants({ meet }: { meet: Meet }) {
             {participants.length > 0 && (
                 <div className={styles.section}>
                     <h3 className={styles.sectionTitle}>
-                        Подтвержденные ({participants.length}{meet.membersCount ? ` / ${meet.membersCount}` : ''})
+                        {t('sections.approved')} ({participants.length}{meet.membersCount ? ` / ${meet.membersCount}` : ''})
                     </h3>
                     <div className={styles.grid}>
                         {participants.map((user) => (
@@ -132,7 +134,7 @@ export default function Participants({ meet }: { meet: Meet }) {
                                 className={`${user.id === meet.ownerId ? styles.ownerWrapper : ''}`}
                             >
                                 {user.id === meet.ownerId && (
-                                    <span className={styles.ownerBadge}>Организатор</span>
+                                    <span className={styles.ownerBadge}>{t('badges.owner')}</span>
                                 )}
                                 <UserCard user={user} />
                                 {isOwner && user.id !== meet.ownerId && (
@@ -142,7 +144,7 @@ export default function Participants({ meet }: { meet: Meet }) {
                                             onClick={() => handleMemberAction(user.memberId, 'remove')}
                                             disabled={actionLoading === user.memberId}
                                         >
-                                            {actionLoading === user.memberId ? 'Удаление...' : 'Удалить участника'}
+                                            {actionLoading === user.memberId ? t('buttons.remove.loading') : t('buttons.remove.text')}
                                         </button>
                                     </div>
                                 )}
@@ -155,7 +157,7 @@ export default function Participants({ meet }: { meet: Meet }) {
             {waiting.length > 0 && (
                 <div className={styles.section}>
                     <h3 className={styles.sectionTitle}>
-                        Ожидают подтверждения ({waiting.length})
+                        {t('sections.waiting')} ({waiting.length})
                     </h3>
                     <div className={styles.grid}>
                         {waiting.map((user) => (
@@ -168,14 +170,14 @@ export default function Participants({ meet }: { meet: Meet }) {
                                             onClick={() => handleMemberAction(user.memberId, 'approve')}
                                             disabled={actionLoading === user.memberId}
                                         >
-                                            {actionLoading === user.memberId ? 'Принятие...' : 'Принять'}
+                                            {actionLoading === user.memberId ? t('buttons.approve.loading') : t('buttons.approve.text')}
                                         </button>
                                         <button
                                             className={styles.declineButton}
                                             onClick={() => handleMemberAction(user.memberId, 'decline')}
                                             disabled={actionLoading === user.memberId}
                                         >
-                                            {actionLoading === user.memberId ? 'Отклонение...' : 'Отклонить'}
+                                            {actionLoading === user.memberId ? t('buttons.decline.loading') : t('buttons.decline.text')}
                                         </button>
                                     </div>
                                 )}
@@ -188,7 +190,7 @@ export default function Participants({ meet }: { meet: Meet }) {
             {invited.length > 0 && (
                 <div className={styles.section}>
                     <h3 className={styles.sectionTitle}>
-                        Отправлены приглашения ({invited.length})
+                        {t('sections.invited')} ({invited.length})
                     </h3>
                     <div className={styles.grid}>
                         {invited.map((user) => (
@@ -201,7 +203,7 @@ export default function Participants({ meet }: { meet: Meet }) {
                                             onClick={() => handleMemberAction(user.memberId, 'remove')}
                                             disabled={actionLoading === user.memberId}
                                         >
-                                            {actionLoading === user.memberId ? 'Удаление...' : 'Удалить'}
+                                            {actionLoading === user.memberId ? t('buttons.remove.loading') : t('buttons.remove.textShort')}
                                         </button>
                                     </div>
                                 )}
@@ -213,7 +215,7 @@ export default function Participants({ meet }: { meet: Meet }) {
 
             {participants.length === 0 && waiting.length === 0 && invited.length === 0 && (
                 <div className={styles.emptyState}>
-                    Участников пока нет
+                    {t('emptyState')}
                 </div>
             )}
 
@@ -223,7 +225,7 @@ export default function Participants({ meet }: { meet: Meet }) {
                         className={styles.inviteButton}
                         onClick={() => setShowInviteModal(true)}
                     >
-                        + Пригласить
+                        {t('buttons.invite')}
                     </button>
                 </div>
             )}

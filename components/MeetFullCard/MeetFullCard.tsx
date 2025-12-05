@@ -3,7 +3,7 @@ import { AiOutlineClose, AiOutlineStar } from 'react-icons/ai'
 import styles from './MeetFullCard.module.css'
 import { Meet, ApplicationMemberStatus, MeetStatus } from '@/models/Meet'
 import { FaWineBottle } from 'react-icons/fa'
-import { ages } from '@/app/account/meets/components/Meets/Meets'
+import { getAges } from '@/app/account/meets/components/Meets/Meets'
 import { useAuth } from '@/app/_providers/AuthProvider'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -13,8 +13,12 @@ import { useTranslations, useLocale } from 'next-intl'
 export default function MeetFullCard({ meet }: { meet: Meet }) {
     const auth = useAuth();
     const t = useTranslations('MeetFullCard');
+    const tMeets = useTranslations('Meets');
     const locale = useLocale();
     const [loading, setLoading] = useState(false);
+
+    // Get localized ages array
+    const ages = getAges((key: string) => tMeets(`ages.${key}`));
 
     // Проверяем, является ли текущий пользователь участником
     const currentUserId = auth.user?.uid;

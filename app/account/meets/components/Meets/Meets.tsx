@@ -7,32 +7,28 @@ import styles from "./Meets.module.css";
 import UserCard from "@/components/UserCard/UserCard";
 import MeetSuggestions from "../MeetSuggestions/MeetSuggestions";
 import LoadingView from "@/components/LoadingView/LoadingView";
+import { useTranslations } from 'next-intl';
 
-export const ages: { key: string, label: string }[] = [
-    { key: "none", label: "Не важно" },
-    { key: "18-22", label: "18 – 22" },
-    { key: "23-27", label: "23 – 27" },
-    { key: "28-35", label: "28 – 35" },
-    { key: "36-45", label: "36 – 45" },
-    { key: "46-60", label: "46 – 60" },
-    { key: "60", label: "60 +" },
+// Helper functions for exported arrays (used in other components)
+export const getAges = (t: (key: string) => string): { key: string, label: string }[] => [
+    { key: "none", label: t('Meets.ages.none') },
+    { key: "18-22", label: t('Meets.ages.18-22') },
+    { key: "23-27", label: t('Meets.ages.23-27') },
+    { key: "28-35", label: t('Meets.ages.28-35') },
+    { key: "36-45", label: t('Meets.ages.36-45') },
+    { key: "46-60", label: t('Meets.ages.46-60') },
+    { key: "60", label: t('Meets.ages.60') },
 ]
 
-const statuses: { key: string, label: string }[] = [
-    { key: "none", label: "Не важно" },
-    { key: "READY", label: "Готов к встрече" },
-    { key: "INTENSIVE_SEARCH", label: "В активном поиске" }
-]
-
-export const meetType: { key: string, label: string }[] = [
-    { key: "none", label: "Не важно" },
-    { key: "CURRENT_HOME", label: "У себя дома" },
-    { key: "USER_HOME", label: "У других дома" },
-    { key: "STREET", label: "На улице" },
-    { key: "PUBLIC_PLACES", label: "В общественных местах" },
-    { key: "PARKS", label: "В парках" },
-    { key: "CAFES", label: "В кафе/ресторанах" },
-    { key: "ONLINE", label: "Онлайн" }
+export const getMeetTypes = (t: (key: string) => string): { key: string, label: string }[] => [
+    { key: "none", label: t('Meets.meetTypes.none') },
+    { key: "CURRENT_HOME", label: t('Meets.meetTypes.CURRENT_HOME') },
+    { key: "USER_HOME", label: t('Meets.meetTypes.USER_HOME') },
+    { key: "STREET", label: t('Meets.meetTypes.STREET') },
+    { key: "PUBLIC_PLACES", label: t('Meets.meetTypes.PUBLIC_PLACES') },
+    { key: "PARKS", label: t('Meets.meetTypes.PARKS') },
+    { key: "CAFES", label: t('Meets.meetTypes.CAFES') },
+    { key: "ONLINE", label: t('Meets.meetTypes.ONLINE') }
 ]
 
 type SearchForm = {
@@ -43,6 +39,7 @@ type SearchForm = {
 }
 
 export default function Meets() {
+    const t = useTranslations('Meets');
     const [users, setUsers] = useState<User[]>([]);
     const [sortedUsers, setSortedUsers] = useState<User[]>([]);
     const [cities, setCities] = useState<string[]>([]);
@@ -52,6 +49,34 @@ export default function Meets() {
     const cityInputRef = useRef<HTMLInputElement>(null);
     const citySuggestionsRef = useRef<HTMLDivElement>(null);
     const [loading, setLoading] = useState(true);
+
+    // Localized arrays for this component
+    const ages = [
+        { key: "none", label: t('ages.none') },
+        { key: "18-22", label: t('ages.18-22') },
+        { key: "23-27", label: t('ages.23-27') },
+        { key: "28-35", label: t('ages.28-35') },
+        { key: "36-45", label: t('ages.36-45') },
+        { key: "46-60", label: t('ages.46-60') },
+        { key: "60", label: t('ages.60') },
+    ]
+
+    const statuses: { key: string, label: string }[] = [
+        { key: "none", label: t('statuses.none') },
+        { key: "READY", label: t('statuses.READY') },
+        { key: "INTENSIVE_SEARCH", label: t('statuses.INTENSIVE_SEARCH') }
+    ]
+
+    const meetType: { key: string, label: string }[] = [
+        { key: "none", label: t('meetTypes.none') },
+        { key: "CURRENT_HOME", label: t('meetTypes.CURRENT_HOME') },
+        { key: "USER_HOME", label: t('meetTypes.USER_HOME') },
+        { key: "STREET", label: t('meetTypes.STREET') },
+        { key: "PUBLIC_PLACES", label: t('meetTypes.PUBLIC_PLACES') },
+        { key: "PARKS", label: t('meetTypes.PARKS') },
+        { key: "CAFES", label: t('meetTypes.CAFES') },
+        { key: "ONLINE", label: t('meetTypes.ONLINE') }
+    ]
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -302,7 +327,7 @@ export default function Meets() {
 
             <div className={styles.filters}>
                 <label className={styles.filterLabel}>
-                    <span>Возраст</span>
+                    <span>{t('filters.age')}</span>
                     <Dropdown
                         source={ages}
                         current={form.age}
@@ -310,14 +335,14 @@ export default function Meets() {
                     />
                 </label>
                 <label className={styles.filterLabel}>
-                    <span>Город</span>
+                    <span>{t('filters.city')}</span>
                     <div className={styles.cityInputWrapper}>
                         <input
                             ref={cityInputRef}
                             id="city"
                             name="city"
                             type="text"
-                            placeholder="Город встречи"
+                            placeholder={t('placeholders.city')}
                             value={form.city}
                             onChange={(e) => handleChangeCity(e.target.value)}
                             onFocus={handleCityInputFocus}
@@ -342,7 +367,7 @@ export default function Meets() {
                     </div>
                 </label>
                 <label className={styles.filterLabel}>
-                    <span>Статус</span>
+                    <span>{t('filters.status')}</span>
                     <Dropdown
                         source={statuses}
                         current={form.status}
@@ -350,7 +375,7 @@ export default function Meets() {
                     />
                 </label>
                 <label className={styles.filterLabel}>
-                    <span>Где встретиться</span>
+                    <span>{t('filters.meetType')}</span>
                     <Dropdown
                         source={meetType}
                         current={form.meetType}
@@ -361,7 +386,7 @@ export default function Meets() {
             <div className={styles.usersGrid}>
                 {sortedUsers.length === 0 ? (
                     <div className={styles.emptyState}>
-                        Пользователи не найдены
+                        {t('emptyState')}
                     </div>
                 ) : (
                     sortedUsers.map((user) => (

@@ -7,9 +7,11 @@ import styles from "./InviteUser.module.css";
 import { AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
 import { useAuth } from "@/app/_providers/AuthProvider";
 import InviteUserCard from "./components/InviteUserCard/InviteUserCard";
+import { useTranslations } from 'next-intl';
 
 export default function InviteUser({ meet, onClose }: { meet: Meet, onClose: () => void }) {
     const auth = useAuth();
+    const t = useTranslations('InviteUser');
     const [availableUsers, setAvailableUsers] = useState<User[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [inviteLoading, setInviteLoading] = useState<string | null>(null);
@@ -80,12 +82,12 @@ export default function InviteUser({ meet, onClose }: { meet: Meet, onClose: () 
                 fetchAvailableUsers('');
             } else {
                 const errorData = await response.json().catch(() => ({}));
-                alert(errorData.message || 'Ошибка при приглашении пользователя');
+                alert(errorData.message || t('errors.inviteError'));
                 setInviteLoading(null);
             }
         } catch (error) {
             console.error('Error inviting user:', error);
-            alert('Ошибка при приглашении пользователя');
+            alert(t('errors.inviteError'));
             setInviteLoading(null);
         }
     };
@@ -94,7 +96,7 @@ export default function InviteUser({ meet, onClose }: { meet: Meet, onClose: () 
         <div className={styles.modalOverlay} onClick={onClose}>
             <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.modalHeader}>
-                    <h3 className={styles.modalTitle}>Пригласить пользователя</h3>
+                    <h3 className={styles.modalTitle}>{t('title')}</h3>
                     <button
                         className={styles.modalCloseButton}
                         onClick={onClose}
@@ -106,7 +108,7 @@ export default function InviteUser({ meet, onClose }: { meet: Meet, onClose: () 
                     <div className={styles.searchContainer}>
                         <input
                             type="text"
-                            placeholder="Поиск по имени или никнейму..."
+                            placeholder={t('search.placeholder')}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             onKeyPress={handleKeyPress}
@@ -124,11 +126,11 @@ export default function InviteUser({ meet, onClose }: { meet: Meet, onClose: () 
                 <div className={styles.modalUsersList}>
                     {loading ? (
                         <div className={styles.emptyState}>
-                            Загрузка...
+                            {t('emptyState.loading')}
                         </div>
                     ) : availableUsers.length === 0 ? (
                         <div className={styles.emptyState}>
-                            Пользователи не найдены
+                            {t('emptyState.noUsers')}
                         </div>
                     ) : (
                         availableUsers.map((user) => (

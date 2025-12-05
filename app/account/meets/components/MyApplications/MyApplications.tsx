@@ -6,9 +6,11 @@ import styles from "./MyApplications.module.css";
 import { Meet } from "@/models/Meet";
 import MeetCard from "@/components/MeetCard/MeetCard";
 import LoadingView from "@/components/LoadingView/LoadingView";
+import { useTranslations } from 'next-intl';
 
 export default function MyApplications() {
     const auth = useAuth();
+    const t = useTranslations('MyApplications');
     const [applications, setApplications] = useState<Meet[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -64,7 +66,7 @@ export default function MyApplications() {
         <section className={styles.section}>
             {applications.length === 0 ? (
                 <div className={styles.emptyState}>
-                    У вас пока нет заявок на встречи
+                    {t('emptyState')}
                 </div>
             ) : (
                 <div className={styles.applicationsGrid}>

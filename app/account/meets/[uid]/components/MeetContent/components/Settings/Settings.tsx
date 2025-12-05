@@ -5,10 +5,12 @@ import { useState } from "react";
 import styles from "./Settings.module.css";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/_providers/AuthProvider";
+import { useTranslations } from 'next-intl';
 
 export default function Settings({ meet }: { meet: Meet }) {
     const auth = useAuth();
     const router = useRouter();
+    const t = useTranslations('Settings');
     const [form, setForm] = useState({
         title: meet.title || "",
         description: meet.description || "",
@@ -35,13 +37,13 @@ export default function Settings({ meet }: { meet: Meet }) {
         if (response.status === 200) {
             window.location.reload();
         } else {
-            alert('Ошибка при сохранении изменений');
+            alert(t('errors.saveError'));
             setLoading(false);
         }
     };
 
     const handleDelete = async () => {
-        if (!confirm('Вы уверены, что хотите удалить эту встречу? Это действие нельзя отменить.')) {
+        if (!confirm(t('delete.confirm'))) {
             return;
         }
 
@@ -57,7 +59,7 @@ export default function Settings({ meet }: { meet: Meet }) {
         if (response.status === 200) {
             router.push('/account/meets?tab=meets');
         } else {
-            alert('Ошибка при удалении встречи');
+            alert(t('errors.deleteError'));
             setDeleteLoading(false);
         }
     };
@@ -69,26 +71,26 @@ export default function Settings({ meet }: { meet: Meet }) {
                     <form onSubmit={handleSubmit} className={styles.form}>
                         <div className={styles.formGroup}>
                             <label className={styles.label}>
-                                <span>Название встречи</span>
+                                <span>{t('labels.title')}</span>
                                 <input
                                     type="text"
                                     className={styles.input}
                                     value={form.title}
                                     onChange={(e) => setForm({ ...form, title: e.target.value })}
                                     required
-                                    placeholder="Введите название встречи"
+                                    placeholder={t('placeholders.title')}
                                 />
                             </label>
                         </div>
 
                         <div className={styles.formGroup}>
                             <label className={styles.label}>
-                                <span>Описание</span>
+                                <span>{t('labels.description')}</span>
                                 <textarea
                                     className={styles.textarea}
                                     value={form.description}
                                     onChange={(e) => setForm({ ...form, description: e.target.value })}
-                                    placeholder="Введите описание встречи"
+                                    placeholder={t('placeholders.description')}
                                     rows={6}
                                 />
                             </label>
@@ -100,14 +102,14 @@ export default function Settings({ meet }: { meet: Meet }) {
                                 className={styles.saveButton}
                                 disabled={loading}
                             >
-                                {loading ? 'Сохранение...' : 'Сохранить'}
+                                {loading ? t('buttons.save.loading') : t('buttons.save.text')}
                             </button>
                         </div>
                     </form>
 
                     <div className={styles.deleteSection}>
                         <p className={styles.deleteDescription}>
-                            Удаление встречи нельзя отменить. Все данные будут безвозвратно удалены.
+                            {t('delete.description')}
                         </p>
                         <button
                             type="button"
@@ -115,7 +117,7 @@ export default function Settings({ meet }: { meet: Meet }) {
                             onClick={handleDelete}
                             disabled={deleteLoading}
                         >
-                            {deleteLoading ? 'Удаление...' : 'Удалить встречу'}
+                            {deleteLoading ? t('buttons.delete.loading') : t('buttons.delete.text')}
                         </button>
                     </div>
                 </>
