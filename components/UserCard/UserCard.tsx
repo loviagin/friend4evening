@@ -1,3 +1,5 @@
+"use client";
+
 import { User } from "@/models/User";
 import Link from "next/link";
 import Avatar from "../Avatar/Avatar";
@@ -5,10 +7,15 @@ import styles from './UserCard.module.css'
 import { AiFillCar, AiOutlineClose } from "react-icons/ai";
 import { FaSmokingBan, FaWineBottle } from "react-icons/fa";
 import { useTranslations, useLocale } from 'next-intl';
+import { useState } from 'react';
+import { useAuth } from '@/app/_providers/AuthProvider';
+import InviteToMeet from '../InviteToMeet/InviteToMeet';
 
 export default function UserCard({ user }: { user: User }) {
     const t = useTranslations('UserCard');
     const locale = useLocale();
+    const auth = useAuth();
+    const [showInviteModal, setShowInviteModal] = useState(false);
 
     const pluralizeYears = (age: number) => {
         if (locale === 'ru') {
@@ -91,6 +98,21 @@ export default function UserCard({ user }: { user: User }) {
                     </p>
                 )}
             </Link>
+            {auth.user && auth.user.uid !== user.id && (
+                <button
+                    className={styles.inviteButton}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setShowInviteModal(true);
+                    }}
+                >
+                    {t('buttons.invite')}
+                </button>
+            )}
+            {showInviteModal && (
+                <InviteToMeet user={user} close={() => setShowInviteModal(false)} />
+            )}
         </div>
     )
 }

@@ -260,6 +260,13 @@
       "CURRENT": "At a meet",
       "BUSY": "Busy",
       "INTENSIVE_SEARCH": "Intensive search"
+    },
+    "buttons": {
+      "invite": "Invite",
+      "inviting": "Inviting..."
+    },
+    "errors": {
+      "inviteError": "Error inviting user"
     }
   },
   "ApplicationApprovedEmail": {
@@ -938,6 +945,48 @@
     "errors": {
       "saveError": "Error saving changes",
       "deleteError": "Error deleting meet"
+    }
+  },
+  "InviteToMeet": {
+    "title": "Invite {userName} to a meet",
+    "modes": {
+      "existing": "Existing meet",
+      "new": "New closed meet"
+    },
+    "emptyState": {
+      "noMeets": "You don't have any active meets yet"
+    },
+    "meet": {
+      "defaultTitle": "Meet #{id}"
+    },
+    "form": {
+      "labels": {
+        "title": "Meet title",
+        "description": "Description",
+        "location": "Location",
+        "duration": "Duration",
+        "age": "Age",
+        "meetType": "Where to meet",
+        "dateTime": "Date and time",
+        "noAlcohol": "No alcohol"
+      },
+      "placeholders": {
+        "title": "Enter title (optional)",
+        "description": "Enter description (optional)",
+        "location": "City or address",
+        "duration": "For example: 2 hours"
+      }
+    },
+    "buttons": {
+      "invite": "Invite",
+      "cancel": "Cancel",
+      "createAndInvite": "Create and invite"
+    },
+    "alerts": {
+      "inviteSuccess": "User invited successfully",
+      "inviteError": "Error inviting user",
+      "createError": "Error creating meet",
+      "createAndInviteSuccess": "Meet created and user invited"
     }
   }
 }

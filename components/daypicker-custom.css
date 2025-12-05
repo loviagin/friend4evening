@@ -8,7 +8,7 @@
   --rdp-background-color-dark: var(--background);
   --rdp-outline: 2px solid var(--rdp-accent-color);
   --rdp-outline-selected: 2px solid var(--rdp-accent-color-dark);
-  margin: 0;
+  margin: 0 auto;
   font-family: inherit;
 }
 
@@ -39,9 +39,10 @@
 
 .rdp-months {
   display: flex;
-  max-width: 100%;
-  overflow-x: hidden;
+  max-width: none;
+  overflow-x: visible;
   box-sizing: border-box;
+  width: 100%;
 }
 
 .rdp-month {
@@ -49,15 +50,30 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  overflow-x: hidden;
+  overflow-x: visible;
   box-sizing: border-box;
 }
 
 .rdp-table {
-  width: 100%;
-  max-width: 100%;
+  width: 100% !important;
+  max-width: 100% !important;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: fixed !important;
+  box-sizing: border-box;
+  min-width: 100% !important;
+  overflow: visible;
+}
+
+.rdp-table tr {
+  width: 100%;
+  display: table-row;
+}
+
+.rdp-table td,
+.rdp-table th {
+  width: calc(100% / 7) !important;
+  min-width: calc(100% / 7) !important;
+  max-width: calc(100% / 7) !important;
   box-sizing: border-box;
 }
 
@@ -154,9 +170,11 @@
   height: var(--rdp-cell-size);
   padding: 0;
   color: rgba(70, 108, 149, 0.7);
-  max-width: calc(100% / 7);
+  width: calc(100% / 7) !important;
+  min-width: calc(100% / 7) !important;
+  max-width: calc(100% / 7) !important;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .rdp-tbody {
@@ -168,28 +186,31 @@
 }
 
 .rdp-cell {
-  width: var(--rdp-cell-size);
-  max-width: calc(100% / 7);
+  width: calc(100% / 7) !important;
+  min-width: calc(100% / 7) !important;
+  max-width: calc(100% / 7) !important;
   height: 100%;
   position: relative;
   font-size: 0.8125rem;
   text-align: center;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .rdp-button_cell {
-  width: var(--rdp-cell-size);
+  width: 100%;
   height: var(--rdp-cell-size);
+  box-sizing: border-box;
 }
 
 .rdp-day {
-  width: var(--rdp-cell-size);
+  width: 100%;
   height: var(--rdp-cell-size);
   border-radius: 50%;
   font-weight: 500;
   color: var(--foreground);
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .rdp-day:hover:not([disabled]):not(.rdp-day_selected):not(.rdp-day_outside) {
@@ -378,37 +399,59 @@
   border: 2px solid rgba(70, 108, 149, 0.2);
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(70, 108, 149, 0.15);
-  padding: 1rem;
+  padding: 1.25rem 1rem;
+  margin: 0;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-x: visible !important;
+  overflow-y: visible;
 }
 
 @media (max-width: 768px) {
   .rdp {
     font-size: 0.75rem;
-    padding: 0.5rem;
+    padding: 1rem 0.75rem;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: visible;
     box-sizing: border-box;
+    margin: 0;
+    display: block;
+    width: 100%;
+    min-width: 0;
   }
 
   .rdp-months {
-    max-width: 100%;
-    overflow-x: hidden;
+    max-width: none;
+    overflow-x: visible;
+    width: 100%;
   }
 
   .rdp-month {
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: visible;
+    margin: 0;
+    width: 100%;
   }
 
   .rdp-table {
     max-width: 100%;
     table-layout: fixed;
+    width: 100%;
+    min-width: 100%;
   }
 
   .rdp-button_previous,
   .rdp-button_next {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0.5rem;
+  }
+
+  .rdp-nav_icon {
+    width: 1rem;
+    height: 1rem;
   }
 
   .rdp-caption_label {
@@ -417,45 +460,68 @@
 
   .rdp-head_cell {
     font-size: 0.6875rem;
-  }
-
-  .rdp-day {
-    font-size: 0.75rem;
+    width: calc(100% / 7) !important;
+    min-width: calc(100% / 7) !important;
+    max-width: calc(100% / 7) !important;
+    overflow: visible;
   }
 
   .rdp-cell {
     --rdp-cell-size: 1.5rem;
+    width: calc(100% / 7) !important;
+    min-width: calc(100% / 7) !important;
+    max-width: calc(100% / 7) !important;
+    overflow: visible;
+  }
+
+  .rdp-day {
+    font-size: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
   .rdp {
     font-size: 0.6875rem;
-    padding: 0.375rem;
+    padding: 0.875rem 0.625rem;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: visible;
     box-sizing: border-box;
+    margin: 0;
+    display: block;
+    width: 100%;
+    min-width: 0;
   }
 
   .rdp-months {
-    max-width: 100%;
-    overflow-x: hidden;
+    max-width: none;
+    overflow-x: visible;
+    width: 100%;
   }
 
   .rdp-month {
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: visible;
+    margin: 0;
+    width: 100%;
   }
 
   .rdp-table {
     max-width: 100%;
     table-layout: fixed;
+    width: 100%;
+    min-width: 100%;
   }
 
   .rdp-button_previous,
   .rdp-button_next {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.625rem;
+  }
+
+  .rdp-nav_icon {
+    width: 1.125rem;
+    height: 1.125rem;
   }
 
   .rdp-caption_label {
@@ -464,14 +530,22 @@
 
   .rdp-head_cell {
     font-size: 0.625rem;
-  }
-
-  .rdp-day {
-    font-size: 0.6875rem;
+    width: calc(100% / 7) !important;
+    min-width: calc(100% / 7) !important;
+    max-width: calc(100% / 7) !important;
+    overflow: visible;
   }
 
   .rdp-cell {
     --rdp-cell-size: 1.25rem;
+    width: calc(100% / 7) !important;
+    min-width: calc(100% / 7) !important;
+    max-width: calc(100% / 7) !important;
+    overflow: visible;
+  }
+
+  .rdp-day {
+    font-size: 0.6875rem;
   }
 }
 

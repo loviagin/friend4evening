@@ -62,8 +62,16 @@ export function CreateMeetContent({ close }: Props) {
     const [loading, setLoading] = useState(false);
 
     // Get localized arrays
-    const ages = getAges((key: string) => tMeets(`ages.${key}`));
-    const meetType = getMeetTypes((key: string) => tMeets(`meetTypes.${key}`));
+    // getAges and getMeetTypes expect keys with 'Meets.' prefix, but tMeets already works with 'Meets' namespace
+    // So we need to strip the 'Meets.' prefix before passing to tMeets
+    const ages = getAges((key: string) => {
+        const keyWithoutPrefix = key.replace(/^Meets\./, '');
+        return tMeets(keyWithoutPrefix);
+    });
+    const meetType = getMeetTypes((key: string) => {
+        const keyWithoutPrefix = key.replace(/^Meets\./, '');
+        return tMeets(keyWithoutPrefix);
+    });
 
     const [form, setForm] = useState<MeetApplicationProps>({
         title: "",
@@ -90,12 +98,12 @@ export function CreateMeetContent({ close }: Props) {
         console.log(form);
 
         if (!auth.user) return;
-        
+
         // Конвертируем membersCount из строки в number или null
-        const membersCountValue = form.membersCount.trim() === "" 
-            ? null 
+        const membersCountValue = form.membersCount.trim() === ""
+            ? null
             : parseInt(form.membersCount, 10);
-        
+
         if (membersCountValue !== null && membersCountValue < 0) return;
         setLoading(true);
 
@@ -226,11 +234,11 @@ export function CreateMeetContent({ close }: Props) {
                                 </div>
                             </div>
 
-                            <div className={styles.formRow}>
-                                <div className={styles.formGroup}>
-                                    <label className={styles.label}>
-                                        <span>{t('labels.dateTime')}</span>
-                                        <div className={styles.dateTimePicker}>
+                            <div className={styles.formGroup}>
+                                <label className={styles.label}>
+                                    <span>{t('labels.dateTime')}</span>
+                                    <div className={styles.dateTimePicker}>
+                                        <div className={styles.dayPickerWrapper}>
                                             <DayPicker
                                                 mode="single"
                                                 selected={form.date}
@@ -246,50 +254,50 @@ export function CreateMeetContent({ close }: Props) {
                                                 disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
                                                 className={styles.dayPicker}
                                             />
-                                            <div className={styles.timePicker}>
-                                                <div className={styles.timeGrid}>
-                                                    {Array.from({ length: 24 }, (_, i) => {
-                                                        const hours = i;
-                                                        const minutes = 0;
-                                                        const timeString = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-                                                        const isSelected = form.date.getHours() === hours && form.date.getMinutes() === 0;
+                                        </div>
+                                        <div className={styles.timePicker}>
+                                            <div className={styles.timeGrid}>
+                                                {Array.from({ length: 24 }, (_, i) => {
+                                                    const hours = i;
+                                                    const minutes = 0;
+                                                    const timeString = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+                                                    const isSelected = form.date.getHours() === hours && form.date.getMinutes() === 0;
 
-                                                        return (
-                                                            <button
-                                                                key={i}
-                                                                type="button"
-                                                                className={`${styles.timeButton} ${isSelected ? styles.timeButtonSelected : ''}`}
-                                                                onClick={() => {
-                                                                    const newDate = new Date(form.date);
-                                                                    newDate.setHours(hours);
-                                                                    newDate.setMinutes(0);
-                                                                    newDate.setSeconds(0);
-                                                                    newDate.setMilliseconds(0);
-                                                                    setForm({ ...form, date: newDate });
-                                                                }}
-                                                            >
-                                                                {timeString}
-                                                            </button>
-                                                        );
-                                                    })}
-                                                </div>
+                                                    return (
+                                                        <button
+                                                            key={i}
+                                                            type="button"
+                                                            className={`${styles.timeButton} ${isSelected ? styles.timeButtonSelected : ''}`}
+                                                            onClick={() => {
+                                                                const newDate = new Date(form.date);
+                                                                newDate.setHours(hours);
+                                                                newDate.setMinutes(0);
+                                                                newDate.setSeconds(0);
+                                                                newDate.setMilliseconds(0);
+                                                                setForm({ ...form, date: newDate });
+                                                            }}
+                                                        >
+                                                            {timeString}
+                                                        </button>
+                                                    );
+                                                })}
                                             </div>
                                         </div>
-                                    </label>
-                                </div>
+                                    </div>
+                                </label>
+                            </div>
 
-                                <div className={styles.formGroup}>
-                                    <label className={styles.label}>
-                                        <span>{t('labels.duration')}</span>
-                                        <input
-                                            type="text"
-                                            className={styles.input}
-                                            placeholder={t('placeholders.duration')}
-                                            value={form.duration}
-                                            onChange={(e) => setForm({ ...form, duration: e.target.value })}
-                                        />
-                                    </label>
-                                </div>
+                            <div className={styles.formGroup}>
+                                <label className={styles.label}>
+                                    <span>{t('labels.duration')}</span>
+                                    <input
+                                        type="text"
+                                        className={styles.input}
+                                        placeholder={t('placeholders.duration')}
+                                        value={form.duration}
+                                        onChange={(e) => setForm({ ...form, duration: e.target.value })}
+                                    />
+                                </label>
                             </div>
 
                             <div className={styles.formGroup}>
@@ -316,6 +324,6 @@ export function CreateMeetContent({ close }: Props) {
                     </>
                 )}
             </div>
-        </div>
+        </div >
     )
 }

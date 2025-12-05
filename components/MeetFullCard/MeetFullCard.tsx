@@ -17,8 +17,10 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
     const locale = useLocale();
     const [loading, setLoading] = useState(false);
 
-    // Get localized ages array
-    const ages = getAges((key: string) => tMeets(`ages.${key}`));
+    const ages = getAges((key: string) => {
+        const keyWithoutPrefix = key.replace(/^Meets\./, '');
+        return tMeets(keyWithoutPrefix);
+    });
 
     // Проверяем, является ли текущий пользователь участником
     const currentUserId = auth.user?.uid;

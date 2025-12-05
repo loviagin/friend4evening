@@ -261,6 +261,13 @@
       "CURRENT": "На встрече",
       "BUSY": "Занят",
       "INTENSIVE_SEARCH": "В активном поиске"
+    },
+    "buttons": {
+      "invite": "Пригласить",
+      "inviting": "Приглашение..."
+    },
+    "errors": {
+      "inviteError": "Ошибка при приглашении пользователя"
     }
   },
   "ApplicationApprovedEmail": {
@@ -939,6 +946,48 @@
     "errors": {
       "saveError": "Ошибка при сохранении изменений",
       "deleteError": "Ошибка при удалении встречи"
+    }
+  },
+  "InviteToMeet": {
+    "title": "Пригласить {userName} на встречу",
+    "modes": {
+      "existing": "Существующая встреча",
+      "new": "Новая закрытая встреча"
+    },
+    "emptyState": {
+      "noMeets": "У вас пока нет активных встреч"
+    },
+    "meet": {
+      "defaultTitle": "Встреча #{id}"
+    },
+    "form": {
+      "labels": {
+        "title": "Название встречи",
+        "description": "Описание",
+        "location": "Местоположение",
+        "duration": "Длительность",
+        "age": "Возраст",
+        "meetType": "Где встретиться",
+        "dateTime": "Дата и время",
+        "noAlcohol": "Без алкоголя"
+      },
+      "placeholders": {
+        "title": "Введите название (необязательно)",
+        "description": "Введите описание (необязательно)",
+        "location": "Город или адрес",
+        "duration": "Например: 2 часа"
+      }
+    },
+    "buttons": {
+      "invite": "Пригласить",
+      "cancel": "Отмена",
+      "createAndInvite": "Создать и пригласить"
+    },
+    "alerts": {
+      "inviteSuccess": "Пользователь успешно приглашен",
+      "inviteError": "Ошибка при приглашении пользователя",
+      "createError": "Ошибка при создании встречи",
+      "createAndInviteSuccess": "Встреча создана и пользователь приглашен"
     }
   }
 }
