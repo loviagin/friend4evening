@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import HeroProfile from "@/app/account/profile/components/HeroProfile/HeroProfile";
 import BlockedProfile from "@/app/account/profile/components/BlockedProfile/BlockedProfile";
 import Friends from "@/app/account/profile/components/Friends/Friends";
+import { useTranslations } from "next-intl";
 import styles from "./UserProfilePage.module.css";
 
 enum ProfileTab {
@@ -18,6 +19,7 @@ type Props = {
 }
 
 export default function UserProfilePage({ nickname }: Props) {
+    const t = useTranslations('Profile');
     const [user, setUser] = useState<User | null>(null);
     const [tab, setTab] = useState<ProfileTab>(ProfileTab.general);
 
@@ -44,7 +46,7 @@ export default function UserProfilePage({ nickname }: Props) {
             content = <GeneralProfile user={user} />
             break;
         case ProfileTab.friends:
-            content = user ? <Friends user={user} /> : <>Загрузка...</>
+            content = user ? <Friends user={user} /> : <>{t('loading')}</>
             break;
         default:
             break;
@@ -68,13 +70,13 @@ export default function UserProfilePage({ nickname }: Props) {
                     className={`${styles.navButton} ${tab === ProfileTab.general ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(ProfileTab.general)}
                 >
-                    Основное
+                    {t('navigation.general')}
                 </button>
                 <button
                     className={`${styles.navButton} ${tab === ProfileTab.friends ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(ProfileTab.friends)}
                 >
-                    Друзья
+                    {t('navigation.friends')}
                 </button>
             </section>
 

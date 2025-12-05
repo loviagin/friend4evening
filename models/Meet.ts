@@ -39,9 +39,6 @@ export enum MeetStatus {
     canceled = "canceled"
 }
 
-export const MeetStatusLabels: Record<MeetStatus, string> = {
-    [MeetStatus.plan]: "Запланировано",
-    [MeetStatus.current]: "Сейчас идет",
-    [MeetStatus.completed]: "Завершена",
-    [MeetStatus.canceled]: "Отменена",
-}
+// MeetStatusLabels has been moved to translations (messages/{locale}.json under "MeetStatus" namespace)
+// Use useTranslations('MeetStatus') in components to get localized labels
+// Example: t('plan'), t('current'), t('completed'), t('canceled')

@@ -8,16 +8,21 @@ import { AuthProvider } from "./_providers/AuthProvider";
 import MobileMenuBar from "@/components/MobileMenuBar/MobileMenuBar";
 import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 const nunitoFont = Nunito({
   variable: "--font-nunito",
   subsets: ['latin'],
 })
 
-export const metadata: Metadata = {
-  title: "Friends4Evening – найти друга на вечер",
-  description: "Удобный поиск и фильтр по нужным параметрам, чаты и многое другое на Friends4Evening. 18+",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('RootLayout');
+  
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  };
+}
 
 export default function RootLayout({
   children,

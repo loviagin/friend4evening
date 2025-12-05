@@ -16,6 +16,7 @@ import { AiOutlineCloseCircle, AiOutlineNotification } from 'react-icons/ai';
 import { subscribeUser, WebPushSubscription } from '@/app/actions';
 import Link from 'next/link';
 import { IoIosNotifications } from 'react-icons/io';
+import { useTranslations } from 'next-intl';
 
 enum ProfileTab {
     general, edit, settings, admin, friends
@@ -24,6 +25,7 @@ enum ProfileTab {
 export default function AccountProfile() {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const t = useTranslations('Profile');
     const cTab = searchParams.get('tab');
     const [user, setUser] = useState<User | null>(null);
     const [tab, setTab] = useState<ProfileTab>(ProfileTab.general);
@@ -105,10 +107,10 @@ export default function AccountProfile() {
             content = <GeneralProfile user={user} />
             break;
         case ProfileTab.friends:
-            content = user ? <Friends user={user} /> : <>Загрузка...</>
+            content = user ? <Friends user={user} /> : <>{t('loading')}</>
             break;
         case ProfileTab.edit:
-            content = user ? <EditProfile user={user} /> : <>Загрузка...</>
+            content = user ? <EditProfile user={user} /> : <>{t('loading')}</>
             break;
         case ProfileTab.settings:
             content = <SettingsProfile />
@@ -131,7 +133,7 @@ export default function AccountProfile() {
     return (
         <main className={styles.container}>
             <div className={styles.header}>
-                <h1 className={styles.title}>Профиль</h1>
+                <h1 className={styles.title}>{t('title')}</h1>
                 <Link href={'/account/notifications'} className={styles.notificationsLink}>
                     <IoIosNotifications />
                 </Link>
@@ -147,10 +149,10 @@ export default function AccountProfile() {
                         <AiOutlineNotification />
                     </div>
                     <div className={styles.subscriptionContent}>
-                        <h4 className={styles.subscriptionTitle}>Включите уведомления чтобы всегда оставаться в курсе событий</h4>
-                        <p className={styles.subscriptionText}>Будем присылать уведомления о новых заявках в друзья, на встречи, о новых сообщениях и важную информацию</p>
+                        <h4 className={styles.subscriptionTitle}>{t('subscription.title')}</h4>
+                        <p className={styles.subscriptionText}>{t('subscription.text')}</p>
                     </div>
-                    <button className={styles.subscriptionButton} onClick={subscribeToPush}>Включить</button>
+                    <button className={styles.subscriptionButton} onClick={subscribeToPush}>{t('subscription.button')}</button>
                 </div>
             )}
             <HeroProfile user={user} />
@@ -163,33 +165,33 @@ export default function AccountProfile() {
                     className={`${styles.navButton} ${tab === ProfileTab.general ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(ProfileTab.general)}
                 >
-                    Основное
+                    {t('navigation.general')}
                 </button>
                 <button
                     className={`${styles.navButton} ${tab === ProfileTab.friends ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(ProfileTab.friends)}
                 >
-                    Друзья
+                    {t('navigation.friends')}
                 </button>
                 {user?.tags && user.tags.includes("admin") && (
                     <button
                         className={`${styles.navButton} ${tab === ProfileTab.admin ? styles.navButtonActive : ''}`}
                         onClick={() => setTab(ProfileTab.admin)}
                     >
-                        👨‍💻 Админ панель
+                        {t('navigation.admin')}
                     </button>
                 )}
                 <button
                     className={`${styles.navButton} ${tab === ProfileTab.edit ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(ProfileTab.edit)}
                 >
-                    Редактировать профиль
+                    {t('navigation.edit')}
                 </button>
                 <button
                     className={`${styles.navButton} ${tab === ProfileTab.settings ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(ProfileTab.settings)}
                 >
-                    Настройки
+                    {t('navigation.settings')}
                 </button>
             </section>
 

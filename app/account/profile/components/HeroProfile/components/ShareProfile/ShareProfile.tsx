@@ -2,6 +2,7 @@
 import { createPortal } from 'react-dom';
 import styles from './ShareProfile.module.css'
 import { useEffect, useState } from "react";
+import { useTranslations } from 'next-intl';
 
 type Props = {
     userNickname: string
@@ -9,6 +10,7 @@ type Props = {
 }
 
 export default function ShareProfile({ userNickname }: { userNickname: string }) {
+    const t = useTranslations('ShareProfile');
     const [showPortal, setShowPortal] = useState(false);
     const [mounted, setMounted] = useState(false);
 
@@ -21,7 +23,7 @@ export default function ShareProfile({ userNickname }: { userNickname: string })
     return (
         <>
             <button className={styles.buttonSecondary} onClick={() => setShowPortal(true)}>
-                Поделиться профилем
+                {t('button')}
             </button>
             {showPortal && mounted && createPortal(
                 <ShareContent close={() => setShowPortal(false)} userNickname={userNickname} />,
@@ -32,6 +34,7 @@ export default function ShareProfile({ userNickname }: { userNickname: string })
 }
 
 export function ShareContent({ close, userNickname }: Props) {
+    const t = useTranslations('ShareProfile');
     const [copied, setCopied] = useState(false);
     const profileUrl = typeof window !== 'undefined'
         ? `${window.location.origin}/profile/${userNickname || ''}`
@@ -49,7 +52,7 @@ export function ShareContent({ close, userNickname }: Props) {
 
     const handleShare = (platform: string) => {
         const encodedUrl = encodeURIComponent(profileUrl);
-        const encodedText = encodeURIComponent('Посмотри мой профиль на Friends4Evening!');
+        const encodedText = encodeURIComponent(t('shareText'));
 
         const shareUrls: Record<string, string> = {
             vk: `https://vk.com/share.php?url=${encodedUrl}&title=${encodedText}`,
@@ -74,15 +77,15 @@ export function ShareContent({ close, userNickname }: Props) {
             <div className={styles.modal}>
                 <div className={styles.modalHeader}>
                     <h2 className={styles.modalTitle}>
-                        Поделиться профилем
+                        {t('title')}
                     </h2>
-                    <button className={styles.closeButton} onClick={close} aria-label="Закрыть">
+                    <button className={styles.closeButton} onClick={close} aria-label={t('close')}>
                         ✕
                     </button>
                 </div>
                 <div className={styles.modalContent}>
                     <p className={styles.shareText}>
-                        Скопируйте ссылку или поделитесь профилем в социальных сетях
+                        {t('instructions')}
                     </p>
                     <div className={styles.shareInputGroup}>
                         <input
@@ -96,7 +99,7 @@ export function ShareContent({ close, userNickname }: Props) {
                             onClick={handleCopy}
                             disabled={copied}
                         >
-                            {copied ? '✓ Скопировано' : 'Копировать'}
+                            {copied ? t('copyButton.copied') : t('copyButton.copy')}
                         </button>
                     </div>
                     <div className={styles.socialButtons}>
@@ -104,19 +107,19 @@ export function ShareContent({ close, userNickname }: Props) {
                             className={styles.socialButton}
                             onClick={() => handleShare('vk')}
                         >
-                            Поделиться в VK
+                            {t('social.vk')}
                         </button>
                         <button
                             className={styles.socialButton}
                             onClick={() => handleShare('telegram')}
                         >
-                            Поделиться в Telegram
+                            {t('social.telegram')}
                         </button>
                         <button
                             className={styles.socialButton}
                             onClick={() => handleShare('whatsapp')}
                         >
-                            Поделиться в WhatsApp
+                            {t('social.whatsapp')}
                         </button>
                     </div>
                 </div>

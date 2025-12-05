@@ -6,10 +6,13 @@ import { Notification } from "@/models/Notification";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { useTranslations, useLocale } from "next-intl";
 import styles from './page.module.css'
 
 export default function Notifications() {
     const auth = useAuth();
+    const t = useTranslations('Notifications');
+    const locale = useLocale();
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -57,9 +60,9 @@ export default function Notifications() {
         ]))
         setLoading(false);
         if (r.status === 200) {
-            alert("Заявка успешно принята")
+            alert(t('alerts.acceptSuccess'))
         } else {
-            alert("Вы уже приняли или отклонили заявку")
+            alert(t('alerts.alreadyProcessed'))
         }
     }
 
@@ -84,9 +87,9 @@ export default function Notifications() {
         ]))
         setLoading(false);
         if (r.status === 200) {
-            alert("Заявка отклонена")
+            alert(t('alerts.declineSuccess'))
         } else {
-            alert("Вы уже приняли или отклонили заявку")
+            alert(t('alerts.alreadyProcessed'))
         }
     }
 
@@ -96,13 +99,29 @@ export default function Notifications() {
         )
     }
 
+    const formatDate = (date: Date) => {
+        const localeMap: { [key: string]: string } = {
+            'ru': 'ru-RU',
+            'en': 'en-US',
+        };
+        const browserLocale = localeMap[locale] || 'en-US';
+
+        return new Date(date).toLocaleDateString(browserLocale, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+
     return (
         <main className={styles.container}>
-            <h1 className={styles.title}>Уведомления</h1>
+            <h1 className={styles.title}>{t('title')}</h1>
             {notifications.length === 0 ? (
                 <div className={styles.emptyState}>
                     <IoNotificationsOutline className={styles.emptyStateIcon} />
-                    <p className={styles.emptyStateText}>У вас пока нет уведомлений</p>
+                    <p className={styles.emptyStateText}>{t('emptyState')}</p>
                 </div>
             ) : (
                 <div className={styles.notificationsList}>
@@ -135,24 +154,18 @@ export default function Notifications() {
                                             className={styles.button}
                                             onClick={() => acceptFriend(notification)}
                                         >
-                                            Принять заявку
+                                            {t('buttons.accept')}
                                         </button>
                                         <button
                                             className={styles.buttonSecondary}
                                             onClick={() => declineFriend(notification)}
                                         >
-                                            Отклонить заявку
+                                            {t('buttons.decline')}
                                         </button>
                                     </div>
                                 )}
                                 <span className={styles.notificationDate}>
-                                    {new Date(notification.createdAt).toLocaleDateString('ru-RU', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: '2-digit',
-                                        minute: '2-digit'
-                                    })}
+                                    {formatDate(notification.createdAt)}
                                 </span>
                             </div>
                         </div>

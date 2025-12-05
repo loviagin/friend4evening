@@ -4,13 +4,15 @@ import { Review } from "@/models/Review"
 import { User } from "@/models/User"
 import { useState, useEffect } from "react"
 import styles from "./UserReview.module.css"
+import { useTranslations, useLocale } from 'next-intl'
 
 type Props = {
     review: Review,
 }
 
 export default function UserReview({ review }: Props) {
-
+    const t = useTranslations('UserReview')
+    const locale = useLocale()
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
@@ -34,7 +36,12 @@ export default function UserReview({ review }: Props) {
 
     const formatDate = (date: Date) => {
         const d = new Date(date);
-        return d.toLocaleDateString('ru-RU', { 
+        const localeMap: Record<string, string> = {
+            'ru': 'ru-RU',
+            'en': 'en-US'
+        };
+        const intlLocale = localeMap[locale] || locale;
+        return d.toLocaleDateString(intlLocale, { 
             year: 'numeric', 
             month: 'long', 
             day: 'numeric' 
@@ -48,7 +55,7 @@ export default function UserReview({ review }: Props) {
                     <Avatar avatarUrl={user?.avatarUrl} />
                 </div>
                 <div className={styles.userInfo}>
-                    <div className={styles.userName}>{user?.name || "Пользователь"}</div>
+                    <div className={styles.userName}>{user?.name || t('defaultUserName')}</div>
                     <div className={styles.rating}>
                         <div className={styles.ratingStars}>
                             {Array.from({ length: review.rating }).map((_, i) => (

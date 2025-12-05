@@ -2,6 +2,7 @@
 "use client"
 import { useState, useEffect } from "react"
 import styles from "./WriteReview.module.css"
+import { useTranslations } from 'next-intl'
 
 type Props = {
     reviewerId: string,
@@ -20,6 +21,7 @@ const StarIcon = ({ className }: { className?: string }) => (
 );
 
 export default function WriteReview({ reviewerId, userId }: Props) {
+    const t = useTranslations('WriteReview')
     const [allow, setAllow] = useState(false);
     const [form, setForm] = useState<Form>({ rating: 0, text: "" });
 
@@ -61,10 +63,10 @@ export default function WriteReview({ reviewerId, userId }: Props) {
         const data = await response.json();
 
         if (response.status === 200) {
-            alert("Отзыв успешно отправлен. Спасибо");
+            alert(t('alerts.success'));
             window.location.reload();
         } else {
-            alert("Ошибка отправки. Попробуйте попозже");
+            alert(t('alerts.error'));
         }
     }
 
@@ -73,7 +75,7 @@ export default function WriteReview({ reviewerId, userId }: Props) {
         return (
             <div className={styles.container}>
                 <p className={styles.message}>
-                    Отзыв можно оставить только после завершенной встречи
+                    {t('message.onlyAfterCompletedMeet')}
                 </p>
             </div>
         )
@@ -83,7 +85,7 @@ export default function WriteReview({ reviewerId, userId }: Props) {
         <div className={styles.container}>
             <form className={styles.form} id="review-form" onSubmit={handleReviewSubmit}>
                 <div className={styles.ratingSection}>
-                    <div className={styles.ratingLabel}>Оценка:</div>
+                    <div className={styles.ratingLabel}>{t('labels.rating')}</div>
                     <div className={styles.starsContainer}>
                         {Array.from({ length: 5 }).map((_, i) => (
                             <button
@@ -91,7 +93,7 @@ export default function WriteReview({ reviewerId, userId }: Props) {
                                 onClick={() => setForm({ ...form, rating: i + 1 })}
                                 className={`${styles.starButton} ${form.rating > i ? styles.active : ''}`}
                                 type="button"
-                                aria-label={`Оценить ${i + 1} звезд${i === 0 ? 'ой' : i < 4 ? 'ами' : 'ами'}`}
+                                aria-label={t('ariaLabels.rateStars', { count: i + 1 })}
                             >
                                 <StarIcon className={styles.starIcon} />
                             </button>
@@ -101,14 +103,14 @@ export default function WriteReview({ reviewerId, userId }: Props) {
 
                 <div className={styles.textareaSection}>
                     <label className={styles.textareaLabel} htmlFor="review-text">
-                        Ваш отзыв:
+                        {t('labels.review')}
                     </label>
                     <textarea
                         id="review-text"
                         className={styles.textarea}
                         value={form.text}
                         onChange={(e) => setForm({ ...form, text: e.target.value })}
-                        placeholder="Напишите свой отзыв"
+                        placeholder={t('placeholders.review')}
                         rows={6}
                     />
                 </div>
@@ -118,7 +120,7 @@ export default function WriteReview({ reviewerId, userId }: Props) {
                     className={styles.submitButton}
                     disabled={form.rating === 0 || form.text.trim().length === 0}
                 >
-                    Отправить отзыв
+                    {t('buttons.submit')}
                 </button>
             </form>
         </div>

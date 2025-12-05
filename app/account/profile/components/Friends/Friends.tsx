@@ -3,9 +3,11 @@
 import { User } from "@/models/User";
 import { useEffect, useState } from "react";
 import UserCard from "@/components/UserCard/UserCard";
+import { useTranslations } from "next-intl";
 import styles from "./Friends.module.css";
 
 export default function Friends({ user }: { user: User }) {
+    const t = useTranslations('Friends');
     const [friends, setFriends] = useState<User[]>([]);
 
     useEffect(() => {
@@ -40,10 +42,10 @@ export default function Friends({ user }: { user: User }) {
 
     return (
         <main className={styles.container}>
-            <h1 className={styles.title}>Друзья</h1>
+            <h1 className={styles.title}>{t('title')}</h1>
             {friends.length === 0 ? (
                 <div className={styles.emptyState}>
-                    Друзей пока нет
+                    {t('emptyState')}
                 </div>
             ) : (
                 <div className={styles.friendsGrid}>

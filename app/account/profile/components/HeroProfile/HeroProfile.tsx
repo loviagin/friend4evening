@@ -1,13 +1,14 @@
 "use client"
 import Avatar from '@/components/Avatar/Avatar';
 import styles from './HeroProfile.module.css';
-import { tags, User } from '@/models/User';
+import { User } from '@/models/User';
 import { useAuth } from '@/app/_providers/AuthProvider';
 import ShareProfile from './components/ShareProfile/ShareProfile';
 import Dropdown from '@/components/Dropdown/Dropdown';
 import { sendNotificationToUser } from '@/app/actions';
 import { useEffect, useState } from 'react';
 import { NotificationDTO } from '@/app/api/notifications/[userId]/route';
+import { useTranslations } from 'next-intl';
 
 type HeroProps = {
     user: User | null,
@@ -19,8 +20,17 @@ enum FriendType {
 
 export default function HeroProfile({ user }: HeroProps) {
     const auth = useAuth();
+    const tTags = useTranslations('UserTags');
+    const t = useTranslations('HeroProfile');
     const [isFriends, setIsFriends] = useState<FriendType>(FriendType.none);
     const [status, setStatus] = useState<string>('none');
+    
+    const tags = [
+        { key: "READY", label: tTags('READY') },
+        { key: "CURRENT", label: tTags('CURRENT') },
+        { key: "BUSY", label: tTags('BUSY') },
+        { key: "INTENSIVE_SEARCH", label: tTags('INTENSIVE_SEARCH') }
+    ];
 
     useEffect(() => {
         const fetchFriends = async (uid: string, userId: string) => {
@@ -61,10 +71,10 @@ export default function HeroProfile({ user }: HeroProps) {
         const mod10 = age % 10;
         const mod100 = age % 100;
 
-        if (mod100 >= 11 && mod100 <= 14) return "лет";
-        if (mod10 === 1) return "год";
-        if (mod10 >= 2 && mod10 <= 4) return "года";
-        return "лет";
+        if (mod100 >= 11 && mod100 <= 14) return t('years.many');
+        if (mod10 === 1) return t('years.one');
+        if (mod10 >= 2 && mod10 <= 4) return t('years.few');
+        return t('years.many');
     };
 
     const userAge = () => {
@@ -97,19 +107,19 @@ export default function HeroProfile({ user }: HeroProps) {
         const data = await response.json();
         if (response.status === 409) {
             setIsFriends(FriendType.waiting)
-            alert("Заявка уже отправлена. Дождитесь ответа")
+            alert(t('alerts.requestAlreadySent'))
         } else if (response.status === 202) {
-            alert("Вы стали друзьями!")
+            alert(t('alerts.becameFriends'))
             setIsFriends(FriendType.friends)
-            sendNotificationTo(user.id, "Подтверждена заявка на дружбу")
-            sendNotification("Новый друг", "У вас появился новый друг", "friends")
+            sendNotificationTo(user.id, t('notifications.friendRequestApproved'))
+            sendNotification(t('notifications.newFriendTitle'), t('notifications.newFriendDescription'), "friends")
         } else if (response.status === 200) {
-            alert("Заявка успешно отправлена")
-            sendNotificationTo(user.id, "У вас новая заявка в друзья")
-            sendNotification("Проверьте заявку в друзья", "Пользователь хочет стать Вашим другом", "friend-request")
+            alert(t('alerts.requestSent'))
+            sendNotificationTo(user.id, t('notifications.friendRequestSent'))
+            sendNotification(t('notifications.newFriendRequestTitle'), t('notifications.newFriendRequestDescription'), "friend-request")
         } else {
             setIsFriends(FriendType.none)
-            alert("Ошибка отправки заявки в друзья")
+            alert(t('alerts.requestError'))
         }
     }
 
@@ -134,7 +144,7 @@ export default function HeroProfile({ user }: HeroProps) {
     const handleFriendDelete = async () => {
         if (!user || !auth.user) return
 
-        if (window.confirm('Вы хотите перестать быть друзьями?')) {
+        if (window.confirm(t('alerts.unfriendConfirm'))) {
             setIsFriends(FriendType.none)
 
             const response = await fetch(`/api/users/${auth.user.uid}/unfriend`, {
@@ -148,7 +158,7 @@ export default function HeroProfile({ user }: HeroProps) {
             const data = await response.json();
             if (response.status !== 200) {
                 setIsFriends(FriendType.friends)
-                alert("Ошибка удаления из друзей")
+                alert(t('alerts.unfriendError'))
             }
         }
     }
@@ -176,7 +186,7 @@ export default function HeroProfile({ user }: HeroProps) {
             const data = await resp.json()
 
             setStatus('none')
-            alert("Ошибка установка статуса")
+            alert(t('alerts.tagError'))
         }
     }
 
@@ -191,7 +201,7 @@ export default function HeroProfile({ user }: HeroProps) {
                 {/* right block */}
                 <div className={styles.infoBlock}>
                     <div className={styles.nameBlock}>
-                        <h3>{user?.name && user.name.length !== 0 ? user?.name : "Имя не задано"}</h3>
+                        <h3>{user?.name && user.name.length !== 0 ? user?.name : t('placeholders.name')}</h3>
                         {user?.tags && user.tags.includes("verified") && (
                             <img src={'/verified.webp'} className={styles.verifiedBadge} alt="Verified" />
                         )}
@@ -209,20 +219,20 @@ export default function HeroProfile({ user }: HeroProps) {
 
                     </div>
                     <div className={styles.nicknameBlock}>
-                        <h5 className={styles.nickname}>@{user?.nickname ? user?.nickname : "Никнейм не задан"}{userAge()}</h5>
+                        <h5 className={styles.nickname}>@{user?.nickname ? user?.nickname : t('placeholders.nickname')}{userAge()}</h5>
                     </div>
                     {/* Actions block */}
                     <div className={styles.actionsBlock}>
                         {auth.user && user && auth.user?.uid !== user?.id &&
                             <>
-                                <button className={styles.button}>Предложить встречу</button>
-                                <button className={styles.button}>Написать сообщение</button>
+                                <button className={styles.button}>{t('buttons.suggestMeet')}</button>
+                                <button className={styles.button}>{t('buttons.sendMessage')}</button>
                                 {isFriends === FriendType.friends ? (
-                                    <button className={styles.buttonSecondary} onClick={handleFriendDelete}>Вы друзья</button>
+                                    <button className={styles.buttonSecondary} onClick={handleFriendDelete}>{t('buttons.friends')}</button>
                                 ) : (isFriends === FriendType.waiting ? (
-                                    <button className={styles.buttonSecondary}>Заявка отправлена</button>
+                                    <button className={styles.buttonSecondary}>{t('buttons.requestSent')}</button>
                                 ) : (
-                                    <button className={styles.buttonSecondary} onClick={handleFriendAppend}>Заявка в друзья</button>
+                                    <button className={styles.buttonSecondary} onClick={handleFriendAppend}>{t('buttons.addFriend')}</button>
                                 ))}
                             </>
                         }
