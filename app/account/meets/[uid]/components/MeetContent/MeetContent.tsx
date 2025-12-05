@@ -2,13 +2,14 @@
 
 import LoadingView from "@/components/LoadingView/LoadingView";
 import MeetFullCard from "@/components/MeetFullCard/MeetFullCard";
-import { ApplicationMember, Meet } from "@/models/Meet";
+import { Meet } from "@/models/Meet";
 import { useEffect, useState } from "react";
 import styles from "./MeetContent.module.css";
 import Participants from "./components/Participants/Participants";
 import Settings from "./components/Settings/Settings";
 import General from "./components/General/General";
 import { useAuth } from "@/app/_providers/AuthProvider";
+import { useTranslations } from 'next-intl';
 
 enum MeetTab {
     general,
@@ -18,6 +19,7 @@ enum MeetTab {
 
 export default function MeetContent({ uid }: { uid: string }) {
     const auth = useAuth();
+    const t = useTranslations('MeetContent');
     const [meet, setMeet] = useState<Meet | null>(null);
     const [loading, setLoading] = useState(true);
     const [blocked, setBlocked] = useState<string | null>(null);
@@ -69,7 +71,7 @@ export default function MeetContent({ uid }: { uid: string }) {
                 <div className={styles.blockedContainer}>
                     <span className={styles.blockedIcon}>🚫</span>
                     <p className={styles.blockedMessage}>
-                        Извините, Вам не разрешен просмотр этой встречи
+                        {t('blocked.message')}
                     </p>
                 </div>
             </section>
@@ -102,20 +104,20 @@ export default function MeetContent({ uid }: { uid: string }) {
                     className={`${styles.navButton} ${tab === MeetTab.general ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(MeetTab.general)}
                 >
-                    Основное
+                    {t('navigation.general')}
                 </button>
                 <button
                     className={`${styles.navButton} ${tab === MeetTab.participants ? styles.navButtonActive : ''}`}
                     onClick={() => setTab(MeetTab.participants)}
                 >
-                    Участники
+                    {t('navigation.participants')}
                 </button>
                 {auth.user && meet.ownerId === auth.user.uid && (
                     <button
                         className={`${styles.navButton} ${tab === MeetTab.settings ? styles.navButtonActive : ''}`}
                         onClick={() => setTab(MeetTab.settings)}
                     >
-                        Настройки
+                        {t('navigation.settings')}
                     </button>
                 )}
             </section>

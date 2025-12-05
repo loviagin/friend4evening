@@ -4,6 +4,7 @@ import { User } from "@/models/User";
 import Avatar from "@/components/Avatar/Avatar";
 import Link from "next/link";
 import styles from "./InviteUserCard.module.css";
+import { useTranslations } from 'next-intl';
 
 export default function InviteUserCard({ 
     user, 
@@ -14,6 +15,8 @@ export default function InviteUserCard({
     onInvite: () => void, 
     loading: boolean 
 }) {
+    const t = useTranslations('InviteUserCard');
+    
     return (
         <div className={styles.card}>
             <Link href={`/profile/${user.nickname}`} target="_blank" className={styles.userLink}>
@@ -34,7 +37,7 @@ export default function InviteUserCard({
                 onClick={onInvite}
                 disabled={loading}
             >
-                {loading ? 'Приглашение...' : 'Пригласить'}
+                {loading ? t('buttons.inviting') : t('buttons.invite')}
             </button>
         </div>
     );

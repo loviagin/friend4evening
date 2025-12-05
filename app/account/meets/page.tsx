@@ -6,15 +6,17 @@ import CreateMeetPortal from './components/CreateMeetPortal/CreateMeetPortal';
 import MyApplications from './components/MyApplications/MyApplications';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 enum MeetsPageType {
-    meets = "Поиск встречи",
-    myApplications = "Встречи и заявки"
+    meets = "meets",
+    myApplications = "myApplications"
 }
 
 export default function AccountMeets() {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const t = useTranslations('AccountMeets');
     const [currentTab, setCurrentTab] = useState<MeetsPageType>(MeetsPageType.meets);
 
     useEffect(() => {
@@ -50,19 +52,19 @@ export default function AccountMeets() {
 
     return (
         <main className={styles.container}>
-            <h1>{currentTab.toString()}</h1>
+            <h1>{t(`tabs.${currentTab}`)}</h1>
             <div className={styles.tabs}>
                 <button
                     className={`${styles.tabButton} ${currentTab === MeetsPageType.meets ? styles.tabButtonActive : ''}`}
                     onClick={() => handleSetTab(MeetsPageType.meets)}
                 >
-                    Поиск встречи
+                    {t('tabs.meets')}
                 </button>
                 <button
                     className={`${styles.tabButton} ${currentTab === MeetsPageType.myApplications ? styles.tabButtonActive : ''}`}
                     onClick={() => handleSetTab(MeetsPageType.myApplications)}
                 >
-                    Встречи и заявки
+                    {t('tabs.myApplications')}
                 </button>
 
                 <CreateMeetPortal />

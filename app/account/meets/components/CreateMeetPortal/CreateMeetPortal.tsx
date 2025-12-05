@@ -2,21 +2,23 @@
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from "react";
 import Dropdown from "@/components/Dropdown/Dropdown";
-import { ages, meetType } from "../Meets/Meets";
+import { getAges, getMeetTypes } from "../Meets/Meets";
 import styles from "./CreateMeetPortal.module.css";
 import { AiOutlineClose, AiOutlinePlusCircle } from "react-icons/ai";
 import { DayPicker } from "react-day-picker";
-import { ru } from "date-fns/locale";
+import { ru, enUS } from "date-fns/locale";
 import "react-day-picker/dist/style.css";
 import "@/components/daypicker-custom.css";
 import { useAuth } from '@/app/_providers/AuthProvider';
 import LoadingView from '@/components/LoadingView/LoadingView';
+import { useTranslations, useLocale } from 'next-intl';
 
 type Props = {
     close: () => void
 }
 
 export default function CreateMeetPortal() {
+    const t = useTranslations('CreateMeetPortal');
     const [showPortal, setShowPortal] = useState(false);
     const [mounted, setMounted] = useState(false);
 
@@ -30,7 +32,7 @@ export default function CreateMeetPortal() {
         <>
             <button className={styles.openButton} onClick={() => setShowPortal(true)}>
                 <AiOutlinePlusCircle />
-                <span className={styles.buttonText}>Заявка на встречу</span>
+                <span className={styles.buttonText}>{t('button')}</span>
             </button>
             {showPortal && mounted && createPortal(
                 <CreateMeetContent close={() => setShowPortal(false)} />,
@@ -54,7 +56,14 @@ type MeetApplicationProps = {
 
 export function CreateMeetContent({ close }: Props) {
     const auth = useAuth();
+    const t = useTranslations('CreateMeetPortal');
+    const tMeets = useTranslations('Meets');
+    const locale = useLocale();
     const [loading, setLoading] = useState(false);
+
+    // Get localized arrays
+    const ages = getAges((key: string) => tMeets(`ages.${key}`));
+    const meetType = getMeetTypes((key: string) => tMeets(`meetTypes.${key}`));
 
     const [form, setForm] = useState<MeetApplicationProps>({
         title: "",
@@ -67,6 +76,8 @@ export function CreateMeetContent({ close }: Props) {
         date: new Date(),
         duration: "",
     });
+
+    const dayPickerLocale = locale === 'ru' ? ru : enUS;
 
     const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
@@ -105,11 +116,11 @@ export function CreateMeetContent({ close }: Props) {
         const data = await response.json();
 
         if (response.status === 200) {
-            alert("Заявка успешно создана")
+            alert(t('alerts.success'))
             console.log(data)
             close();
         } else {
-            alert("Ошибка создания заявки. Пожалуйста попробуйте позже")
+            alert(t('alerts.error'))
         }
 
         setLoading(false);
@@ -120,7 +131,7 @@ export function CreateMeetContent({ close }: Props) {
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
 
                 <div className={styles.header}>
-                    <h2 className={styles.title}>Создать заявку на встречу</h2>
+                    <h2 className={styles.title}>{t('title')}</h2>
                     <button className={styles.closeButton} onClick={close}>
                         <AiOutlineClose />
                     </button>
@@ -133,11 +144,11 @@ export function CreateMeetContent({ close }: Props) {
                         <form className={styles.form} onSubmit={handleSubmit}>
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>
-                                    <span>Название встречи</span>
+                                    <span>{t('labels.title')}</span>
                                     <input
                                         type="text"
                                         className={styles.input}
-                                        placeholder="Введите название (необязательно)"
+                                        placeholder={t('placeholders.title')}
                                         value={form.title}
                                         onChange={(e) => setForm({ ...form, title: e.target.value })}
                                     />
@@ -146,10 +157,10 @@ export function CreateMeetContent({ close }: Props) {
 
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>
-                                    <span>Описание</span>
+                                    <span>{t('labels.description')}</span>
                                     <textarea
                                         className={styles.textarea}
-                                        placeholder="Опишите, что вы планируете делать (необязательно)"
+                                        placeholder={t('placeholders.description')}
                                         value={form.description}
                                         onChange={(e) => setForm({ ...form, description: e.target.value })}
                                         rows={4}
@@ -160,11 +171,11 @@ export function CreateMeetContent({ close }: Props) {
                             <div className={styles.formRow}>
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
-                                        <span>Местоположение</span>
+                                        <span>{t('labels.location')}</span>
                                         <input
                                             type="text"
                                             className={styles.input}
-                                            placeholder="Город или адрес"
+                                            placeholder={t('placeholders.location')}
                                             value={form.location}
                                             onChange={(e) => setForm({ ...form, location: e.target.value })}
                                             required
@@ -174,7 +185,7 @@ export function CreateMeetContent({ close }: Props) {
 
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
-                                        <span>Количество участников</span>
+                                        <span>{t('labels.membersCount')}</span>
                                         <input
                                             type="text"
                                             className={styles.input}
@@ -185,7 +196,7 @@ export function CreateMeetContent({ close }: Props) {
                                                     setForm({ ...form, membersCount: value });
                                                 }
                                             }}
-                                            placeholder="Не ограничено, если пусто"
+                                            placeholder={t('placeholders.membersCount')}
                                         />
                                     </label>
                                 </div>
@@ -194,7 +205,7 @@ export function CreateMeetContent({ close }: Props) {
                             <div className={styles.formRow}>
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
-                                        <span>Возраст</span>
+                                        <span>{t('labels.age')}</span>
                                         <Dropdown
                                             source={ages}
                                             current={form.ageRange}
@@ -205,7 +216,7 @@ export function CreateMeetContent({ close }: Props) {
 
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
-                                        <span>Где встретиться</span>
+                                        <span>{t('labels.meetType')}</span>
                                         <Dropdown
                                             source={meetType}
                                             current={form.meetType}
@@ -218,7 +229,7 @@ export function CreateMeetContent({ close }: Props) {
                             <div className={styles.formRow}>
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
-                                        <span>Дата и время</span>
+                                        <span>{t('labels.dateTime')}</span>
                                         <div className={styles.dateTimePicker}>
                                             <DayPicker
                                                 mode="single"
@@ -231,7 +242,7 @@ export function CreateMeetContent({ close }: Props) {
                                                         setForm({ ...form, date: newDate });
                                                     }
                                                 }}
-                                                locale={ru}
+                                                locale={dayPickerLocale}
                                                 disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
                                                 className={styles.dayPicker}
                                             />
@@ -269,11 +280,11 @@ export function CreateMeetContent({ close }: Props) {
 
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
-                                        <span>Длительность</span>
+                                        <span>{t('labels.duration')}</span>
                                         <input
                                             type="text"
                                             className={styles.input}
-                                            placeholder="Например: 2 часа, 3-4 часа"
+                                            placeholder={t('placeholders.duration')}
                                             value={form.duration}
                                             onChange={(e) => setForm({ ...form, duration: e.target.value })}
                                         />
@@ -289,16 +300,16 @@ export function CreateMeetContent({ close }: Props) {
                                         onChange={(e) => setForm({ ...form, noAlcohol: e.target.checked })}
                                         className={styles.checkbox}
                                     />
-                                    <span>Без алкоголя</span>
+                                    <span>{t('labels.noAlcohol')}</span>
                                 </label>
                             </div>
 
                             <div className={styles.formActions}>
                                 <button type="button" className={styles.cancelButton} onClick={close}>
-                                    Отмена
+                                    {t('buttons.cancel')}
                                 </button>
                                 <button type="submit" className={styles.submitButton}>
-                                    Создать заявку
+                                    {t('buttons.submit')}
                                 </button>
                             </div>
                         </form>

@@ -10,6 +10,7 @@ import { useTranslations, useLocale } from "next-intl";
 export default function General({ meet }: { meet: Meet }) {
     const auth = useAuth();
     const t = useTranslations('MeetStatus');
+    const tGeneral = useTranslations('General');
     const locale = useLocale();
     const [loading, setLoading] = useState<string | null>(null);
     const [copied, setCopied] = useState(false);
@@ -60,19 +61,19 @@ export default function General({ meet }: { meet: Meet }) {
     return (
         <div className={styles.container}>
             <div className={styles.typeSection}>
-                <span className={styles.typeLabel}>Тип встречи:</span>
+                <span className={styles.typeLabel}>{tGeneral('type.label')}</span>
                 <span className={`${styles.typeBadge} ${meet.type === 'open' ? styles.typeOpen : styles.typeClosed}`}>
-                    {meet.type === 'open' ? 'Публичная' : 'Личная'}
+                    {meet.type === 'open' ? tGeneral('type.open') : tGeneral('type.closed')}
                 </span>
                 {meet.type === 'open' && (
                     <button
                         className={styles.copyLinkButton}
                         onClick={handleCopyLink}
                         disabled={copied}
-                        title="Скопировать ссылку на встречу"
+                        title={tGeneral('copyLink.title')}
                     >
                         <IoCopyOutline className={styles.copyIcon} />
-                        <span>{copied ? 'Скопировано' : 'Скопировать ссылку'}</span>
+                        <span>{copied ? tGeneral('copyLink.copied') : tGeneral('copyLink.button')}</span>
                     </button>
                 )}
             </div>
@@ -116,28 +117,28 @@ export default function General({ meet }: { meet: Meet }) {
                         onClick={() => handleStatusChange(MeetStatus.current)}
                         disabled={loading !== null}
                     >
-                        {loading === MeetStatus.current ? 'Запуск...' : 'Начать встречу'}
+                        {loading === MeetStatus.current ? tGeneral('buttons.start.loading') : tGeneral('buttons.start.text')}
                     </button>
                     <button
                         className={`${styles.actionButton} ${styles.completeButton}`}
                         onClick={() => handleStatusChange(MeetStatus.completed)}
                         disabled={loading !== null}
                     >
-                        {loading === MeetStatus.completed ? 'Завершение...' : 'Завершить встречу'}
+                        {loading === MeetStatus.completed ? tGeneral('buttons.complete.loading') : tGeneral('buttons.complete.text')}
                     </button>
                     <button
                         className={`${styles.actionButton} ${styles.cancelButton}`}
                         onClick={() => handleStatusChange(MeetStatus.canceled)}
                         disabled={loading !== null}
                     >
-                        {loading === MeetStatus.canceled ? 'Отмена...' : 'Отменить встречу'}
+                        {loading === MeetStatus.canceled ? tGeneral('buttons.cancel.loading') : tGeneral('buttons.cancel.text')}
                     </button>
                 </div>
             )}
 
             <div className={styles.comingSoon}>
                 <p className={styles.comingSoonText}>
-                    Скоро можно будет добавлять геолокацию, загружать фото и видео со встречи
+                    {tGeneral('comingSoon')}
                 </p>
             </div>
         </div>
