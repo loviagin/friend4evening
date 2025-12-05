@@ -4,20 +4,21 @@ import styles from './MeetFullCard.module.css'
 import { Meet, ApplicationMemberStatus, MeetStatus } from '@/models/Meet'
 import { FaWineBottle } from 'react-icons/fa'
 import { ages } from '@/app/account/meets/components/Meets/Meets'
-import { MeetType, MeetTypeLabels } from '@/models/User'
 import { useAuth } from '@/app/_providers/AuthProvider'
 import Link from 'next/link'
 import { useState } from 'react'
 import { sendInvitationResponseNotification } from '@/app/actions'
+import { useTranslations, useLocale } from 'next-intl'
 
 export default function MeetFullCard({ meet }: { meet: Meet }) {
     const auth = useAuth();
+    const t = useTranslations('MeetFullCard');
+    const locale = useLocale();
     const [loading, setLoading] = useState(false);
 
     // Проверяем, является ли текущий пользователь участником
     const currentUserId = auth.user?.uid;
     const userMember = currentUserId ? meet.members.find(m => m.userId === currentUserId) : null;
-    const isMember = userMember !== null && userMember !== undefined;
     const isInvited = userMember?.status === ApplicationMemberStatus.invited;
     const isWaiting = userMember?.status === ApplicationMemberStatus.waiting;
     const isApproved = userMember?.status === ApplicationMemberStatus.approved;
@@ -49,7 +50,7 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                     window.location.reload();
                 } else {
                     const errorData = await response.json().catch(() => ({}));
-                    alert(errorData.message || 'Ошибка при принятии приглашения');
+                    alert(errorData.message || t('errors.acceptInvitation'));
                     setLoading(false);
                 }
             } else if (isApproved && userMember) {
@@ -66,7 +67,7 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                 if (response.status === 200) {
                     window.location.reload();
                 } else {
-                    alert('Ошибка при покидании встречи');
+                    alert(t('errors.leaveMeet'));
                     setLoading(false);
                 }
             } else {
@@ -84,13 +85,13 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                     window.location.reload();
                 } else {
                     const errorData = await response.json().catch(() => ({}));
-                    alert(errorData.message || 'Ошибка при присоединении к встрече');
+                    alert(errorData.message || t('errors.joinMeet'));
                     setLoading(false);
                 }
             }
         } catch (error) {
             console.error('Error joining/leaving meet:', error);
-            alert('Ошибка при выполнении действия');
+            alert(t('errors.action'));
             setLoading(false);
         }
     };
@@ -118,12 +119,12 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                 }
                 window.location.reload();
             } else {
-                alert('Ошибка при отклонении приглашения');
+                alert(t('errors.declineInvitation'));
                 setLoading(false);
             }
         } catch (error) {
             console.error('Error declining invitation:', error);
-            alert('Ошибка при отклонении приглашения');
+            alert(t('errors.declineInvitation'));
             setLoading(false);
         }
     };
@@ -145,12 +146,12 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
             if (response.status === 200) {
                 window.location.reload();
             } else {
-                alert('Ошибка при отмене заявки');
+                alert(t('errors.cancelApplication'));
                 setLoading(false);
             }
         } catch (error) {
             console.error('Error canceling application:', error);
-            alert('Ошибка при отмене заявки');
+            alert(t('errors.cancelApplication'));
             setLoading(false);
         }
     };
@@ -170,9 +171,14 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                         )}
 
                         {meet.status === MeetStatus.current ? (
-                            <span className={styles.currentBadge}>Сейчас идет</span>
+                            <span className={styles.currentBadge}>{t('currentBadge')}</span>
                         ) : (
-                            <span className={styles.slideDate}>{new Date(meet.date).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
+                            <span className={styles.slideDate}>
+                                {new Date(meet.date).toLocaleDateString(
+                                    locale === 'ru' ? 'ru-RU' : 'en-US',
+                                    { day: '2-digit', month: '2-digit', year: 'numeric' }
+                                )}
+                            </span>
                         )}
                     </div>
                 </div>
@@ -185,7 +191,7 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                             <span>🌆</span>
                             <span>{meet.location}</span>
                             {meet.noAlcohol === true && (
-                                <span className={styles.noAlcoholIcon} title="Не употребляю алкоголь">
+                                <span className={styles.noAlcoholIcon} title={t('noAlcohol')}>
                                     <FaWineBottle />
                                     <AiOutlineClose className={styles.noAlcoholCross} />
                                 </span>
@@ -194,11 +200,11 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                     )}
                     <div className={styles.slideInfoItem}>
                         {ages.findLast((a) => a.key === meet.ageRange)?.label && (
-                            <span>{ages.findLast((a) => a.key === meet.ageRange)?.label} лет</span>
+                            <span>{ages.findLast((a) => a.key === meet.ageRange)?.label} {t('years')}</span>
                         )}
                         {meet.duration !== null && <span> • {meet.duration}</span>}
-                        {meet.membersCount !== null && <span> • До {meet.membersCount} человек</span>}
-                        {meet.meetType !== null && <span> • {MeetTypeLabels[meet.meetType as MeetType]}</span>}
+                        {meet.membersCount !== null && <span> • {t('upToMembers', { count: meet.membersCount })}</span>}
+                        {meet.meetType !== null && <span> • {t(`meetTypes.${meet.meetType}`)}</span>}
                     </div>
                 </div>
                 {auth.user && !isOwner && (
@@ -210,14 +216,14 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                                     onClick={handleJoinOrLeave}
                                     disabled={loading}
                                 >
-                                    {loading ? 'Загрузка...' : 'Принять приглашение'}
+                                    {loading ? t('loading') : t('buttons.acceptInvitation')}
                                 </button>
                                 <button
                                     className={`${styles.actionButton} ${styles.declineButton}`}
                                     onClick={handleDecline}
                                     disabled={loading}
                                 >
-                                    {loading ? 'Загрузка...' : 'Отклонить'}
+                                    {loading ? t('loading') : t('buttons.decline')}
                                 </button>
                             </div>
                         ) : isWaiting ? (
@@ -226,14 +232,14 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                                     className={`${styles.actionButton} ${styles.waitingButton}`}
                                     disabled={true}
                                 >
-                                    Ожидает одобрения
+                                    {t('buttons.waitingApproval')}
                                 </button>
                                 <button
                                     className={`${styles.actionButton} ${styles.cancelButton}`}
                                     onClick={handleCancelApplication}
                                     disabled={loading}
                                 >
-                                    {loading ? 'Загрузка...' : 'Отменить заявку'}
+                                    {loading ? t('loading') : t('buttons.cancelApplication')}
                                 </button>
                             </div>
                         ) : (
@@ -247,10 +253,10 @@ export default function MeetFullCard({ meet }: { meet: Meet }) {
                                 disabled={loading}
                             >
                                 {loading 
-                                    ? 'Загрузка...' 
+                                    ? t('loading') 
                                     : isApproved 
-                                        ? 'Покинуть' 
-                                        : 'Присоединиться'
+                                        ? t('buttons.leave') 
+                                        : t('buttons.join')
                                 }
                             </button>
                         )}

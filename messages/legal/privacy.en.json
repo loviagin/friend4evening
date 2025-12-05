@@ -1,0 +1,88 @@
+{
+  "title": "Privacy Policy",
+  "version": "Version dated 11/04/2025",
+  "metaTitle": "Privacy Policy | Friends4Evening",
+  "metaDescription": "This page contains the privacy policy for users of the F4E website and application",
+  "intro": {
+    "p1": "This Privacy Policy (hereinafter referred to as the \"Policy\") governs the processing and protection of personal data of users of the Friends4Evening website, mobile application and related services (hereinafter referred to as the \"Service\"), owned by the Friends4Evening project Administration (hereinafter referred to as the \"Administration\").",
+    "p2": "By using the Service, the User expresses consent to the terms of this Policy."
+  },
+  "sections": {
+    "1": {
+      "title": "1. General Provisions",
+      "item1": "This Policy is developed in accordance with the Federal Law of the Russian Federation No. 152-FZ \"On Personal Data\", as well as the general principles of GDPR.",
+      "item2": "The purpose of processing personal data is to ensure the operation of the Service, provide dating functionality, and maintain communication with the User.",
+      "item3": "The Administration does not collect or process personal data of minors (under 18 years of age). Upon detection of such an account, access is blocked."
+    },
+    "2": {
+      "title": "2. Composition of Collected Data",
+      "item1": "When registering and using the Service, the following categories of data may be collected:",
+      "list": {
+        "item1": "user's name or nickname;",
+        "item2": "email address;",
+        "item3": "date of birth (to confirm age 18+);",
+        "item4": "city or geolocation (with consent);",
+        "item5": "photos, descriptions and messages sent within the Service;",
+        "item6": "technical information: IP address, device type, cookie data."
+      },
+      "item2": "The Administration does not request or store financial information, passwords from third-party services or other sensitive data."
+    },
+    "3": {
+      "title": "3. Purposes of Data Processing",
+      "item1": "Personal data is used exclusively for:",
+      "list": {
+        "item1": "user registration and authorization;",
+        "item2": "ensuring the operation of the Service and its functions;",
+        "item3": "improving the quality of work and personalizing content;",
+        "item4": "communication with Users (notifications, support, project news);",
+        "item5": "compliance with legal requirements."
+      }
+    },
+    "4": {
+      "title": "4. Data Transfer and Storage",
+      "item1": "The Administration stores personal data on secure servers and takes all reasonable measures to protect them.",
+      "item2": "Only authorized employees or contractors who have signed a confidentiality agreement have access to the data.",
+      "item3": "Transfer of data to third parties is possible only:",
+      "list": {
+        "item1": "with the User's consent;",
+        "item2": "at the request of government agencies on legal grounds;",
+        "item3": "if necessary for the functioning of the Service (for example, when using third-party authorization or analytics services)."
+      },
+      "item4": "Personal data is stored for the duration of the User's account. After profile deletion, data is deleted within 30 days."
+    },
+    "5": {
+      "title": "5. Cookies and Analytics",
+      "item1": "The website may use cookies for proper operation and traffic analysis.",
+      "item2": "Cookies do not contain personal data and can be disabled by the User in browser settings.",
+      "item3": "The Service may use analytics tools (for example, Google Analytics, Yandex.Metrica) exclusively for statistical purposes."
+    },
+    "6": {
+      "title": "6. User Rights",
+      "item1": "The User has the right to:",
+      "list": {
+        "item1": "receive information about their personal data and its processing;",
+        "item2": "change or delete their data in the personal account;",
+        "item3": "withdraw consent to the processing of personal data;",
+        "item4": "demand termination of mailings."
+      },
+      "item2": "To exercise these rights, the User can send a request to the email Friends4Evening@lovigin.com."
+    },
+    "7": {
+      "title": "7. Responsibility",
+      "item1": "The Administration is not responsible for the actions of third parties who gained access to the User's data as a result of unauthorized actions of the User themselves.",
+      "item2": "The User undertakes not to post personal data of other persons on the platform without their consent."
+    },
+    "8": {
+      "title": "8. Policy Changes",
+      "item1": "The Administration has the right to change this Policy unilaterally.",
+      "item2": "The new version comes into force from the moment of publication on the Friends4Evening website.",
+      "item3": "Continued use of the Service after the Policy change means the User's agreement with its new version."
+    },
+    "9": {
+      "title": "9. Contact Information",
+      "text": "For all questions related to the processing of personal data, the User can contact:"
+    }
+  },
+  "copyright": "© 2025 Friends4Evening — All rights reserved.",
+  "ageRestriction": "Age restriction: 18+"
+}

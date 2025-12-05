@@ -1,0 +1,59 @@
+.switcher {
+  margin-top: 1rem;
+}
+
+.dropdownWrapper :global(.wrapper) {
+  min-width: 120px;
+}
+
+.dropdownWrapper :global(.mainButton) {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: var(--background) !important;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.dropdownWrapper :global(.mainButton:hover) {
+  opacity: 1 !important;
+  border-color: var(--yellow) !important;
+  color: var(--yellow) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.dropdownWrapper :global(.mainButton:active) {
+  transform: none !important;
+}
+
+.dropdownWrapper :global(.arrow) {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.dropdownWrapper :global(.menu) {
+  background: var(--foreground) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dropdownWrapper :global(.item) {
+  color: var(--background) !important;
+  opacity: 0.8;
+}
+
+.dropdownWrapper :global(.item:hover) {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: var(--yellow) !important;
+  opacity: 1;
+}
+
+.dropdownWrapper :global(.item:active) {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+

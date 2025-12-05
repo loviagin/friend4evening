@@ -1,170 +1,182 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
+import { Metadata } from 'next';
 import styles from './page.module.css';
 
-export default function Agreement() {
+export async function generateMetadata(): Promise<Metadata> {
+    const t = await getTranslations('legal.agreement');
+    
+    return {
+        title: t('metaTitle'),
+        description: t('metaDescription'),
+    };
+}
+
+export default async function Agreement() {
+    const t = await getTranslations('legal.agreement');
     return (
         <main className={styles.main}>
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h1 className={styles.title}>Пользовательское соглашение</h1>
-                    <p className={styles.version}>Редакция от 04.11.2025г.</p>
+                    <h1 className={styles.title}>{t('title')}</h1>
+                    <p className={styles.version}>{t('version')}</p>
                 </div>
 
                 <div className={styles.intro}>
                     <p>
-                        Настоящее Пользовательское соглашение (далее — «Соглашение») регулирует отношения между владельцем сайта Friends4Evening.online (далее — «Администрация») и пользователем сайта, мобильного приложения или иных сервисов проекта Friends4Evening (далее — «Пользователь»).
+                        {t('intro.p1')}
                     </p>
                     <p>
-                        Используя сайт или приложение, Пользователь подтверждает, что ознакомился с данным Соглашением, понимает его условия и безоговорочно принимает их.
+                        {t('intro.p2')}
                     </p>
                 </div>
 
                 <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>1. Общие положения</h2>
+                    <h2 className={styles.sectionTitle}>{t('sections.1.title')}</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            <strong>1.1.</strong> Friends4Evening — это онлайн-платформа для знакомств и общения между совершеннолетними пользователями, предназначенная для поиска компании на вечер, совместного отдыха или общения по интересам.
+                            <strong>1.1.</strong> {t('sections.1.item1')}
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>1.2.</strong> Сервис не является организатором встреч, не оказывает услуг по продаже, доставке или продвижению алкогольной продукции и не несёт ответственности за действия пользователей вне платформы.
+                            <strong>1.2.</strong> {t('sections.1.item2')}
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>1.3.</strong> Регистрация и использование сервиса разрешены только лицам, достигшим 18 лет.
+                            <strong>1.3.</strong> {t('sections.1.item3')}
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>1.4.</strong> Используя сервис, Пользователь соглашается с обработкой персональных данных в соответствии с Политикой конфиденциальности.
+                            <strong>1.4.</strong> {t('sections.1.item4')}
                         </p>
                     </div>
                 </section>
 
                 <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>2. Регистрация и использование аккаунта</h2>
+                    <h2 className={styles.sectionTitle}>{t('sections.2.title')}</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            <strong>2.1.</strong> Для доступа к функциям сервиса Пользователь проходит регистрацию, предоставляя достоверную информацию.
+                            <strong>2.1.</strong> {t('sections.2.item1')}
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>2.2.</strong> Пользователь несёт полную ответственность за сохранность своих данных для входа.
+                            <strong>2.2.</strong> {t('sections.2.item2')}
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>2.3.</strong> Администрация вправе заблокировать или удалить аккаунт при нарушении условий настоящего Соглашения.
+                            <strong>2.3.</strong> {t('sections.2.item3')}
                         </p>
                     </div>
                 </section>
 
                 <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>3. Права и обязанности пользователей</h2>
+                    <h2 className={styles.sectionTitle}>{t('sections.3.title')}</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            <strong>3.1.</strong> Пользователь обязуется:
+                            <strong>3.1.</strong> {t('sections.3.item1')}
                         </p>
                         <ul className={styles.list}>
-                            <li>соблюдать законодательство страны своего пребывания;</li>
-                            <li>использовать сервис исключительно для законных целей общения и знакомств;</li>
-                            <li>не размещать материалы, содержащие:
+                            <li>{t('sections.3.list.item1')}</li>
+                            <li>{t('sections.3.list.item2')}</li>
+                            <li>{t('sections.3.list.item3')}
                                 <ul className={styles.sublist}>
-                                    <li>оскорбления, угрозы, клевету;</li>
-                                    <li>призывы к насилию, употреблению алкоголя или наркотиков;</li>
-                                    <li>порнографию, сцены распития спиртных напитков;</li>
-                                    <li>спам, мошеннические предложения, рекламу товаров и услуг.</li>
+                                    <li>{t('sections.3.list.sublist.item1')}</li>
+                                    <li>{t('sections.3.list.sublist.item2')}</li>
+                                    <li>{t('sections.3.list.sublist.item3')}</li>
+                                    <li>{t('sections.3.list.sublist.item4')}</li>
                                 </ul>
                             </li>
                         </ul>
                         <p className={styles.paragraph}>
-                            <strong>3.2.</strong> Пользователь несёт личную ответственность за содержание своих сообщений и поведение при общении с другими пользователями.
+                            <strong>3.2.</strong> {t('sections.3.item2')}
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>3.3.</strong> Пользователь понимает, что Администрация не проверяет достоверность информации, размещаемой другими пользователями.
+                            <strong>3.3.</strong> {t('sections.3.item3')}
                         </p>
                     </div>
                 </section>
 
                 <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>4. Права и обязанности Администрации</h2>
+                    <h2 className={styles.sectionTitle}>{t('sections.4.title')}</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            <strong>4.1.</strong> Администрация имеет право:
+                            <strong>4.1.</strong> {t('sections.4.item1')}
                         </p>
                         <ul className={styles.list}>
-                            <li>удалять материалы и блокировать пользователей при нарушении правил;</li>
-                            <li>временно приостанавливать работу сервиса для технических или иных работ;</li>
-                            <li>вносить изменения в функциональность сервиса без предварительного уведомления.</li>
+                            <li>{t('sections.4.list.item1')}</li>
+                            <li>{t('sections.4.list.item2')}</li>
+                            <li>{t('sections.4.list.item3')}</li>
                         </ul>
                         <p className={styles.paragraph}>
-                            <strong>4.2.</strong> Администрация обязуется обеспечивать конфиденциальность персональных данных Пользователей и использовать их только в пределах, предусмотренных Политикой конфиденциальности.
+                            <strong>4.2.</strong> {t('sections.4.item2')}
                         </p>
                     </div>
                 </section>
 
                 <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>5. Ответственность сторон</h2>
+                    <h2 className={styles.sectionTitle}>{t('sections.5.title')}</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            <strong>5.1.</strong> Администрация не несёт ответственности за:
+                            <strong>5.1.</strong> {t('sections.5.item1')}
                         </p>
                         <ul className={styles.list}>
-                            <li>действия пользователей внутри или за пределами платформы;</li>
-                            <li>возможный вред, причинённый в результате офлайн-встреч или общения между пользователями;</li>
-                            <li>сбои в работе сервиса, вызванные техническими причинами.</li>
+                            <li>{t('sections.5.list.item1')}</li>
+                            <li>{t('sections.5.list.item2')}</li>
+                            <li>{t('sections.5.list.item3')}</li>
                         </ul>
                         <p className={styles.paragraph}>
-                            <strong>5.2.</strong> Пользователь несёт полную ответственность за размещаемый контент и последствия его публикации.
+                            <strong>5.2.</strong> {t('sections.5.item2')}
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>5.3.</strong> В случае нарушения условий Соглашения Пользователь может быть заблокирован без уведомления и без возврата оплаченных услуг (если таковые были).
-                        </p>
-                    </div>
-                </section>
-
-                <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>6. Интеллектуальная собственность</h2>
-                    <div className={styles.content}>
-                        <p className={styles.paragraph}>
-                            <strong>6.1.</strong> Все права на материалы, размещённые на сайте и в приложении (дизайн, логотип, тексты, программный код и т.д.), принадлежат Администрации.
-                        </p>
-                        <p className={styles.paragraph}>
-                            <strong>6.2.</strong> Копирование, распространение и использование материалов без согласия Администрации запрещено.
+                            <strong>5.3.</strong> {t('sections.5.item3')}
                         </p>
                     </div>
                 </section>
 
                 <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>7. Изменения условий</h2>
+                    <h2 className={styles.sectionTitle}>{t('sections.6.title')}</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            <strong>7.1.</strong> Администрация вправе изменять настоящее Соглашение в одностороннем порядке.
+                            <strong>6.1.</strong> {t('sections.6.item1')}
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>7.2.</strong> Новая редакция вступает в силу с момента публикации на сайте Friends4Evening.
-                        </p>
-                        <p className={styles.paragraph}>
-                            <strong>7.3.</strong> Продолжение использования сервиса после изменения условий означает согласие Пользователя с новой редакцией.
+                            <strong>6.2.</strong> {t('sections.6.item2')}
                         </p>
                     </div>
                 </section>
 
                 <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>8. Прочие положения</h2>
+                    <h2 className={styles.sectionTitle}>{t('sections.7.title')}</h2>
                     <div className={styles.content}>
                         <p className={styles.paragraph}>
-                            <strong>8.1.</strong> Настоящее Соглашение регулируется законодательством страны Вашего пребывания.
+                            <strong>7.1.</strong> {t('sections.7.item1')}
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>8.2.</strong> Все споры и разногласия подлежат рассмотрению по месту нахождения Администрации.
+                            <strong>7.2.</strong> {t('sections.7.item2')}
                         </p>
                         <p className={styles.paragraph}>
-                            <strong>8.3.</strong> Недействительность отдельного положения не влияет на действительность остальных частей Соглашения.
+                            <strong>7.3.</strong> {t('sections.7.item3')}
+                        </p>
+                    </div>
+                </section>
+
+                <section className={styles.section}>
+                    <h2 className={styles.sectionTitle}>{t('sections.8.title')}</h2>
+                    <div className={styles.content}>
+                        <p className={styles.paragraph}>
+                            <strong>8.1.</strong> {t('sections.8.item1')}
+                        </p>
+                        <p className={styles.paragraph}>
+                            <strong>8.2.</strong> {t('sections.8.item2')}
+                        </p>
+                        <p className={styles.paragraph}>
+                            <strong>8.3.</strong> {t('sections.8.item3')}
                         </p>
                     </div>
                 </section>
 
                 <div className={styles.contacts}>
-                    <h3 className={styles.contactsTitle}>Контакты для связи</h3>
+                    <h3 className={styles.contactsTitle}>{t('contacts.title')}</h3>
                     <p className={styles.contact}>
-                        Email: <Link href="mailto:Friends4Evening@lovigin.com" className={styles.link}>Friends4Evening@lovigin.com</Link>
+                        {t('contacts.email')} <Link href="mailto:Friends4Evening@lovigin.com" className={styles.link}>Friends4Evening@lovigin.com</Link>
                     </p>
                     <p className={styles.copyright}>
-                        © 2025 Friends4Evening — Все права защищены. 18+
+                        {t('contacts.copyright')}
                     </p>
                 </div>
             </div>

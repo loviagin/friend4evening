@@ -11,6 +11,7 @@ import { ApplicationDeclined } from '@/emails/ApplicationDeclined/ApplicationDec
 import { InvitationAccepted } from '@/emails/InvitationAccepted/InvitationAccepted'
 import { InvitationDeclined } from '@/emails/InvitationDeclined/InvitationDeclined'
 import { doc, getDoc } from 'firebase/firestore'
+import { cookies } from 'next/headers'
 
 export type WebPushSubscription = {
   endpoint: string
@@ -98,6 +99,18 @@ export async function sendNotificationToUser(userId: string, message: string) {
   return { success: anyOk, results }
 }
 
+// Функция для получения локали из cookie или дефолтной
+async function getUserLocale(): Promise<string> {
+  try {
+    const store = await cookies();
+    const locale = store.get('locale')?.value;
+    const locales = ['en', 'ru'];
+    return (locale && locales.includes(locale)) ? locale : 'ru';
+  } catch {
+    return 'ru'; // Дефолтная локаль при ошибке
+  }
+}
+
 export async function sendEmailAndNotification(
   action: 'approve' | 'decline',
   memberUser: User,
@@ -112,6 +125,10 @@ export async function sendEmailAndNotification(
     const meetDate = meet.date instanceof Date
       ? meet.date
       : new Date(meet.date);
+
+    // Получаем локаль пользователя (пока из cookie текущего запроса)
+    // TODO: в будущем хранить локаль в профиле пользователя в базе данных
+    const userLocale = await getUserLocale();
 
     let emailComponent;
     let subject;
@@ -128,6 +145,7 @@ export async function sendEmailAndNotification(
         meetDate: meetDate,
         meetLocation: meet.location,
         meetDescription: meet.description,
+        locale: userLocale,
       });
       subject = "Заявка одобрена | Friends4Evening";
       notificationTitle = `Заявка на встречу "${meet.title}" одобрена`;
@@ -356,4 +374,13 @@ export async function sendInvitationResponseNotification(
   } catch (error) {
     console.error('[sendInvitationResponseNotification] Error:', error);
   }
+}
+
+export async function setLocale(locale: string) {
+  const cookieStore = await cookies();
+  cookieStore.set('locale', locale, {
+    path: '/',
+    maxAge: 60 * 60 * 24 * 365, // 1 year
+    sameSite: 'lax',
+  });
 }

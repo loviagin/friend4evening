@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
+import { useTranslations } from 'next-intl';
 import styles from "./AgeGate.module.css";
 
 export default function AgeGate() {
     const router = useRouter();
+    const t = useTranslations('AgeGate');
     const [show, setShow] = useState(false);
     const [mounted, setMounted] = useState(false);
 
@@ -46,19 +48,19 @@ export default function AgeGate() {
             <div className={styles.modal}>
                 <div className={styles.content}>
                     <div className={styles.icon}>🔞</div>
-                    <h2 className={styles.title}>Предупреждение о контенте 18+</h2>
+                    <h2 className={styles.title}>{t('title')}</h2>
                     <p className={styles.text}>
-                        Данный сайт содержит контент, предназначенный только для лиц старше 18 лет.
+                        {t('text1')}
                     </p>
                     <p className={styles.text}>
-                        Если вам нет 18 лет, пожалуйста, покиньте сайт.
+                        {t('text2')}
                     </p>
                     <div className={styles.buttons}>
                         <button onClick={handleContinue} className={styles.buttonContinue}>
-                            Продолжить
+                            {t('continueButton')}
                         </button>
                         <button onClick={handleExit} className={styles.buttonExit}>
-                            Выход
+                            {t('exitButton')}
                         </button>
                     </div>
                 </div>

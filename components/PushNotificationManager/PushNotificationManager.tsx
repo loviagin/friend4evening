@@ -2,6 +2,7 @@
 
 import { subscribeUser, unsubscribeUser, WebPushSubscription } from '@/app/actions'
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import styles from './PushNotificationManager.module.css'
 import { useAuth } from '@/app/_providers/AuthProvider'
 
@@ -25,6 +26,7 @@ export default function PushNotificationManager({
     setSub: (newSab: PushSubscription | null) => void
 }) {
     const auth = useAuth();
+    const t = useTranslations('PushNotificationManager');
     const [isSupported, setIsSupported] = useState(false)
     const [subscription, setSubscription] = useState<PushSubscription | null>(null)
 
@@ -80,7 +82,7 @@ export default function PushNotificationManager({
     if (!isSupported) {
         return (
             <div className={styles.notSupported}>
-                Push notifications are not supported in this browser.
+                {t('notSupported')}
             </div>
         )
     }
@@ -90,17 +92,17 @@ export default function PushNotificationManager({
             {subscription ? (
                 <>
                     <div className={styles.settingBlock}>
-                        <span className={styles.settingText}>Вы подписаны на push-уведомления</span>
+                        <span className={styles.settingText}>{t('subscribed')}</span>
                         <button className={styles.buttonSecondary} onClick={unsubscribeFromPush}>
-                            Отписаться
+                            {t('unsubscribe')}
                         </button>
                     </div>
                 </>
             ) : (
                 <div className={styles.settingBlock}>
-                    <span className={styles.settingText}>Вы не подписаны на push-уведомления</span>
+                    <span className={styles.settingText}>{t('notSubscribed')}</span>
                     <button className={styles.button} onClick={subscribeToPush}>
-                        Подписаться
+                        {t('subscribe')}
                     </button>
                 </div>
             )}

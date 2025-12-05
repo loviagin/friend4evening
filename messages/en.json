@@ -1,0 +1,400 @@
+{
+  "HomeHero": {
+    "subtitle": "Find a company for the evening",
+    "description": "Dating service for those who want to spend the evening in good company.",
+    "descriptionBold": "Fast, safe and by interests.",
+    "startSearchButton": "Start searching",
+    "learnMoreButton": "Learn more"
+  },
+  "HomeFeatures": {
+    "title": "Why choose us",
+    "subtitle": "Everything for comfortable and safe communication",
+    "features": {
+      "security": {
+        "title": "Security",
+        "description": "Verified profiles and moderation system. Your safety is our priority."
+      },
+      "fast": {
+        "title": "Fast",
+        "description": "Find company in a few minutes. No long questionnaires and waiting."
+      },
+      "byInterests": {
+        "title": "By interests",
+        "description": "Filters by age, interests and location. Find exactly who you need."
+      },
+      "chat": {
+        "title": "Convenient chat",
+        "description": "Built-in messenger for communication. Discuss plans and arrange a meeting."
+      },
+      "nearby": {
+        "title": "Nearby",
+        "description": "Search for company in your city or area. Meet where it's convenient for both of you."
+      },
+      "reviews": {
+        "title": "Reviews",
+        "description": "Rating and review system. Choose verified users."
+      }
+    }
+  },
+  "HomeCTA": {
+    "title": "Ready to start?",
+    "subtitle": "Join thousands of users who have already found company for the evening",
+    "registerButton": "Sign up",
+    "loginButton": "Log in"
+  },
+  "AgeGate": {
+    "title": "18+ Content Warning",
+    "text1": "This site contains content intended only for persons over 18 years of age.",
+    "text2": "If you are under 18 years old, please leave the site.",
+    "continueButton": "Continue",
+    "exitButton": "Exit"
+  },
+  "HomeHowItWorks": {
+    "title": "How it works",
+    "subtitle": "Just a few steps to a meeting",
+    "steps": {
+      "registration": {
+        "title": "Registration",
+        "description": "Quick registration via social networks or email. Specify your interests and preferences."
+      },
+      "search": {
+        "title": "Search",
+        "description": "Use filters to find suitable company. Age, interests, location - choose yourself."
+      },
+      "communication": {
+        "title": "Communication",
+        "description": "Write to the person you're interested in. Discuss evening plans and arrange a meeting."
+      },
+      "meeting": {
+        "title": "Meeting",
+        "description": "Spend an unforgettable evening together! After the meeting, you can leave a review."
+      }
+    },
+    "button": "Start now"
+  },
+  "HomeScreenshots": {
+    "title": "How it looks",
+    "subtitle": "Intuitive interface",
+    "screenshots": {
+      "profile": {
+        "image": "/screenshot1.webp",
+        "alt": "User profile",
+        "caption": "User profile"
+      },
+      "search": {
+        "image": "/screenshot2.webp",
+        "alt": "Search and filters",
+        "caption": "Search and filters"
+      },
+      "messenger": {
+        "image": "",
+        "alt": "Messenger",
+        "caption": "Messenger"
+      }
+    },
+    "button": "Try now"
+  },
+  "HomeSecurity": {
+    "title": "Security first",
+    "subtitle": "We care about your safety",
+    "items": {
+      "verification": {
+        "icon": "🛡️",
+        "title": "Verification",
+        "description": "Profile verification and content moderation. We work only with adult users."
+      },
+      "dataProtection": {
+        "icon": "🔐",
+        "title": "Data protection",
+        "description": "Your personal data is securely protected. We use modern encryption methods."
+      },
+      "complaints": {
+        "icon": "🚨",
+        "title": "Complaint system",
+        "description": "Fast response system for complaints. Violators are blocked instantly."
+      },
+      "ratings": {
+        "icon": "✅",
+        "title": "Ratings",
+        "description": "Review and rating system helps you choose verified users."
+      }
+    },
+    "note": "⚠️ Remember: always meet in public places and inform your friends about your plans."
+  },
+  "HomeTestimonials": {
+    "title": "What users say",
+    "subtitle": "Thousands of satisfied users",
+    "testimonials": {
+      "andrey": {
+        "text": "Great service! Found company for the evening in half an hour. Everything went great, I'll definitely come back again.",
+        "avatar": "A",
+        "name": "Andrew, 48",
+        "location": "Moscow"
+      },
+      "maxim": {
+        "text": "Convenient search and filters. Quickly found suitable company. The service really works as it should.",
+        "avatar": "M",
+        "name": "Max, 28",
+        "location": "Saint Petersburg"
+      },
+      "ksenia": {
+        "text": "Safe and convenient. The rating system helps choose verified people. I recommend!",
+        "avatar": "K",
+        "name": "Ksenia, 23",
+        "location": "Kazan"
+      }
+    }
+  },
+  "Dropdown": {
+    "defaultLabel": "Set status"
+  },
+  "Footer": {
+    "description": "Dating service for those who want to spend the evening in good company.",
+    "columns": {
+      "navigation": "Navigation",
+      "information": "Information",
+      "contacts": "Contacts"
+    },
+    "links": {
+      "home": "Home",
+      "howItWorks": "How it works",
+      "apps": "Apps",
+      "contacts": "Contacts",
+      "security": "Security",
+      "testimonials": "Testimonials",
+      "account": "Account",
+      "login": "Log in",
+      "support": "Support",
+      "agreement": "User agreement",
+      "privacy": "Privacy policy",
+      "rules": "User rules"
+    },
+    "copyright": "All rights reserved"
+  },
+  "Header": {
+    "navLinks": {
+      "authenticated": {
+        "meets": "Meets",
+        "messages": "Messages",
+        "profile": "Profile"
+      },
+      "unauthenticated": {
+        "howItWorks": "How it works",
+        "features": "Features",
+        "testimonials": "Testimonials"
+      }
+    },
+    "accountButton": "Account"
+  },
+  "LoadingView": {
+    "text": "Loading"
+  },
+  "MeetCard": {
+    "deleteConfirm": "Are you sure you want to delete this meet?",
+    "type": {
+      "open": "Public",
+      "closed": "Private"
+    },
+    "menu": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "members": "members",
+    "waiting": "waiting",
+    "status": {
+      "plan": "Planned",
+      "current": "In progress",
+      "completed": "Completed",
+      "canceled": "Canceled"
+    }
+  },
+  "MeetFullCard": {
+    "errors": {
+      "acceptInvitation": "Error accepting invitation",
+      "leaveMeet": "Error leaving meet",
+      "joinMeet": "Error joining meet",
+      "action": "Error performing action",
+      "declineInvitation": "Error declining invitation",
+      "cancelApplication": "Error canceling application"
+    },
+    "currentBadge": "In progress",
+    "noAlcohol": "I don't drink alcohol",
+    "years": "years old",
+    "upToMembers": "Up to {count} people",
+    "loading": "Loading...",
+    "buttons": {
+      "acceptInvitation": "Accept invitation",
+      "decline": "Decline",
+      "waitingApproval": "Waiting for approval",
+      "cancelApplication": "Cancel application",
+      "leave": "Leave",
+      "join": "Join"
+    },
+    "meetTypes": {
+      "CURRENT_HOME": "At my home",
+      "USER_HOME": "At others' homes",
+      "STREET": "On the street",
+      "PUBLIC_PLACES": "In public places",
+      "PARKS": "In parks",
+      "CAFES": "In cafes/restaurants",
+      "ONLINE": "Online"
+    }
+  },
+  "PushNotificationManager": {
+    "notSupported": "Push notifications are not supported in this browser",
+    "subscribed": "You are subscribed to push notifications",
+    "notSubscribed": "You are not subscribed to push notifications",
+    "subscribe": "Subscribe",
+    "unsubscribe": "Unsubscribe"
+  },
+  "UserCard": {
+    "years": {
+      "one": "year",
+      "other": "years"
+    },
+    "readyToTrip": "Ready to travel",
+    "noAlcohol": "I don't drink alcohol",
+    "noSmoking": "I don't smoke",
+    "tags": {
+      "READY": "Ready to meet",
+      "CURRENT": "At a meet",
+      "BUSY": "Busy",
+      "INTENSIVE_SEARCH": "Intensive search"
+    }
+  },
+  "ApplicationApprovedEmail": {
+    "title": "Application approved!",
+    "greeting": "Hello, {userName}!",
+    "message": "Your application to join the meet has been approved by the organizer.",
+    "successTitle": "✅ Application accepted",
+    "successMessage": "You are now a participant in the meet.",
+    "labels": {
+      "dateTime": "Date and time:",
+      "location": "Location:",
+      "description": "Description:"
+    },
+    "button": "Go to meet",
+    "infoText": "Don't forget to prepare for the meet and be punctual!",
+    "footer": "Friends4Evening. 18+. All rights reserved"
+  },
+  "Contacts": {
+    "metaTitle": "Contacts Friends4Evening | Meeting and Communication Service",
+    "metaDescription": "Ways to contact Friends4Evening service, company information, feedback form, our social networks and frequently asked questions",
+    "metaKeywords": ["contacts", "social networks", "company information", "f4e", "friends4evening", "dating service", "meeting service", "meet search"],
+    "title": "Contacts",
+    "subtitle": "Contact us if you have questions or suggestions",
+    "companyInfo": {
+      "title": "Company Information",
+      "labels": {
+        "name": "Name:",
+        "address": "Address:",
+        "companyNumber": "Company Number:",
+        "icoRegistration": "ICO Registration:"
+      },
+      "values": {
+        "name": "LOVIGIN LTD",
+        "address": "86-90 Paul Street London EC2A 4NE, United Kingdom",
+        "companyNumber": "16203160",
+        "icoRegistration": "ZC026591"
+      }
+    },
+    "contactUs": "Contact Us",
+    "email": {
+      "title": "Email"
+    },
+    "social": {
+      "title": "We are on social networks"
+    },
+    "form": {
+      "title": "Feedback Form"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "support": {
+          "question": "How to contact support?",
+          "answer": "You can write to us at Friends4Evening@lovigin.com or contact us through the feedback form. We try to respond within 24 hours."
+        },
+        "report": {
+          "question": "How to report a violation?",
+          "answer": "If you encounter a violation of the rules of conduct, please use the \"Report\" button in the user's profile or write to us by email with a description of the situation."
+        },
+        "suggestions": {
+          "question": "How to suggest a service improvement?",
+          "answer": "We are always happy to hear your suggestions! Write to us by email or fill out the feedback form with a description of your idea, and we will definitely consider it."
+        }
+      }
+    },
+    "usefulLinks": {
+      "title": "Useful Links",
+      "rules": "User Rules",
+      "agreement": "User Agreement",
+      "privacy": "Privacy Policy"
+    },
+    "ContactForm": {
+      "labels": {
+        "name": "Your name",
+        "email": "Email",
+        "message": "Message"
+      },
+      "placeholders": {
+        "name": "Enter your name",
+        "email": "your@email.com",
+        "message": "Write your message..."
+      },
+      "messages": {
+        "success": "✓ Message sent! We will contact you soon.",
+        "error": "✗ An error occurred. Please try again or contact us directly by email."
+      },
+      "buttons": {
+        "submitting": "Sending...",
+        "submit": "Send message"
+      }
+    }
+  },
+  "Login": {
+    "title": {
+      "login": "Login",
+      "register": "Registration"
+    },
+    "mobileBanner": {
+      "title": "Add Friends4Evening icon to home screen",
+      "description": "For faster access to Account:",
+      "step1": "1. Tap share or open additional actions menu",
+      "step2": "2. Tap Add to Home Screen"
+    },
+    "placeholders": {
+      "email": "Enter your email",
+      "password": "Your password",
+      "name": "Your name",
+      "birthday": "Your date of birth",
+      "registerEmail": "Your email",
+      "registerPassword": "Create a password"
+    },
+    "buttons": {
+      "login": "Login",
+      "register": "Register",
+      "continue": "Continue",
+      "switchToRegister": "Register with email",
+      "switchToLogin": "Login with email"
+    },
+    "errors": {
+      "prefix": "Error:",
+      "userNotFound": "User not found",
+      "passwordTooShort": "Password must be longer than 6 characters",
+      "registrationError": "User registration error. Please try again later",
+      "generic": "Error {message}"
+    },
+    "agreement": {
+      "text": "By registering and using the service, you confirm that you are 18 years old and agree to the",
+      "rules": "rules",
+      "agreement": "agreement",
+      "and": "and",
+      "privacy": "privacy policy",
+      "period": "."
+    },
+    "GoogleLogin": {
+      "button": "Sign in with Google"
+    }
+  }
+}

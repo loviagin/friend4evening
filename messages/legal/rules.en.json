@@ -1,0 +1,70 @@
+{
+  "title": "User Rules",
+  "version": "Version dated 11/04/2025",
+  "metaTitle": "User Rules | Friends4Evening",
+  "metaDescription": "This page contains the rules of conduct for users on the F4E website and application",
+  "intro": "These Rules of Conduct (hereinafter referred to as \"Rules\") establish standards for communication and use of the Friends4Evening service (hereinafter referred to as \"Service\"). The purpose of the Rules is to ensure safe, respectful and comfortable communication between users.",
+  "sections": {
+    "1": {
+      "title": "1. General Principles",
+      "item1": "The Service is intended exclusively for adult users (18+).",
+      "item2": "Friends4Evening is a platform for dating, communication and finding evening company.",
+      "item3": "By using the Service, you agree to comply with these Rules, the User Agreement and the Privacy Policy."
+    },
+    "2": {
+      "title": "2. Respect and Responsibility",
+      "item1": "Communicate politely, respect other users and their personal boundaries.",
+      "item2": "The following is not allowed:",
+      "list": {
+        "item1": "insults, threats, discriminatory statements;",
+        "item2": "aggressive or intrusive behavior;",
+        "item3": "publishing other people's personal data without consent."
+      },
+      "item3": "Any harassment, harassment or humiliation will result in profile blocking without warning."
+    },
+    "3": {
+      "title": "3. Prohibited Content",
+      "intro": "Users are prohibited from posting:",
+      "list": {
+        "item1": "materials containing calls for the use of alcohol, drugs or other substances;",
+        "item2": "scenes of alcohol consumption, pornography, erotic materials and sexually explicit images;",
+        "item3": "advertising, spam, links to third-party resources without the permission of the Administration;",
+        "item4": "content that violates copyright or the legislation of the country of residence."
+      }
+    },
+    "4": {
+      "title": "4. Meeting Safety",
+      "item1": "The Service does not organize offline meetings and is not responsible for the actions of users outside the platform.",
+      "item2": "Before a personal meeting, it is recommended:",
+      "list": {
+        "item1": "arrange meetings only with verified users;",
+        "item2": "meet in public places;",
+        "item3": "inform friends or relatives about the place and time of the meeting."
+      }
+    },
+    "5": {
+      "title": "5. Behavior in Messages and Chats",
+      "item1": "Do not send messages of an advertising, offensive or sexually explicit nature.",
+      "item2": "Do not request or forward personal data (addresses, bank details, etc.) unless required for communication.",
+      "item3": "Report violations through the built-in \"Report\" button or to the support email."
+    },
+    "6": {
+      "title": "6. Responsibility for Violations",
+      "item1": "Violation of the Rules may result in temporary or permanent profile blocking without prior notice.",
+      "item2": "Administration decisions on blocking are final and not subject to review.",
+      "item3": "In case of repeated complaints from other users, the account may be deleted."
+    },
+    "7": {
+      "title": "7. Changes to the Rules",
+      "item1": "The Administration has the right to make changes to these Rules without prior notice.",
+      "item2": "The new version comes into force from the moment of publication on the Friends4Evening website."
+    },
+    "8": {
+      "title": "8. Contacts",
+      "text": "For questions related to the use of the Service or violation of the Rules, please contact:"
+    }
+  },
+  "copyright": "© 2025 Friends4Evening — All rights reserved.",
+  "ageRestriction": "Age restriction: 18+"
+}
+

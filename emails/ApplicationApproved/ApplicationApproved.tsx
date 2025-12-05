@@ -7,14 +7,37 @@ export type ApplicationApprovedEmail = {
     meetDate: Date,
     meetLocation: string | null,
     meetDescription: string | null,
+    locale?: string,
 }
 
-export function ApplicationApproved({ userName, meetId, meetTitle, meetDate, meetLocation, meetDescription }: ApplicationApprovedEmail) {
+export function ApplicationApproved({ userName, meetId, meetTitle, meetDate, meetLocation, meetDescription, locale = 'ru' }: ApplicationApprovedEmail) {
     const base = process.env.NEXT_PUBLIC_URL!
+    
+    // Импортируем сообщения напрямую
+    const messages = locale === 'en' 
+        ? require('../../messages/en.json').ApplicationApprovedEmail
+        : require('../../messages/ru.json').ApplicationApprovedEmail;
+    
+    const t = (key: string, params?: Record<string, string>) => {
+        const keys = key.split('.');
+        let value: any = messages;
+        for (const k of keys) {
+            value = value?.[k];
+        }
+        if (typeof value === 'string' && params) {
+            return value.replace(/\{(\w+)\}/g, (_, param) => params[param] || '');
+        }
+        return value || key;
+    };
 
     const formatDate = (date: Date) => {
         const d = new Date(date);
-        return d.toLocaleDateString('ru-RU', {
+        const localeMap: Record<string, string> = {
+            'ru': 'ru-RU',
+            'en': 'en-US'
+        };
+        const intlLocale = localeMap[locale] || locale;
+        return d.toLocaleDateString(intlLocale, {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
@@ -195,18 +218,18 @@ export function ApplicationApproved({ userName, meetId, meetTitle, meetDate, mee
                     </header>
 
                     <h1 className={styles.title}>
-                        Заявка одобрена!
+                        {t('title')}
                     </h1>
                     <hr className={styles.divider} />
                     <p className={styles.paragraph}>
-                        Привет, {userName}!<br />
-                        Ваша заявка на участие во встрече была одобрена организатором.
+                        {t('greeting', { userName })}<br />
+                        {t('message')}
                     </p>
 
                     <div className={styles.successBox}>
-                        <h2 className={styles.successTitle}>✅ Заявка принята</h2>
+                        <h2 className={styles.successTitle}>{t('successTitle')}</h2>
                         <p className={styles.paragraph} style={{ margin: '0.5rem 0', fontSize: '1rem' }}>
-                            Вы стали участником встречи.
+                            {t('successMessage')}
                         </p>
                     </div>
 
@@ -216,7 +239,7 @@ export function ApplicationApproved({ userName, meetId, meetTitle, meetDate, mee
                         <div className={styles.meetDetail}>
                             <span className={styles.meetDetailIcon}>📅</span>
                             <div className={styles.meetDetailText}>
-                                <span className={styles.meetDetailLabel}>Дата и время:</span>
+                                <span className={styles.meetDetailLabel}>{t('labels.dateTime')}</span>
                                 {formatDate(meetDate)}
                             </div>
                         </div>
@@ -225,7 +248,7 @@ export function ApplicationApproved({ userName, meetId, meetTitle, meetDate, mee
                             <div className={styles.meetDetail}>
                                 <span className={styles.meetDetailIcon}>📍</span>
                                 <div className={styles.meetDetailText}>
-                                    <span className={styles.meetDetailLabel}>Место:</span>
+                                    <span className={styles.meetDetailLabel}>{t('labels.location')}</span>
                                     {meetLocation}
                                 </div>
                             </div>
@@ -235,7 +258,7 @@ export function ApplicationApproved({ userName, meetId, meetTitle, meetDate, mee
                             <div className={styles.meetDetail}>
                                 <span className={styles.meetDetailIcon}>📝</span>
                                 <div className={styles.meetDetailText}>
-                                    <span className={styles.meetDetailLabel}>Описание:</span>
+                                    <span className={styles.meetDetailLabel}>{t('labels.description')}</span>
                                     {meetDescription}
                                 </div>
                             </div>
@@ -244,16 +267,16 @@ export function ApplicationApproved({ userName, meetId, meetTitle, meetDate, mee
 
                     <div className={styles.buttonContainer}>
                         <a href={`${base}/account/meets/${meetId}`} className={styles.button}>
-                            Перейти к встрече
+                            {t('button')}
                         </a>
                     </div>
 
                     <p className={styles.infoText}>
-                        Не забудьте подготовиться к встрече и быть пунктуальным!
+                        {t('infoText')}
                     </p>
 
                     <footer className={styles.emailFooter}>
-                        <div>Friends4Evening. 18+. Все права защищены</div>
+                        <div>{t('footer')}</div>
                         <a href={'mailto:Friends4Evening@lovigin.com'} className={styles.footerLink}>Friends4Evening@lovigin.com</a>
                         <a href={`${base}`} className={styles.footerLink}>www.f4e.io</a>
                     </footer>
