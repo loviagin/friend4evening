@@ -8,11 +8,13 @@ import { useAuth } from "@/app/_providers/AuthProvider";
 import { useState, useEffect } from "react";
 import { User } from "@/models/User";
 import Dropdown from "@/components/Dropdown/Dropdown";
+import { useTranslations } from 'next-intl';
 
 type PrivacySetting = "everyone" | "friends";
 
 export default function SettingsProfile() {
     const selfAuth = useAuth()
+    const t = useTranslations('SettingsProfile')
     const [subscription, setSubscription] = useState<PushSubscription | null>(null)
     const [user, setUser] = useState<User | null>(null)
     const [meetInvitesPrivacy, setMeetInvitesPrivacy] = useState<PrivacySetting>("everyone")
@@ -122,8 +124,8 @@ export default function SettingsProfile() {
     }
 
     const defaultOptions = [
-        { key: "everyone", label: "Всем" },
-        { key: "friends", label: "Только друзьям" },
+        { key: "everyone", label: t('options.everyone') },
+        { key: "friends", label: t('options.friends') },
     ]
 
     return (
@@ -132,9 +134,9 @@ export default function SettingsProfile() {
             {!loading && (
                 <>
                     <div className={styles.privacyBlock}>
-                        <h3 className={styles.privacyTitle}>Настройки приватности</h3>
+                        <h3 className={styles.privacyTitle}>{t('privacy.title')}</h3>
                         <div className={styles.settingBlock}>
-                            <span className={styles.settingText}>Разрешить приглашать на встречи</span>
+                            <span className={styles.settingText}>{t('privacy.meetInvites')}</span>
                             <Dropdown
                                 source={defaultOptions}
                                 current={meetInvitesPrivacy}
@@ -142,7 +144,7 @@ export default function SettingsProfile() {
                             />
                         </div>
                         <div className={styles.settingBlock}>
-                            <span className={styles.settingText}>Разрешить отправку сообщений</span>
+                            <span className={styles.settingText}>{t('privacy.messages')}</span>
                             <Dropdown
                                 source={defaultOptions}
                                 current={messagesPrivacy}
@@ -153,15 +155,15 @@ export default function SettingsProfile() {
                 </>
             )}
             <div className={styles.settingBlock}>
-                <span className={styles.settingText}>Нужна помощь?</span>
-                <button className={styles.button}>Написать в службу поддержки</button>
+                <span className={styles.settingText}>{t('support.title')}</span>
+                <button className={styles.button}>{t('support.button')}</button>
             </div>
             <div className={styles.settingBlock}>
-                <span className={styles.settingText}>Запросить удаление аккаунта</span>
-                <button className={styles.button}>Запросить</button>
+                <span className={styles.settingText}>{t('account.deleteRequest')}</span>
+                <button className={styles.button}>{t('account.requestButton')}</button>
             </div>
             <div className={styles.logoutBlock}>
-                <button className={styles.logoutButton} onClick={handleLogout}>Выйти из аккаунта</button>
+                <button className={styles.logoutButton} onClick={handleLogout}>{t('logout.button')}</button>
             </div>
         </section>
     )

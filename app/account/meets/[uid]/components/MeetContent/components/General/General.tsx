@@ -5,9 +5,12 @@ import { useState } from "react";
 import styles from "./General.module.css";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import { IoCopyOutline } from "react-icons/io5";
+import { useTranslations, useLocale } from "next-intl";
 
 export default function General({ meet }: { meet: Meet }) {
     const auth = useAuth();
+    const t = useTranslations('MeetStatus');
+    const locale = useLocale();
     const [loading, setLoading] = useState<string | null>(null);
     const [copied, setCopied] = useState(false);
 
@@ -35,7 +38,7 @@ export default function General({ meet }: { meet: Meet }) {
         if (response.status === 200) {
             window.location.reload();
         } else {
-            alert('Ошибка при изменении статуса встречи');
+            alert(t('errors.statusChange'));
             setLoading(null);
         }
     };
@@ -76,26 +79,26 @@ export default function General({ meet }: { meet: Meet }) {
 
             {meet.status === MeetStatus.current && (
                 <div className={styles.statusBanner}>
-                    <span className={styles.statusBannerText}>Встреча сейчас идет</span>
+                    <span className={styles.statusBannerText}>{t('banners.current')}</span>
                 </div>
             )}
 
             {meet.status === MeetStatus.canceled && (
                 <div className={`${styles.statusBanner} ${styles.statusBannerCanceled}`}>
-                    <span className={styles.statusBannerText}>Встреча отменена</span>
+                    <span className={styles.statusBannerText}>{t('banners.canceled')}</span>
                 </div>
             )}
 
             {meet.status === MeetStatus.completed && (
                 <div className={`${styles.statusBanner} ${styles.statusBannerCompleted}`}>
-                    <span className={styles.statusBannerText}>Встреча завершена</span>
+                    <span className={styles.statusBannerText}>{t('banners.completed')}</span>
                 </div>
             )}
 
             {meet.status === MeetStatus.plan && (
                 <div className={`${styles.statusBanner} ${styles.statusBannerPlan}`}>
                     <span className={styles.statusBannerText}>
-                        Запланировано на {new Date(meet.date).toLocaleDateString('ru-RU', {
+                        {t('banners.plan')} {new Date(meet.date).toLocaleDateString(locale === 'ru' ? 'ru-RU' : 'en-US', {
                             day: 'numeric',
                             month: 'long',
                             year: 'numeric',

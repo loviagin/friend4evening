@@ -396,5 +396,358 @@
     "GoogleLogin": {
       "button": "Sign in with Google"
     }
+  },
+  "Apps": {
+    "metaTitle": "Friends4Evening Apps | Meeting and Communication Service",
+    "metaDescription": "How to install F4e app on iOS and Android. Instructions, links and announcement of publication in AppStore and Play Market.",
+    "metaKeywords": ["app", "ios", "android", "f4e", "friends4evening", "dating service", "meeting service", "find meetings"],
+    "header": {
+      "title": "Mobile Apps",
+      "subtitle": "Install Friends4Evening on your phone for convenient access"
+    },
+    "pwa": {
+      "title": "How to install PWA app",
+      "ios": {
+        "title": "iOS (iPhone/iPad)",
+        "steps": {
+          "step1": "Open Friends4Evening website in Safari browser",
+          "step2": "Tap the",
+          "shareButton": "Share",
+          "step2End": "button at the bottom of the screen",
+          "step3": "Select",
+          "addToHome": "Add to Home Screen",
+          "step4": "Confirm installation by tapping \"Add\"",
+          "step5": "The app will appear on your device's home screen"
+        }
+      },
+      "android": {
+        "title": "Android",
+        "steps": {
+          "step1": "Open Friends4Evening website in Chrome browser",
+          "step2": "Tap the menu",
+          "menuIcon": "⋮",
+          "step2End": "in the top right corner",
+          "step3": "Select",
+          "installOption": "\"Install app\" or \"Add to home screen\"",
+          "step4": "Confirm installation in the popup window",
+          "step5": "The app will be installed and appear on the home screen"
+        }
+      }
+    },
+    "native": {
+      "title": "Native Apps",
+      "description": "Full-featured apps for iOS and Android coming soon",
+      "ios": {
+        "title": "iOS App",
+        "description": "App for iPhone and iPad will be available in App Store",
+        "status": "In Development"
+      },
+      "android": {
+        "title": "Android App",
+        "description": "App for Android will be available in Google Play",
+        "status": "In Development"
+      }
+    }
+  },
+  "Profile": {
+    "title": "Profile",
+    "loading": "Loading...",
+    "subscription": {
+      "title": "Enable notifications to stay up to date",
+      "text": "We will send notifications about new friend requests, meetings, new messages and important information",
+      "button": "Enable"
+    },
+    "navigation": {
+      "general": "General",
+      "friends": "Friends",
+      "admin": "👨‍💻 Admin Panel",
+      "edit": "Edit Profile",
+      "settings": "Settings"
+    }
+  },
+  "UserProfile": {
+    "title": "Profile",
+    "userNotFound": "User not found"
+  },
+  "RootLayout": {
+    "metaTitle": "Friends4Evening – find a friend for the evening",
+    "metaDescription": "Convenient search and filter by desired parameters, chats and much more on Friends4Evening. 18+"
+  },
+  "Notifications": {
+    "title": "Notifications",
+    "emptyState": "You have no notifications yet",
+    "buttons": {
+      "accept": "Accept request",
+      "decline": "Decline request"
+    },
+    "alerts": {
+      "acceptSuccess": "Request accepted successfully",
+      "declineSuccess": "Request declined",
+      "alreadyProcessed": "You have already accepted or declined this request"
+    }
+  },
+  "BlockedProfile": {
+    "title": "Account blocked",
+    "message": "The account has been blocked by the Friends4Evening service Administration.",
+    "contactText": "If you think an error has occurred, please write to us at",
+    "warning": "⚠️ Blocking may be applied for violation of service rules, inappropriate behavior or other actions contrary to the user agreement."
+  },
+  "EditProfile": {
+    "alerts": {
+      "loginRequired": "Please log in again",
+      "nicknameTaken": "Nickname is taken. Please choose another one",
+      "saveError": "Error saving. Check your internet connection",
+      "serverError": "Server problem",
+      "deleteError": "Error deleting",
+      "avatarUpdated": "Avatar updated ✨",
+      "avatarUploadError": "Error uploading avatar"
+    },
+    "labels": {
+      "avatar": "Profile avatar",
+      "name": "Your name",
+      "nickname": "Your nickname",
+      "email": "Email",
+      "birthday": "Date of Birth",
+      "bio": "Profile description",
+      "location": "Current location",
+      "drinks": "Preferred drinks"
+    },
+    "placeholders": {
+      "name": "Enter how you want to be called",
+      "nickname": "Create a nickname (e.g. beautifulBoy)",
+      "birthday": "Date of birth",
+      "bio": "You can write about yourself",
+      "country": "Country",
+      "city": "City",
+      "drinks": "Enter drinks separated by commas"
+    },
+    "checkboxes": {
+      "showAge": "Show age in Profile?",
+      "readyToTrip": "Ready to travel to another city?",
+      "noAlcohol": "I don't drink alcohol",
+      "noSmoking": "I don't smoke"
+    },
+    "fieldsets": {
+      "meetIn": "Ready to meet:"
+    },
+    "meetTypes": {
+      "CURRENT_HOME": "At my home",
+      "USER_HOME": "At others' homes",
+      "STREET": "On the street",
+      "PUBLIC_PLACES": "In public places",
+      "PARKS": "In parks",
+      "CAFES": "In cafes/restaurants",
+      "ONLINE": "Online"
+    },
+    "errors": {
+      "nicknameTaken": "This nickname is already taken. Choose another one"
+    },
+    "warnings": {
+      "alcohol": "Excessive alcohol consumption can lead to fatal consequences",
+      "smoking": "Smoking (vaping) is harmful to your health"
+    },
+    "buttons": {
+      "uploading": "Uploading...",
+      "saving": "Saving...",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "ariaLabels": {
+      "deleteDrink": "Delete drink"
+    }
+  },
+  "FriendStatus": {
+    "WAITING": "Waiting",
+    "APPROVED": "Friend",
+    "DECLINED": "Declined"
+  },
+  "MeetStatus": {
+    "plan": "Planned",
+    "current": "In progress",
+    "completed": "Completed",
+    "canceled": "Canceled",
+    "banners": {
+      "current": "Meet is in progress",
+      "canceled": "Meet canceled",
+      "completed": "Meet completed",
+      "plan": "Planned on"
+    },
+    "errors": {
+      "statusChange": "Error changing meet status"
+    }
+  },
+  "MeetType": {
+    "CURRENT_HOME": "At my home",
+    "USER_HOME": "At others' homes",
+    "STREET": "On the street",
+    "PUBLIC_PLACES": "In public places",
+    "PARKS": "In parks",
+    "CAFES": "In cafes/restaurants",
+    "ONLINE": "Online"
+  },
+  "UserTags": {
+    "READY": "Ready to meet",
+    "CURRENT": "At a meet",
+    "BUSY": "Busy",
+    "INTENSIVE_SEARCH": "Intensive search"
+  },
+  "Friends": {
+    "title": "Friends",
+    "emptyState": "No friends yet"
+  },
+  "GeneralProfile": {
+    "location": "🗺️ Location",
+    "drinks": {
+      "title": "Preferred drinks",
+      "noAlcohol": "🚫 No alcoholic drinks"
+    },
+    "noSmoking": "🚭 I don't smoke",
+    "meetIn": "Ready to meet:",
+    "readyToTrip": "✅ Ready to travel to another city",
+    "statistics": {
+      "title": "📊 Statistics",
+      "meetsCount": "Total meets",
+      "friendsCount": "Friends in service",
+      "daysFromRegistration": "Since registration"
+    },
+    "reviews": {
+      "title": "⭐ Reviews",
+      "averageRating": "Average rating:",
+      "emptyState": "No reviews yet"
+    },
+    "actions": {
+      "unblock": "🔓 Unblock",
+      "block": "🚫 Block",
+      "report": "⚠️ Report"
+    },
+    "time": {
+      "months": "mo.",
+      "days": "days"
+    }
+  },
+  "HeroProfile": {
+    "years": {
+      "one": "year",
+      "few": "years",
+      "many": "years"
+    },
+    "placeholders": {
+      "name": "Name not set",
+      "nickname": "Nickname not set"
+    },
+    "buttons": {
+      "suggestMeet": "Suggest meet",
+      "sendMessage": "Send message",
+      "friends": "You are friends",
+      "requestSent": "Request sent",
+      "addFriend": "Add friend"
+    },
+    "alerts": {
+      "requestAlreadySent": "Request already sent. Please wait for response",
+      "becameFriends": "You became friends!",
+      "requestSent": "Request sent successfully",
+      "requestError": "Error sending friend request",
+      "unfriendConfirm": "Do you want to stop being friends?",
+      "unfriendError": "Error removing from friends",
+      "tagError": "Error setting status"
+    },
+    "notifications": {
+      "friendRequestApproved": "Friend request approved",
+      "newFriendTitle": "New friend",
+      "newFriendDescription": "You have a new friend",
+      "newFriendRequestTitle": "Check friend request",
+      "newFriendRequestDescription": "User wants to be your friend",
+      "friendRequestSent": "You have a new friend request"
+    }
+  },
+  "ShareProfile": {
+    "title": "Share profile",
+    "button": "Share profile",
+    "close": "Close",
+    "instructions": "Copy the link or share the profile on social networks",
+    "copyButton": {
+      "copy": "Copy",
+      "copied": "✓ Copied"
+    },
+    "social": {
+      "vk": "Share on VK",
+      "telegram": "Share on Telegram",
+      "whatsapp": "Share on WhatsApp"
+    },
+    "shareText": "Check out my profile on Friends4Evening!"
+  },
+  "ReportForm": {
+    "title": "Report user",
+    "labels": {
+      "reason": "Reason for report",
+      "description": "Problem description"
+    },
+    "placeholders": {
+      "reason": "Select reason",
+      "description": "Describe in detail what happened..."
+    },
+    "reasons": {
+      "spam": "Spam",
+      "inappropriate_content": "Inappropriate content",
+      "fake_profile": "Fake profile",
+      "scam": "Scam",
+      "other": "Other"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "submit": "Submit report"
+    },
+    "alerts": {
+      "fillAllFields": "Please fill in all fields",
+      "success": "Report submitted successfully. Thank you for your feedback",
+      "error": "Error submitting report. Please try again later"
+    }
+  },
+  "SettingsProfile": {
+    "privacy": {
+      "title": "Privacy settings",
+      "meetInvites": "Allow meet invitations",
+      "messages": "Allow messages"
+    },
+    "options": {
+      "everyone": "Everyone",
+      "friends": "Friends only"
+    },
+    "support": {
+      "title": "Need help?",
+      "button": "Contact support"
+    },
+    "account": {
+      "deleteRequest": "Request account deletion",
+      "requestButton": "Request"
+    },
+    "logout": {
+      "button": "Sign out"
+    }
+  },
+  "UserReview": {
+    "defaultUserName": "User"
+  },
+  "WriteReview": {
+    "message": {
+      "onlyAfterCompletedMeet": "You can leave a review only after a completed meet"
+    },
+    "labels": {
+      "rating": "Rating:",
+      "review": "Your review:"
+    },
+    "placeholders": {
+      "review": "Write your review"
+    },
+    "buttons": {
+      "submit": "Submit review"
+    },
+    "ariaLabels": {
+      "rateStars": "Rate {count} stars"
+    },
+    "alerts": {
+      "success": "Review submitted successfully. Thank you",
+      "error": "Error submitting. Please try again later"
+    }
   }
 }

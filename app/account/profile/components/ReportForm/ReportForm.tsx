@@ -5,6 +5,7 @@ import styles from "./ReportForm.module.css";
 import { AiOutlineClose } from "react-icons/ai";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import LoadingView from '@/components/LoadingView/LoadingView';
+import { useTranslations } from 'next-intl';
 
 type Props = {
     userId: string;
@@ -18,6 +19,7 @@ type ReportFormData = {
 
 export default function ReportForm({ userId, close }: Props) {
     const auth = useAuth();
+    const t = useTranslations('ReportForm');
     const [mounted, setMounted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState<ReportFormData>({
@@ -42,7 +44,7 @@ export default function ReportForm({ userId, close }: Props) {
         if (!auth.user?.uid) return;
 
         if (!form.reason.trim() || !form.description.trim()) {
-            alert("Пожалуйста, заполните все поля");
+            alert(t('alerts.fillAllFields'));
             return;
         }
 
@@ -64,10 +66,10 @@ export default function ReportForm({ userId, close }: Props) {
         const data = await response.json();
 
         if (response.status === 200) {
-            alert("Жалоба успешно отправлена. Спасибо за обратную связь");
+            alert(t('alerts.success'));
             close();
         } else {
-            alert("Ошибка отправки жалобы. Пожалуйста попробуйте позже");
+            alert(t('alerts.error'));
         }
 
         setLoading(false);
@@ -79,7 +81,7 @@ export default function ReportForm({ userId, close }: Props) {
         <div className={styles.overlay} onClick={handleOverlayClick}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
-                    <h2 className={styles.title}>Пожаловаться на пользователя</h2>
+                    <h2 className={styles.title}>{t('title')}</h2>
                     <button className={styles.closeButton} onClick={close}>
                         <AiOutlineClose />
                     </button>
@@ -91,29 +93,29 @@ export default function ReportForm({ userId, close }: Props) {
                     <form className={styles.form} onSubmit={handleSubmit}>
                         <div className={styles.formGroup}>
                             <label className={styles.label}>
-                                <span>Причина жалобы</span>
+                                <span>{t('labels.reason')}</span>
                                 <select
                                     className={styles.select}
                                     value={form.reason}
                                     onChange={(e) => setForm({ ...form, reason: e.target.value })}
                                     required
                                 >
-                                    <option value="">Выберите причину</option>
-                                    <option value="spam">Спам</option>
-                                    <option value="inappropriate_content">Неуместный контент</option>
-                                    <option value="fake_profile">Поддельный профиль</option>
-                                    <option value="scam">Мошенничество</option>
-                                    <option value="other">Другое</option>
+                                    <option value="">{t('placeholders.reason')}</option>
+                                    <option value="spam">{t('reasons.spam')}</option>
+                                    <option value="inappropriate_content">{t('reasons.inappropriate_content')}</option>
+                                    <option value="fake_profile">{t('reasons.fake_profile')}</option>
+                                    <option value="scam">{t('reasons.scam')}</option>
+                                    <option value="other">{t('reasons.other')}</option>
                                 </select>
                             </label>
                         </div>
 
                         <div className={styles.formGroup}>
                             <label className={styles.label}>
-                                <span>Описание проблемы</span>
+                                <span>{t('labels.description')}</span>
                                 <textarea
                                     className={styles.textarea}
-                                    placeholder="Опишите подробно, что произошло..."
+                                    placeholder={t('placeholders.description')}
                                     value={form.description}
                                     onChange={(e) => setForm({ ...form, description: e.target.value })}
                                     rows={6}
@@ -124,10 +126,10 @@ export default function ReportForm({ userId, close }: Props) {
 
                         <div className={styles.formActions}>
                             <button type="button" className={styles.cancelButton} onClick={close}>
-                                Отмена
+                                {t('buttons.cancel')}
                             </button>
                             <button type="submit" className={styles.submitButton}>
-                                Отправить жалобу
+                                {t('buttons.submit')}
                             </button>
                         </div>
                     </form>

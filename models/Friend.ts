@@ -12,8 +12,5 @@ export enum FriendStatus {
     declined = "DECLINED"
 }
 
-export const FriendStatusLabel: Record<FriendStatus, string> = {
-    [FriendStatus.waiting]: "Ожидает",
-    [FriendStatus.approved]: "Друг",
-    [FriendStatus.declined]: "Отклонен"
-}
+// FriendStatusLabel has been moved to translations (messages/{locale}.json under "FriendStatus" namespace)
+// Use useTranslations('FriendStatus') in components to get localized labels

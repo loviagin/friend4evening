@@ -3,26 +3,32 @@ import { IoShareOutline } from 'react-icons/io5';
 import styles from './page.module.css';
 import { LuSquarePlus } from 'react-icons/lu';
 import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = {
-    title: "Приложения Friends4Evening | Сервис встреч и общения",
-    description: "Как установить приложение F4e на iOS и Android. Инструкция, ссылки и анонс публикации в AppStore и Play Market.",
-    keywords: ["приложение", "ios", "android", "f4e", "friends4evening", "сервис знакомств", "сервис встреч", "поиск встреч"]
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+    const t = await getTranslations({ locale, namespace: 'Apps' });
+
+    return {
+        title: t('metaTitle'),
+        description: t('metaDescription'),
+        keywords: t('metaKeywords') as unknown as string[],
+    };
 }
 
-export default function AppsPage() {
+export default async function AppsPage() {
+    const t = await getTranslations('Apps');
     return (
         <main className={styles.main}>
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h1 className={styles.title}>Мобильные приложения</h1>
+                    <h1 className={styles.title}>{t('header.title')}</h1>
                     <p className={styles.subtitle}>
-                        Установите Friends4Evening на свой телефон для удобного доступа
+                        {t('header.subtitle')}
                     </p>
                 </div>
 
                 <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>Как установить PWA приложение</h2>
+                    <h2 className={styles.sectionTitle}>{t('pwa.title')}</h2>
                     
                     <div className={styles.instructionsGrid}>
                         <div className={styles.instructionCard}>
@@ -30,27 +36,27 @@ export default function AppsPage() {
                                 <div className={styles.platformIcon}>
                                     <FaApple className={styles.icon} />
                                 </div>
-                                <h3 className={styles.platformTitle}>iOS (iPhone/iPad)</h3>
+                                <h3 className={styles.platformTitle}>{t('pwa.ios.title')}</h3>
                             </div>
                             <ol className={styles.stepsList}>
                                 <li className={styles.step}>
-                                    Откройте сайт Friends4Evening в браузере Safari
+                                    {t('pwa.ios.steps.step1')}
                                 </li>
                                 <li className={styles.step}>
-                                    Нажмите на кнопку <span className={styles.buttonHint}>
-                                        <IoShareOutline className={styles.inlineIcon} /> Поделиться
-                                    </span> внизу экрана
+                                    {t('pwa.ios.steps.step2')} <span className={styles.buttonHint}>
+                                        <IoShareOutline className={styles.inlineIcon} /> {t('pwa.ios.steps.shareButton')}
+                                    </span> {t('pwa.ios.steps.step2End')}
                                 </li>
                                 <li className={styles.step}>
-                                    Выберите <span className={styles.buttonHint}>
-                                        <LuSquarePlus className={styles.inlineIcon} /> На экран «Домой»
+                                    {t('pwa.ios.steps.step3')} <span className={styles.buttonHint}>
+                                        <LuSquarePlus className={styles.inlineIcon} /> {t('pwa.ios.steps.addToHome')}
                                     </span>
                                 </li>
                                 <li className={styles.step}>
-                                    Подтвердите установку, нажав «Добавить»
+                                    {t('pwa.ios.steps.step4')}
                                 </li>
                                 <li className={styles.step}>
-                                    Приложение появится на главном экране вашего устройства
+                                    {t('pwa.ios.steps.step5')}
                                 </li>
                             </ol>
                         </div>
@@ -60,27 +66,27 @@ export default function AppsPage() {
                                 <div className={styles.platformIcon}>
                                     <FaAndroid className={styles.icon} />
                                 </div>
-                                <h3 className={styles.platformTitle}>Android</h3>
+                                <h3 className={styles.platformTitle}>{t('pwa.android.title')}</h3>
                             </div>
                             <ol className={styles.stepsList}>
                                 <li className={styles.step}>
-                                    Откройте сайт Friends4Evening в браузере Chrome
+                                    {t('pwa.android.steps.step1')}
                                 </li>
                                 <li className={styles.step}>
-                                    Нажмите на меню <span className={styles.buttonHint}>
-                                        ⋮
-                                    </span> в правом верхнем углу
+                                    {t('pwa.android.steps.step2')} <span className={styles.buttonHint}>
+                                        {t('pwa.android.steps.menuIcon')}
+                                    </span> {t('pwa.android.steps.step2End')}
                                 </li>
                                 <li className={styles.step}>
-                                    Выберите <span className={styles.buttonHint}>
-                                        «Установить приложение» или «Добавить на главный экран»
+                                    {t('pwa.android.steps.step3')} <span className={styles.buttonHint}>
+                                        {t('pwa.android.steps.installOption')}
                                     </span>
                                 </li>
                                 <li className={styles.step}>
-                                    Подтвердите установку в появившемся окне
+                                    {t('pwa.android.steps.step4')}
                                 </li>
                                 <li className={styles.step}>
-                                    Приложение будет установлено и появится на главном экране
+                                    {t('pwa.android.steps.step5')}
                                 </li>
                             </ol>
                         </div>
@@ -88,9 +94,9 @@ export default function AppsPage() {
                 </section>
 
                 <section className={styles.section}>
-                    <h2 className={styles.sectionTitle}>Нативные приложения</h2>
+                    <h2 className={styles.sectionTitle}>{t('native.title')}</h2>
                     <p className={styles.sectionDescription}>
-                        Скоро появятся полнофункциональные приложения для iOS и Android
+                        {t('native.description')}
                     </p>
                     
                     <div className={styles.appsGrid}>
@@ -99,12 +105,12 @@ export default function AppsPage() {
                                 <div className={styles.appIconWrapper}>
                                     <FaApple className={styles.appIcon} />
                                 </div>
-                                <h3 className={styles.appTitle}>iOS приложение</h3>
+                                <h3 className={styles.appTitle}>{t('native.ios.title')}</h3>
                                 <p className={styles.appDescription}>
-                                    Приложение для iPhone и iPad будет доступно в App Store
+                                    {t('native.ios.description')}
                                 </p>
                                 <div className={styles.statusBadge}>
-                                    <span className={styles.statusText}>В разработке</span>
+                                    <span className={styles.statusText}>{t('native.ios.status')}</span>
                                 </div>
                             </div>
                         </div>
@@ -114,12 +120,12 @@ export default function AppsPage() {
                                 <div className={styles.appIconWrapper}>
                                     <FaAndroid className={styles.appIcon} />
                                 </div>
-                                <h3 className={styles.appTitle}>Android приложение</h3>
+                                <h3 className={styles.appTitle}>{t('native.android.title')}</h3>
                                 <p className={styles.appDescription}>
-                                    Приложение для Android будет доступно в Google Play
+                                    {t('native.android.description')}
                                 </p>
                                 <div className={styles.statusBadge}>
-                                    <span className={styles.statusText}>В разработке</span>
+                                    <span className={styles.statusText}>{t('native.android.status')}</span>
                                 </div>
                             </div>
                         </div>

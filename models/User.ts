@@ -35,24 +35,22 @@ export enum MeetType {
     online = "ONLINE",
 }
 
-export const MeetTypeLabels: Record<MeetType, string> = {
-    [MeetType.currentHome]: "У себя дома",
-    [MeetType.userHome]: "У других дома",
-    [MeetType.street]: "На улице",
-    [MeetType.publicPlaces]: "В общественных местах",
-    [MeetType.parks]: "В парках",
-    [MeetType.cafes]: "В кафе/ресторанах",
-    [MeetType.online]: "Онлайн"
-}
+// MeetTypeLabels has been moved to translations (messages/{locale}.json under "MeetType" namespace)
+// Use useTranslations('MeetType') in components to get localized labels
+// Example: t('CURRENT_HOME'), t('USER_HOME'), etc.
 
 export type UserLocation = {
     country: string,
     city: string,
 }
 
-export const tags = [
-    { key: "READY", label: "Готов к встрече" },
-    { key: "CURRENT", label: "На встрече" },
-    { key: "BUSY", label: "Занят" },
-    { key: "INTENSIVE_SEARCH", label: "В активном поиске" }
-];
+// tags has been moved to translations (messages/{locale}.json under "UserTags" namespace)
+// Use useTranslations('UserTags') in components to get localized labels
+// For Dropdown component, create array from translations:
+// const t = useTranslations('UserTags');
+// const tags = [
+//   { key: "READY", label: t('READY') },
+//   { key: "CURRENT", label: t('CURRENT') },
+//   { key: "BUSY", label: t('BUSY') },
+//   { key: "INTENSIVE_SEARCH", label: t('INTENSIVE_SEARCH') }
+// ];

@@ -1,10 +1,10 @@
 "use client"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { MeetType, MeetTypeLabels, User, UserLocation } from "@/models/User"
+import { MeetType, User, UserLocation } from "@/models/User"
 import Avatar from "@/components/Avatar/Avatar"
 import { registerLocale } from "react-datepicker";
-import { ru } from "date-fns/locale";
+import { ru, enUS } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import "@/components/datepicker-custom.css";
 import styles from "./EditProfile.module.css"
@@ -15,8 +15,10 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import { db, storage } from "@/lib/firebase"
 import { doc, updateDoc } from "firebase/firestore"
 import LoadingView from "@/components/LoadingView/LoadingView"
+import { useTranslations, useLocale } from "next-intl"
 
 registerLocale("ru", ru);
+registerLocale("en", enUS);
 
 type Props = {
     user: User,
@@ -40,6 +42,8 @@ export type EditForm = {
 export default function EditProfile({ user }: Props) {
     const router = useRouter();
     const auth = useAuth();
+    const t = useTranslations('EditProfile');
+    const locale = useLocale();
 
     const [drinks, setDrinks] = useState("");
     const [nicknameError, setNicknameError] = useState(false);
@@ -69,12 +73,12 @@ export default function EditProfile({ user }: Props) {
         e.preventDefault();
 
         if (!auth.user) {
-            alert("Войдите заново в аккаунт")
+            alert(t('alerts.loginRequired'))
             return
         }
 
         if (nicknameError === true) {
-            alert("Никнейм занят. Пожалуйста укажите другой")
+            alert(t('alerts.nicknameTaken'))
             return
         }
 
@@ -129,7 +133,7 @@ export default function EditProfile({ user }: Props) {
         })
 
         if (response.status !== 200) {
-            alert("Ошибка сохранения. Проверьте соединение с интернетом")
+            alert(t('alerts.saveError'))
             return
         }
 
@@ -142,7 +146,7 @@ export default function EditProfile({ user }: Props) {
             window.location.reload();
             router.push('/account/profile')
         } else {
-            alert("Серверная проблема")
+            alert(t('alerts.serverError'))
         }
 
         setLoading(false);
@@ -198,7 +202,7 @@ export default function EditProfile({ user }: Props) {
 
     const handleDelete = (drink: string) => {
         if (!form.drinkPreferences.includes(drink)) {
-            alert("Ошибка удаления")
+            alert(t('alerts.deleteError'))
             return
         }
 
@@ -234,10 +238,10 @@ export default function EditProfile({ user }: Props) {
                 photoURL: url,
             })
 
-            alert("Аватар обновлён ✨");
+            alert(t('alerts.avatarUpdated'));
         } catch (err) {
             console.error(err);
-            alert("Ошибка при загрузке аватара");
+            alert(t('alerts.avatarUploadError'));
         } finally {
             setUploading(false);
         }
@@ -252,7 +256,7 @@ export default function EditProfile({ user }: Props) {
     return (
         <section id="edit-form">
             <div className={styles.avatarSection}>
-                <span className={styles.formLabelText}>Аватар профиля</span>
+                <span className={styles.formLabelText}>{t('labels.avatar')}</span>
                 <Avatar avatarUrl={form.avatarUrl} />
                 <input
                     type="file"
@@ -261,18 +265,18 @@ export default function EditProfile({ user }: Props) {
                     onChange={handleFileChange}
                     disabled={uploading}
                 />
-                {uploading && <p>Загружаем...</p>}
+                {uploading && <p>{t('buttons.uploading')}</p>}
             </div>
 
             <form id="edit-profile-form" onSubmit={handleEditSave} className={styles.editForm}>
                 <div className={styles.formSection}>
                     <label className={styles.formLabel}>
-                        <span className={styles.formLabelText}>Ваше имя</span>
+                        <span className={styles.formLabelText}>{t('labels.name')}</span>
                         <input
                             id="name"
                             type="text"
                             name="name"
-                            placeholder="Введите как Вас называть"
+                            placeholder={t('placeholders.name')}
                             value={form.name}
                             required
                             onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -281,14 +285,14 @@ export default function EditProfile({ user }: Props) {
                     </label>
 
                     <label className={styles.formLabel} id="nickname">
-                        <span className={styles.formLabelText}>Ваш никнейм</span>
+                        <span className={styles.formLabelText}>{t('labels.nickname')}</span>
                         <div className={styles.nicknameInputWrapper}>
                             <span className={styles.nicknamePrefix}>@</span>
                             <input
                                 id="nickname"
                                 type="text"
                                 name="nickname"
-                                placeholder="Придумайте никнейм (например beautifulBoy)"
+                                placeholder={t('placeholders.nickname')}
                                 value={form.nickname}
                                 required
                                 onChange={(e) => handleNicknameChange(e.target.value.trim())}
@@ -298,13 +302,13 @@ export default function EditProfile({ user }: Props) {
 
                         {nicknameError === true &&
                             <p className={styles.nicknameError}>
-                                Данный никнейм уже занят. Выберите другой
+                                {t('errors.nicknameTaken')}
                             </p>
                         }
                     </label>
 
                     <label className={styles.formLabel}>
-                        <span className={styles.formLabelText}>Email</span>
+                        <span className={styles.formLabelText}>{t('labels.email')}</span>
                         <input
                             id="email"
                             type="email"
@@ -316,16 +320,16 @@ export default function EditProfile({ user }: Props) {
                     </label>
 
                     <label className={styles.formLabel}>
-                        <span className={styles.formLabelText}>Дата Рождения</span>
+                        <span className={styles.formLabelText}>{t('labels.birthday')}</span>
                         <DatePicker
                             id="birthday"
-                            placeholderText="Дата рождения"
+                            placeholderText={t('placeholders.birthday')}
                             selected={form.birthday}
                             onChange={(date) => setForm({ ...form, birthday: date ?? new Date() })}
                             className={styles.datePicker}
                             wrapperClassName={styles.datePickerWrapper}
-                            dateFormat="dd.MM.yyyy"
-                            locale="ru"
+                            dateFormat={locale === 'ru' ? "dd.MM.yyyy" : "MM/dd/yyyy"}
+                            locale={locale === 'ru' ? 'ru' : 'en'}
                             showYearDropdown
                             showMonthDropdown
                             dropdownMode="select"
@@ -345,28 +349,28 @@ export default function EditProfile({ user }: Props) {
                             onChange={(e) => setForm({ ...form, showBirthday: e.target.checked })}
                             className={styles.checkboxInput}
                         />
-                        <span>Показывать возраст в Профиле?</span>
+                        <span>{t('checkboxes.showAge')}</span>
                     </label>
 
                     <label className={styles.formLabel}>
-                        <span className={styles.formLabelText}>Описание профиля</span>
+                        <span className={styles.formLabelText}>{t('labels.bio')}</span>
                         <textarea
                             value={form.bio}
                             onChange={(e) => setForm({ ...form, bio: e.target.value })}
-                            placeholder="Можете написать о себе"
+                            placeholder={t('placeholders.bio')}
                             rows={6}
                             className={styles.formTextarea}
                         />
                     </label>
 
                     <label className={styles.formLabel}>
-                        <span className={styles.formLabelText}>Текущая локация</span>
+                        <span className={styles.formLabelText}>{t('labels.location')}</span>
                         <div className={styles.locationInputs}>
                             <input
                                 id="location-country"
                                 type="text"
                                 name="location-country"
-                                placeholder="Страна"
+                                placeholder={t('placeholders.country')}
                                 value={form.location.country}
                                 onChange={(e) => setForm({ ...form, location: { country: e.target.value, city: form.location.city } })}
                                 className={styles.formInput}
@@ -375,7 +379,7 @@ export default function EditProfile({ user }: Props) {
                                 id="location-city"
                                 type="text"
                                 name="location-city"
-                                placeholder="Город"
+                                placeholder={t('placeholders.city')}
                                 value={form.location.city}
                                 onChange={(e) => setForm({ ...form, location: { country: form.location.country, city: e.target.value } })}
                                 className={styles.formInput}
@@ -392,11 +396,11 @@ export default function EditProfile({ user }: Props) {
                             onChange={(e) => setForm({ ...form, readyToTrip: e.target.checked })}
                             className={styles.checkboxInput}
                         />
-                        <span>Готов к поездке в другой город?</span>
+                        <span>{t('checkboxes.readyToTrip')}</span>
                     </label>
 
                     <fieldset className={styles.formFieldset}>
-                        <legend className={styles.formLegend}>Готов встретиться:</legend>
+                        <legend className={styles.formLegend}>{t('fieldsets.meetIn')}</legend>
                         <div className={styles.checkboxGroup}>
                             {Object.values(MeetType).map((option) => (
                                 <label key={option} className={styles.checkboxLabel}>
@@ -413,20 +417,20 @@ export default function EditProfile({ user }: Props) {
                                         }}
                                         className={styles.checkboxInput}
                                     />
-                                    <span>{MeetTypeLabels[option]}</span>
+                                    <span>{t(`meetTypes.${option}`)}</span>
                                 </label>
                             ))}
                         </div>
                     </fieldset>
 
                     <label className={styles.formLabel}>
-                        <span className={styles.formLabelText}>Предпочитаемые напитки</span>
+                        <span className={styles.formLabelText}>{t('labels.drinks')}</span>
                         <div className={styles.drinksInputWrapper}>
                             <input
                                 id="prefered-drinks"
                                 type="text"
                                 name="prefered-drinks"
-                                placeholder="Введите напитки через запятую"
+                                placeholder={t('placeholders.drinks')}
                                 value={drinks}
                                 onChange={(e) => handleSetDrinks(e.target.value)}
                                 className={styles.formInput}
@@ -440,7 +444,7 @@ export default function EditProfile({ user }: Props) {
                                                 type="button"
                                                 className={styles.drinkTagButton}
                                                 onClick={() => handleDelete(drink)}
-                                                aria-label="Удалить напиток"
+                                                aria-label={t('ariaLabels.deleteDrink')}
                                             >
                                                 <span className={styles.drinkTagButtonIcon}>×</span>
                                             </button>
@@ -460,12 +464,12 @@ export default function EditProfile({ user }: Props) {
                             onChange={(e) => setForm({ ...form, noAlcohol: e.target.checked })}
                             className={styles.checkboxInput}
                         />
-                        <span>Не употребляю алкоголь</span>
+                        <span>{t('checkboxes.noAlcohol')}</span>
                     </label>
 
                     {form.noAlcohol !== true && (
                         <div className={styles.warningBlock}>
-                            Употребление алкоголя в больших количествах может привезти к фатальным последствиям
+                            {t('warnings.alcohol')}
                         </div>
                     )}
 
@@ -478,22 +482,22 @@ export default function EditProfile({ user }: Props) {
                             onChange={(e) => setForm({ ...form, noSmoking: e.target.checked })}
                             className={styles.checkboxInput}
                         />
-                        <span>Не курю</span>
+                        <span>{t('checkboxes.noSmoking')}</span>
                     </label>
 
                     {form.noSmoking !== true && (
                         <div className={styles.warningBlock}>
-                            Курение (парение) вредит Вашему здоровью
+                            {t('warnings.smoking')}
                         </div>
                     )}
                 </div>
 
                 <div className={styles.formActions}>
                     <button className={styles.button} type="submit" disabled={loading}>
-                        {loading ? "Сохранение..." : "Сохранить"}
+                        {loading ? t('buttons.saving') : t('buttons.save')}
                     </button>
                     <button className={styles.buttonSecondary} type="button" onClick={handleCancel}>
-                        Отменить
+                        {t('buttons.cancel')}
                     </button>
                 </div>
             </form>
