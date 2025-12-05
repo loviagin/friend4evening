@@ -114,7 +114,7 @@
   min-width: 0;
   max-width: 100%;
   flex-shrink: 0;
-  transform: scale(0.85) !important;
+  transform: scale(1) !important;
   transform-origin: top center !important;
   margin-bottom: 0 !important;
 }
@@ -123,7 +123,7 @@
   content: '';
   display: block;
   height: 0;
-  padding-bottom: 15%;
+  padding-bottom: 0;
 }
 
 /* Специфичные стили для календаря, чтобы все 7 дней отображались */
@@ -582,15 +582,121 @@
   }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 481px) and (max-width: 1024px) {
   .dayPickerWrapper::after {
-    padding-bottom: 10%;
+    padding-bottom: 0 !important;
   }
 
   .dayPicker {
-    transform: scale(0.9) !important;
+    transform: scale(1) !important;
     transform-origin: top center !important;
     margin-bottom: 0 !important;
+  }
+
+  .dayPicker :global(.rdp) {
+    --rdp-cell-size: 2.5rem !important;
+    padding: 1.25rem !important;
+    font-size: 0.9375rem !important;
+  }
+
+  .dayPicker :global(.rdp-head_cell) {
+    font-size: 0.8125rem !important;
+    height: 2.5rem !important;
+  }
+
+  .dayPicker :global(.rdp-cell) {
+    height: 2.5rem !important;
+  }
+
+  .dayPicker :global(.rdp-day) {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    font-size: 0.875rem !important;
+  }
+
+  .dayPicker :global(.rdp-button_cell) {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+
+  .dayPicker :global(.rdp-caption) {
+    padding: 0.75rem 0.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .dayPicker :global(.rdp-caption_label) {
+    font-size: 1rem !important;
+  }
+
+  .dayPicker :global(.rdp-button_previous),
+  .dayPicker :global(.rdp-button_next) {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    padding: 0.5rem !important;
+  }
+
+  .dayPicker :global(.rdp-nav_icon) {
+    width: 0.875rem !important;
+    height: 0.875rem !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .dayPickerWrapper::after {
+    padding-bottom: 0 !important;
+  }
+
+  .dayPicker {
+    transform: scale(1) !important;
+    transform-origin: top center !important;
+    margin-bottom: 0 !important;
+  }
+
+  .dayPicker :global(.rdp) {
+    --rdp-cell-size: 1.75rem !important;
+    padding: 0.75rem !important;
+    font-size: 0.8125rem !important;
+  }
+
+  .dayPicker :global(.rdp-head_cell) {
+    font-size: 0.6875rem !important;
+    height: 1.75rem !important;
+  }
+
+  .dayPicker :global(.rdp-cell) {
+    height: 1.75rem !important;
+  }
+
+  .dayPicker :global(.rdp-day) {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .dayPicker :global(.rdp-button_cell) {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+  }
+
+  .dayPicker :global(.rdp-caption) {
+    padding: 0.5rem 0.375rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .dayPicker :global(.rdp-caption_label) {
+    font-size: 0.875rem !important;
+  }
+
+  .dayPicker :global(.rdp-button_previous),
+  .dayPicker :global(.rdp-button_next) {
+    width: 1.625rem !important;
+    height: 1.625rem !important;
+    padding: 0.375rem !important;
+  }
+
+  .dayPicker :global(.rdp-nav_icon) {
+    width: 0.6875rem !important;
+    height: 0.6875rem !important;
   }
 }
 
